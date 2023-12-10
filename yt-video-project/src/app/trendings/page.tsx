@@ -10,13 +10,13 @@ export default function TrendingPage() {
   }
 
   return (
-    <div className="flex gap-5 flex-col justify-center items-center">
+    <div className="flex gap-5 flex-col justify-center items-center mt-16">
       <h1
         className={`text-4xl font-bold ${
           bool ? 'text-red-500' : 'text-blue-500'
         }`}
       >
-        Trending topics
+        Trending Videos
       </h1>
 
       <button

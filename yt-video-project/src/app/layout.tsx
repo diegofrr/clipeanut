@@ -16,9 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-br">
-      <body className={plusJakartaSans.className}>
-        <div className={'bg-red-800 h-screen'}>{children}</div>
-      </body>
+      <body className={plusJakartaSans.className}>{children}</body>
     </html>
   );
 }
