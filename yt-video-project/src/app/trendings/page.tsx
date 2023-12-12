@@ -21,7 +21,11 @@ export default function TrendingPage() {
 
       <button
         onClick={handleSetBool}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-normal py-2 px-4 rounded-md m-5"
+        className="
+        py-2 px-4 rounded-md m-5 font-normal
+        bg-blue-500 text-white
+        hover:bg-blue-700 hover:scale-105 active:transform-none 
+        active:bg-blue-500 transition-all duration-[.3s] ease-[ease]"
       >
         Alterar cor do título
       </button>

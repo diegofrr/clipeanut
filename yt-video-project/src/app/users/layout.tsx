@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import NavBar from '@/components/Navbar';
 
 export const metadata: Metadata = {
-  title: 'Trending Videos'
+  title: 'Users'
 };
 
 export default function RootLayout({
@@ -11,7 +11,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-zinc-950 h-full w-full p-5">
+    <div className="bg-zinc-950 h-screen w-full p-5">
       <NavBar />
       {children}
     </div>
