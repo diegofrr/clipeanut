@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+    images: {
+        domains: ['pipedproxy.kavin.rocks']
+    }
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
