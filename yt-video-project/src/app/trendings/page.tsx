@@ -1,34 +1,48 @@
 'use client';
 
+import Image from 'next/image';
+
+import NavBar from '@/components/Navbar';
+import ITrendingVideo from '@/types/TrendingVideo';
+
+import { _getTrendingVideos } from '@/services/actions/trendingVideos';
 import { useState } from 'react';
 
-export default function TrendingPage() {
-  const [bool, setBool] = useState(false);
+export default function Home() {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [trendingVideos, setTrendingVideos] = useState<ITrendingVideo[]>([]);
 
-  function handleSetBool() {
-    setBool(!bool);
+  async function handleGetTrendingVideos() {
+    setLoading(true);
+    await _getTrendingVideos({ delay: 0 })
+      .then((data) => setTrendingVideos(data))
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
   }
 
   return (
-    <div className="flex gap-5 flex-col justify-center items-center mt-16">
-      <h1
-        className={`text-4xl font-bold ${
-          bool ? 'text-red-500' : 'text-blue-500'
-        }`}
-      >
-        Trending Videos
-      </h1>
+    <>
+      <NavBar />
+      <main className="mt-16 bg-zinc-950 min-h-screen">
+        <h1 className="text-3xl font-bold underline">Hello World!</h1>
+        <button onClick={handleGetTrendingVideos}>Get Trending Videos</button>
 
-      <button
-        onClick={handleSetBool}
-        className="
-        py-2 px-4 rounded-md m-5 font-normal
-        bg-blue-500 text-white
-        hover:bg-blue-700 hover:scale-105 active:transform-none 
-        active:bg-blue-500 transition-all duration-[.3s] ease-[ease]"
-      >
-        Alterar cor do título
-      </button>
-    </div>
+        {loading && <p>Loading...</p>}
+        {!loading && trendingVideos.length && (
+          <>
+            {trendingVideos.map((video, index) => (
+              <Image
+                className="w-auto h-auto"
+                alt={video.title}
+                key={index}
+                src={video.thumbnail}
+                width={400}
+                height={200}
+              />
+            ))}
+          </>
+        )}
+      </main>
+    </>
   );
 }
