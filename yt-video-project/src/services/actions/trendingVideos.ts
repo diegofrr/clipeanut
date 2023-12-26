@@ -6,15 +6,16 @@ import ITrendingVideo from '@/types/TrendingVideo';
 const FAKE_REQUEST_DELAY = 1000;
 const DEFAULT_REGION = 'BR';
 
-interface ITrendingProps {
+interface ITrendingVideosProps {
   region?: string;
 }
 
-interface _ITrendingProps {
+interface IFakeTrendingVideosProps {
   delay?: number;
 }
+
 export async function getTrendingVideos(
-  props?: ITrendingProps
+  props?: ITrendingVideosProps
 ): Promise<ITrendingVideo[]> {
   return fetch(
     `${process.env.NEXT_PUBLIC_API_ENDPOINT}/trending?region=${
@@ -26,7 +27,7 @@ export async function getTrendingVideos(
 }
 
 export async function _getTrendingVideos(
-  props?: _ITrendingProps
+  props?: IFakeTrendingVideosProps
 ): Promise<ITrendingVideo[]> {
   return new Promise((resolve) => {
     setTimeout(
