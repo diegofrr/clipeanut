@@ -1,10 +1,8 @@
 import Link from 'next/link';
-import NavBar from '@/components/Navbar';
 
 export default function Home() {
   return (
     <>
-      <NavBar />
       <main className="mt-16 bg-zinc-950 h-[calc(100vh-4rem)]">
         <h1 className="text-3xl font-bold underline">Hello World!</h1>
         <Link href="/trendings">
