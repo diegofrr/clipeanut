@@ -1,7 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['pipedproxy.kavin.rocks']
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'pipedproxy.kavin.rocks',
+                port: '',
+                pathname: '/**'
+            }
+        ]
     }
 };
 
