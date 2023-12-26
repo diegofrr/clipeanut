@@ -1,12 +1,11 @@
 'use client';
 
 import Image from 'next/image';
+import { useState } from 'react';
 
 import NavBar from '@/components/Navbar';
 import ITrendingVideo from '@/types/TrendingVideo';
-
 import { _getTrendingVideos } from '@/services/actions/trendingVideos';
-import { useState } from 'react';
 
 export default function Home() {
   const [loading, setLoading] = useState<boolean>(false);
