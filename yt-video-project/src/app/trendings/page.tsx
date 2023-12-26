@@ -1,10 +1,10 @@
 'use client';
 
-import Image from 'next/image';
 import { useState } from 'react';
 
 import ITrendingVideo from '@/types/TrendingVideo';
 import { _getTrendingVideos } from '@/services/actions/trendingVideos';
+import { TrendingVideo } from '@/components/TrendingVideo';
 
 export default function Home() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -12,7 +12,7 @@ export default function Home() {
 
   async function handleGetTrendingVideos() {
     setLoading(true);
-    await _getTrendingVideos({ delay: 0 })
+    await _getTrendingVideos({ delay: 1 })
       .then((data) => setTrendingVideos(data))
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
@@ -28,14 +28,7 @@ export default function Home() {
         {!loading && trendingVideos.length && (
           <>
             {trendingVideos.map((video, index) => (
-              <Image
-                className="w-auto h-auto"
-                alt={video.title}
-                key={index}
-                src={video.thumbnail}
-                width={400}
-                height={200}
-              />
+              <TrendingVideo key={index} data={video} />
             ))}
           </>
         )}
