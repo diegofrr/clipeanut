@@ -14,6 +14,19 @@ const config: Config = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
+      },
+      zIndex: {
+        max: '9999999'
+      },
+      minHeight: {
+        'screen-minus-navbar': 'calc(100vh - 4rem)'
+      },
+      height: {
+        nav: '4rem'
+      },
+      screens: {
+        xxs: '420px',
+        xs: '480px'
       }
     }
   },
