@@ -20,7 +20,6 @@ export default function Home() {
 
   const handleGetTrendingVideos = useCallback(async () => {
     setLoading(true);
-    console.log(region);
     await _getTrendingVideos({ delay: 1 })
       .then((data) => setTrendingVideos(data))
       .catch((error) => console.error(error))

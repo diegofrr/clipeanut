@@ -8,7 +8,7 @@ type PropsPipedInstanceContext = {
 };
 
 const DEFAULT_VALUE = {
-  endpoint: 'test',
+  endpoint: 'https://pipedapi.kavin.rocks',
   region: 'BR',
   setEndpoint: () => {},
   setRegion: () => {}
