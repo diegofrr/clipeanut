@@ -34,13 +34,7 @@ export default function Home() {
     <main className="min-h-screen-minus-navbar mt-16 w-full p-5 flex justify-start flex-col items-center gap-10 max-w-7xl m-auto">
       <header>
         <h1 className="text-3xl font-bold text-white">Vídeos em alta</h1>
-        <h2>{endpoint}</h2>
-        <Button
-          color="primary"
-          onClick={() => setRegion(region === 'BR' ? 'US' : 'BR')}
-        >
-          Alterar endpoint
-        </Button>
+        <h2 className="text-gray-600 text-sm">Região: {region}</h2>
       </header>
 
       {loading && <Spinner />}
