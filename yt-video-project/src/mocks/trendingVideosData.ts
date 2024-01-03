@@ -40,8 +40,7 @@ export default [
   {
     url: '/watch?v=Lu_-odNj5iU',
     type: 'stream',
-    title:
-      'SET DJ GM 6.0 - Grego, Paiva, Cebezinho, Ryan, Lipi, Paulin, Triz, Marks, Gabb, Lele,Daniel,Negão,GH',
+    title: 'SET DJ GM 6.0 - Grego, Paiva, Cebezinho, Ryan, Lipi, Paulin, Triz, Marks, Gabb, Lele,Daniel,Negão,GH',
     thumbnail:
       'https://pipedproxy.kavin.rocks/vi/Lu_-odNj5iU/hqdefault.jpg?host=i.ytimg.com&qhash=0949eba4&rs=AOn4CLDIJV-UnUwqrGlSqSgzCG7W5Woykw&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
     uploaderName: 'Love Funk',
@@ -79,8 +78,7 @@ export default [
   {
     url: '/watch?v=DFKiusBlu7c',
     type: 'stream',
-    title:
-      'Fazendinha Sessions #4: Ryan SP, Mari Fernandez, Us Agroboy, Zé Felipe, LP, João Gomes, Mayck & Lyan',
+    title: 'Fazendinha Sessions #4: Ryan SP, Mari Fernandez, Us Agroboy, Zé Felipe, LP, João Gomes, Mayck & Lyan',
     thumbnail:
       'https://pipedproxy.kavin.rocks/vi/DFKiusBlu7c/hqdefault.jpg?host=i.ytimg.com&qhash=02253984&rs=AOn4CLCj3qqC7at36mJyKlk5ixW1gpf18A&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
     uploaderName: 'Fazendinha Sessions',
@@ -107,8 +105,7 @@ export default [
     uploaderAvatar:
       'https://pipedproxy.kavin.rocks/ytc/AIf8zZRaLmJ2xOLXIFR7hCD4a7Seglg7dIsIsg3zK6oq=s68-c-k-c0x00ffffff-no-rw?host=yt3.ggpht.com&qhash=ac1d59cd',
     uploadedDate: '12 hours ago',
-    shortDescription:
-      '🎄❄🎁☃\n#JENNIE #제니 #눈 #snowman #cover #happyholidays',
+    shortDescription: '🎄❄🎁☃\n#JENNIE #제니 #눈 #snowman #cover #happyholidays',
     duration: 218,
     views: 1768819,
     uploaded: 1703343967230,
@@ -156,8 +153,7 @@ export default [
   {
     url: '/watch?v=jJgIhrP7WpA',
     type: 'stream',
-    title:
-      '"CITY NÃO É O MAIOR TIME DA HISTÓRIA!" - Galvão comenta a final do mundial',
+    title: '"CITY NÃO É O MAIOR TIME DA HISTÓRIA!" - Galvão comenta a final do mundial',
     thumbnail:
       'https://pipedproxy.kavin.rocks/vi/jJgIhrP7WpA/hqdefault.jpg?host=i.ytimg.com&qhash=e7ff6692&rs=AOn4CLCC-vK-hBGjoxmzQ_PwPqvw34PA5Q&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
     uploaderName: 'Canal GB',
@@ -165,8 +161,7 @@ export default [
     uploaderAvatar:
       'https://pipedproxy.kavin.rocks/QX91DdNmUzOOel7k7BtYL2qmlfUvGFwbRmkbMtYNLmRxsu3lCkBLEN-lXIXKKOb7HTaY-7UHcYc=s68-c-k-c0x00ffffff-no-rw?host=yt3.ggpht.com&qhash=83250484',
     uploadedDate: '1 day ago',
-    shortDescription:
-      'Inscreva-se no Canal GB e ative o sininho para não perder nenhum conteúdo.\n\nRealização: Play9',
+    shortDescription: 'Inscreva-se no Canal GB e ative o sininho para não perder nenhum conteúdo.\n\nRealização: Play9',
     duration: 477,
     views: 236701,
     uploaded: 1703300400000,
@@ -195,8 +190,7 @@ export default [
   {
     url: '/watch?v=ePhKh6L9SAY',
     type: 'stream',
-    title:
-      'O plano contra Dirceu é iniciado e Petra corre perigo! | Terra e Paixão | TV Globo',
+    title: 'O plano contra Dirceu é iniciado e Petra corre perigo! | Terra e Paixão | TV Globo',
     thumbnail:
       'https://pipedproxy.kavin.rocks/vi/ePhKh6L9SAY/hqdefault.jpg?host=i.ytimg.com&qhash=5649fe88&rs=AOn4CLDzSftZZO-onXW8nP_xlVBDHxYJ0w&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
     uploaderName: 'TV Globo',
@@ -234,8 +228,7 @@ export default [
   {
     url: '/watch?v=8SEQ38RoEX0',
     type: 'stream',
-    title:
-      'CAFÉ DA MANHÃ de 3 INGREDIENTES, SEM AÇÚCAR, Rico em FIBRAS e PROTEÍNAS! Fácil, Rápido e Saudável',
+    title: 'CAFÉ DA MANHÃ de 3 INGREDIENTES, SEM AÇÚCAR, Rico em FIBRAS e PROTEÍNAS! Fácil, Rápido e Saudável',
     thumbnail:
       'https://pipedproxy.kavin.rocks/vi/8SEQ38RoEX0/hqdefault.jpg?host=i.ytimg.com&qhash=6c516571&rs=AOn4CLBbJMQQcBiY-6zF4HuzLnt6U_lmCA&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
     uploaderName: 'Nutricionista Patricia Leite',
@@ -310,8 +303,7 @@ export default [
   {
     url: '/watch?v=VorRn3SlxfY',
     type: 'stream',
-    title:
-      'FELIPE MELO PASSOU DOS LIMITES E GUARDIOLA REAGIU!! CONFUSÃO MALUCA NO FINAL DO MUNDIAL!!',
+    title: 'FELIPE MELO PASSOU DOS LIMITES E GUARDIOLA REAGIU!! CONFUSÃO MALUCA NO FINAL DO MUNDIAL!!',
     thumbnail:
       'https://pipedproxy.kavin.rocks/vi/VorRn3SlxfY/hqdefault.jpg?host=i.ytimg.com&qhash=9a6f9194&rs=AOn4CLDf3DyDaYkXd5NEKOD7Ed_pJMaWAA&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
     uploaderName: 'Full',
@@ -367,8 +359,7 @@ export default [
   {
     url: '/watch?v=jKXDnho2IeI',
     type: 'stream',
-    title:
-      'Cabelinho recebe Slipmami, Maneirinho, Oruam, Caio Luccas e Orelha para CEIA DE NATAL | Natalinho',
+    title: 'Cabelinho recebe Slipmami, Maneirinho, Oruam, Caio Luccas e Orelha para CEIA DE NATAL | Natalinho',
     thumbnail:
       'https://pipedproxy.kavin.rocks/vi/jKXDnho2IeI/hqdefault.jpg?host=i.ytimg.com&qhash=2cfd1ba8&rs=AOn4CLBBFxfi4Oh7y18vt2sAXQaETbzmTQ&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
     uploaderName: 'Multishow',
@@ -482,8 +473,7 @@ export default [
   {
     url: '/watch?v=NO7ad-8eZSA',
     type: 'stream',
-    title:
-      'CRISTIANO RONALDO VS NEYMAR NA MASSINHA DE MODELAR!! QUEM É O MELHOR?',
+    title: 'CRISTIANO RONALDO VS NEYMAR NA MASSINHA DE MODELAR!! QUEM É O MELHOR?',
     thumbnail:
       'https://pipedproxy.kavin.rocks/vi/NO7ad-8eZSA/hqdefault.jpg?host=i.ytimg.com&qhash=f5da77c6&rs=AOn4CLDokzhH8KEy1BA6N5e-2uBuW4B2JA&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
     uploaderName: 'HeyDavi',
@@ -491,8 +481,7 @@ export default [
     uploaderAvatar:
       'https://pipedproxy.kavin.rocks/Kd53GgeClA14OC9wlDmpIfcMi7MvLvJpB5-XEQPVvTSPnYeoEywbIi6FpA5n24YQf7rzNm-0=s68-c-k-c0x00ffffff-no-rw?host=yt3.ggpht.com&qhash=8d4092ce',
     uploadedDate: '1 day ago',
-    shortDescription:
-      'CRISTIANO RONALDO VS NEYMAR NA MASSINHA DE MODELAR!! QUEM É O MELHOR?',
+    shortDescription: 'CRISTIANO RONALDO VS NEYMAR NA MASSINHA DE MODELAR!! QUEM É O MELHOR?',
     duration: 1414,
     views: 72701,
     uploaded: 1703300400000,
@@ -540,8 +529,7 @@ export default [
   {
     url: '/watch?v=QLgCYouYfEY',
     type: 'stream',
-    title:
-      'USEI A NOVA SKIN MAIS INSANA DE TODAS NO RUSHADÃO SOLO VS SQUAD!! FREE FIRE MOBILE',
+    title: 'USEI A NOVA SKIN MAIS INSANA DE TODAS NO RUSHADÃO SOLO VS SQUAD!! FREE FIRE MOBILE',
     thumbnail:
       'https://pipedproxy.kavin.rocks/vi/QLgCYouYfEY/hqdefault.jpg?host=i.ytimg.com&qhash=23790e7c&rs=AOn4CLCToaI_Zf4weyVoGYdpZAfBEwoo7A&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
     uploaderName: 'FREITAS',
@@ -560,8 +548,7 @@ export default [
   {
     url: '/watch?v=ksqg0s7ibQU',
     type: 'stream',
-    title:
-      '🟨 JOGUEI BLOX FRUIT PELA PRIMEIRA VEZ E ATIVEI O ROBUX INFINITO PARA PEGAR A MELHOR FRUTA DO JOGO 😲',
+    title: '🟨 JOGUEI BLOX FRUIT PELA PRIMEIRA VEZ E ATIVEI O ROBUX INFINITO PARA PEGAR A MELHOR FRUTA DO JOGO 😲',
     thumbnail:
       'https://pipedproxy.kavin.rocks/vi/ksqg0s7ibQU/hqdefault.jpg?host=i.ytimg.com&qhash=372ea0b0&rs=AOn4CLCdJQLHX22pYGQj-MegUaxSAy8ECg&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
     uploaderName: 'xMarcelo',
@@ -655,8 +642,7 @@ export default [
   {
     url: '/watch?v=CH-CFkqZVE8',
     type: 'stream',
-    title:
-      'Criei o TRAILER de SMILING CRITTERS No Minecraft - Poppy PlayTime 3',
+    title: 'Criei o TRAILER de SMILING CRITTERS No Minecraft - Poppy PlayTime 3',
     thumbnail:
       'https://pipedproxy.kavin.rocks/vi/CH-CFkqZVE8/hqdefault.jpg?host=i.ytimg.com&qhash=6a328bd5&rs=AOn4CLCnuRkoo-AWbKgKbp-KPxURG0IuZw&sqp=-oaymwE2CNACELwBSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB_gmAAtAFigIMCAAQARhyIE4oQzAP',
     uploaderName: 'Jakinho',
@@ -675,8 +661,7 @@ export default [
   {
     url: '/watch?v=bWP8LcnjtNY',
     type: 'stream',
-    title:
-      "Racionais MC's - Fórmula Mágica da Paz (Racionais 3 Décadas Ao Vivo)",
+    title: "Racionais MC's - Fórmula Mágica da Paz (Racionais 3 Décadas Ao Vivo)",
     thumbnail:
       'https://pipedproxy.kavin.rocks/vi/bWP8LcnjtNY/hqdefault.jpg?host=i.ytimg.com&qhash=d38f8b68&rs=AOn4CLBm7E2_VZBcV9UnGGKbMUYo2JHpnQ&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
     uploaderName: 'Racionais TV',
@@ -790,8 +775,7 @@ export default [
   {
     url: '/watch?v=ms8W0havs7E',
     type: 'stream',
-    title:
-      'DRAGON BALL LEGENDS REVEALS & STUFF LEGENDS FESTIVAL EDITION 2023 PART #3',
+    title: 'DRAGON BALL LEGENDS REVEALS & STUFF LEGENDS FESTIVAL EDITION 2023 PART #3',
     thumbnail:
       'https://pipedproxy.kavin.rocks/vi/ms8W0havs7E/hqdefault.jpg?host=i.ytimg.com&qhash=ed05946f&rs=AOn4CLCwPo5ej5oUs1aB_06yk9g5oCpq_w&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
     uploaderName: 'Bandai Namco Entertainment',
@@ -810,8 +794,7 @@ export default [
   {
     url: '/watch?v=XIbvY_or6GE',
     type: 'stream',
-    title:
-      'O MELHOR SALPICÃO DE FRANGO DE NATAL DA SUA VIDA! FÁCIL! SUPER CREMOSO! - Isamara Amâncio',
+    title: 'O MELHOR SALPICÃO DE FRANGO DE NATAL DA SUA VIDA! FÁCIL! SUPER CREMOSO! - Isamara Amâncio',
     thumbnail:
       'https://pipedproxy.kavin.rocks/vi/XIbvY_or6GE/hqdefault.jpg?host=i.ytimg.com&qhash=72cc2485&rs=AOn4CLDQQ7skmMx6Ma1AAwHLg4IMHaCxGQ&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
     uploaderName: 'Isamara Amâncio',
@@ -830,8 +813,7 @@ export default [
   {
     url: '/watch?v=Cyz8ydKBCYw',
     type: 'stream',
-    title:
-      "Racionais MC's - Capítulo 4 Versículo 3 (Racionais 3 Décadas Ao Vivo)",
+    title: "Racionais MC's - Capítulo 4 Versículo 3 (Racionais 3 Décadas Ao Vivo)",
     thumbnail:
       'https://pipedproxy.kavin.rocks/vi/Cyz8ydKBCYw/hqdefault.jpg?host=i.ytimg.com&qhash=3cda21e5&rs=AOn4CLBHelJIvZdEDfKL8FY_dfZTgQkenQ&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
     uploaderName: 'Racionais TV',

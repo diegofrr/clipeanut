@@ -3,38 +3,32 @@
 import trendingVideosData from '@/mocks/trendingVideosData';
 import ITrendingVideo from '@/types/TrendingVideo';
 
-const FAKE_REQUEST_DELAY = 1000;
-const DEFAULT_REGION = 'BR';
+import { DEFAULT_VALUES } from '@/constants';
 
 interface ITrendingVideosProps {
-  region?: string;
+  options: {
+    endpoint: string;
+    region?: string;
+  };
 }
 
 interface IFakeTrendingVideosProps {
   delay?: number;
 }
 
-export async function getTrendingVideos(
-  props?: ITrendingVideosProps
-): Promise<ITrendingVideo[]> {
-  return fetch(
-    `${process.env.NEXT_PUBLIC_API_ENDPOINT}/trending?region=${
-      props?.region || DEFAULT_REGION
-    }`
-  )
+export async function getTrendingVideos({ options }: ITrendingVideosProps): Promise<ITrendingVideo[]> {
+  return fetch(`${options.endpoint}/trending?region=${options?.region || DEFAULT_VALUES.PIPED_REGION}`)
     .then((res) => res.json())
     .then((data) => data as ITrendingVideo[]);
 }
 
-export async function _getTrendingVideos(
-  props?: IFakeTrendingVideosProps
-): Promise<ITrendingVideo[]> {
+export async function _getTrendingVideos(props: IFakeTrendingVideosProps): Promise<ITrendingVideo[]> {
   return new Promise((resolve) => {
     setTimeout(
       () => {
         resolve(trendingVideosData as ITrendingVideo[]);
       },
-      props?.delay || FAKE_REQUEST_DELAY
+      props?.delay || DEFAULT_VALUES.FAKE_REQUEST_DELAY
     );
   });
 }

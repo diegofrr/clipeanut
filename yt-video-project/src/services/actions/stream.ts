@@ -1,18 +1,20 @@
+import IPipedInstance from '@/types/PipedInstance';
 import streamData from '@/mocks/streamData';
 import IStream from '@/types/Stream';
 
-const FAKE_REQUEST_DELAY = 2000;
+import { DEFAULT_VALUES } from '@/constants';
 
 interface IStreamProps {
   id: string;
+  instance: IPipedInstance;
 }
 
 interface IFakeStreamProps {
   delay?: number;
 }
 
-export async function getStream(props?: IStreamProps): Promise<IStream> {
-  return fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/stream?v=${props?.id}`)
+export async function getStream({ id, instance }: IStreamProps): Promise<IStream> {
+  return fetch(`${instance.endpoint}/stream?v=${id}`)
     .then((res) => res.json())
     .then((data) => data as IStream);
 }
@@ -23,7 +25,7 @@ export async function _getStream(props?: IFakeStreamProps): Promise<IStream> {
       () => {
         resolve(streamData as IStream);
       },
-      props?.delay || FAKE_REQUEST_DELAY
+      props?.delay || DEFAULT_VALUES.FAKE_REQUEST_DELAY
     );
   });
 }

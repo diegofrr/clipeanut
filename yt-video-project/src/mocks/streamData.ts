@@ -1,6 +1,5 @@
 export default {
-  title:
-    'Rose Bowl: Alabama Crimson Tide vs. Michigan Wolverines | Full Game Highlights | CFB Semifinal',
+  title: 'Rose Bowl: Alabama Crimson Tide vs. Michigan Wolverines | Full Game Highlights | CFB Semifinal',
   description:
     'Check out these highlights from No. 1 Michigan\'s 27-20 OT win over No. 4 Alabama in the 2024 Rose Bowl matchup. The Wolverines will play the winner of the Sugar Bowl matchup between the Texas Longhorns and the Washington Huskies in the College Football National Championship.<br><br>✔️Subscribe to ESPN+ <a href="http://espnplus.com/youtube">http://espnplus.com/youtube</a><br>✔️ Get the ESPN App: <a href="http://www.espn.com/espn/apps/espn">http://www.espn.com/espn/apps/espn</a><br>✔️Subscribe to ESPN on YouTube: <a href="http://es.pn/SUBSCRIBEtoYOUTUBE">http://es.pn/SUBSCRIBEtoYOUTUBE</a><br>✔️ Subscribe to NBA on ESPN on YouTube: <a href="http://bit.ly/SUBSCRIBEtoNBAonESPN">http://bit.ly/SUBSCRIBEtoNBAonESPN</a><br>✔️ Watch ESPN on YouTube TV: <a href="http://es.pn/YouTubeTV">http://es.pn/YouTubeTV</a>',
   uploadDate: '2024-01-01T18:03:55-08:00',
@@ -8,8 +7,7 @@ export default {
   uploaderUrl: '/channel/UCzRWWsFjqHk1an4OnVPsl9g',
   uploaderAvatar:
     'https://pipedproxy.r4fo.com/HS5_CRjOOoLSdekU-7yV131AzBKT9C7YGrbpZrZuAseX3Kq4E8dcCyXM8HJm-tBdmGK6SDbQdw=s176-c-k-c0x00ffffff-no-rw?host=yt3.ggpht.com',
-  thumbnailUrl:
-    'https://pipedproxy.r4fo.com/vi/lO38tZoA0l8/maxresdefault.jpg?host=i.ytimg.com',
+  thumbnailUrl: 'https://pipedproxy.r4fo.com/vi/lO38tZoA0l8/maxresdefault.jpg?host=i.ytimg.com',
   hls: 'https://pipedproxy.r4fo.com/api/manifest/hls_variant/expire/1704230582/ei/ViqUZfTxI42wi9oP0cKDqAM/ip/2a03%3A4000%3A6%3Ab03a%3A8a6a%3Adda5%3A9e08%3Aca68/id/94edfcb59a00d25f/source/youtube/requiressl/yes/xpc/EgVo2aDSNQ%3D%3D/playback_host/rr1---sn-5oxmp55u-8pxe.googlevideo.com/mh/Jo/mm/31%2C29/mn/sn-5oxmp55u-8pxe%2Csn-4g5ednsr/ms/au%2Crdu/mv/m/mvi/1/pl/53/hfr/1/demuxed/1/tts_caps/1/maudio/1/initcwndbps/1067500/vprv/1/go/1/mt/1704207924/fvip/1/nvgoi/1/short_key/1/ncsapi/1/keepalive/yes/fexp/24007246/dover/13/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Cxpc%2Chfr%2Cdemuxed%2Ctts_caps%2Cmaudio%2Cvprv%2Cgo%2Citag%2Cplaylist_type/sig/AJfQdSswRgIhANmwUcC1ilu3NGi0D821qLfffGTD5e_VC6V1NfAVmUToAiEAy7fVi9XPeO3ljetrpWOALtZXaXFzC7pXtzHXLb7Josw%3D/lsparams/playback_host%2Cmh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps/lsig/AAO5W4owRQIhAJsNMFz4mzA-HUpLIHB--rPwodOQAYnwH8TPndBgDOUeAiBYNMXn3kg7Ps2WT5jPc-eJ5vSJElVFmdkKMBKJ0zhhNQ%3D%3D/file/index.m3u8?host=manifest.googlevideo.com',
   dash: null,
   lbryId: null,
@@ -560,8 +558,7 @@ export default {
     {
       url: '/watch?v=gS7WczOL5YQ',
       type: 'stream',
-      title:
-        'Sugar Bowl: Texas Longhorns vs. Washington Huskies | Full Game Highlights',
+      title: 'Sugar Bowl: Texas Longhorns vs. Washington Huskies | Full Game Highlights',
       thumbnail:
         'https://pipedproxy.r4fo.com/vi/gS7WczOL5YQ/hqdefault.jpg?host=i.ytimg.com&rs=AOn4CLDpraT6Zb_c7R_Wfzwy-SYBjbioEw&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
       uploaderName: 'ESPN College Football',
@@ -579,8 +576,7 @@ export default {
     {
       url: '/watch?v=bSf7ENE_VMY',
       type: 'stream',
-      title:
-        'Kalen DeBoer: Washington’s slogan is ‘job not done’ after Sugar Bowl win vs. Texas | SC with SVP',
+      title: 'Kalen DeBoer: Washington’s slogan is ‘job not done’ after Sugar Bowl win vs. Texas | SC with SVP',
       thumbnail:
         'https://pipedproxy.r4fo.com/vi/bSf7ENE_VMY/hqdefault.jpg?host=i.ytimg.com&rs=AOn4CLBx4ii6EvzxlnsOWsQN5kGE37KDzg&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
       uploaderName: 'ESPN College Football',
@@ -616,8 +612,7 @@ export default {
     {
       url: '/watch?v=4i2nZeapYSc',
       type: 'stream',
-      title:
-        'Nick Saban was OUTCOACHED by Jim Harbaugh 😲 - Paul Finebaum is SHOCKED after the Rose Bowl | Get Up',
+      title: 'Nick Saban was OUTCOACHED by Jim Harbaugh 😲 - Paul Finebaum is SHOCKED after the Rose Bowl | Get Up',
       thumbnail:
         'https://pipedproxy.r4fo.com/vi/4i2nZeapYSc/hqdefault.jpg?host=i.ytimg.com&rs=AOn4CLDNFt9Hri0P-aw9M_RrZdht5Um0rQ&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
       uploaderName: 'ESPN',
@@ -635,8 +630,7 @@ export default {
     {
       url: '/watch?v=VXU2IzDsvcA',
       type: 'stream',
-      title:
-        '#4 Alabama vs #1 Michigan Highlights | 2024 Rose Bowl | CFP Semifinal | College Football Highlights',
+      title: '#4 Alabama vs #1 Michigan Highlights | 2024 Rose Bowl | CFP Semifinal | College Football Highlights',
       thumbnail:
         'https://pipedproxy.r4fo.com/vi/VXU2IzDsvcA/hqdefault.jpg?host=i.ytimg.com&rs=AOn4CLCBQhCWaHF3eDe8Umh9bfwf7nwhkg&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
       uploaderName: 'Wheels',
@@ -654,8 +648,7 @@ export default {
     {
       url: '/watch?v=uI64C7VaUuo',
       type: 'stream',
-      title:
-        'Jim Harbaugh, J.J. McCarthy Press Conference: Michigan Beats Alabama In Overtime, 27-20',
+      title: 'Jim Harbaugh, J.J. McCarthy Press Conference: Michigan Beats Alabama In Overtime, 27-20',
       thumbnail:
         'https://pipedproxy.r4fo.com/vi/uI64C7VaUuo/hqdefault.jpg?host=i.ytimg.com&rs=AOn4CLCqKqokSiz9mnIm4rVHgMBEOlYYoQ&sqp=-oaymwE2CNACELwBSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB_gmAAtAFigIMCAAQARhKIFkoZTAP',
       uploaderName: 'The Wolverine: Michigan Football and Basketball',
@@ -673,8 +666,7 @@ export default {
     {
       url: '/watch?v=F3YogLecG_Y',
       type: 'stream',
-      title:
-        'Cincinnati Bengals vs. Kansas City Chiefs Game Highlights | NFL 2023 Week 17',
+      title: 'Cincinnati Bengals vs. Kansas City Chiefs Game Highlights | NFL 2023 Week 17',
       thumbnail:
         'https://pipedproxy.r4fo.com/vi/F3YogLecG_Y/hqdefault.jpg?host=i.ytimg.com&rs=AOn4CLCVoOjK7R4FCvkYSo392LuG2VExdg&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
       uploaderName: 'NFL',
@@ -692,8 +684,7 @@ export default {
     {
       url: '/watch?v=TuFkxnGYU64',
       type: 'stream',
-      title:
-        'Rose Bowl HALFTIME HIGHLIGHTS: Alabama Crimson Tide vs. Michigan Wolverines | ESPN College Football',
+      title: 'Rose Bowl HALFTIME HIGHLIGHTS: Alabama Crimson Tide vs. Michigan Wolverines | ESPN College Football',
       thumbnail:
         'https://pipedproxy.r4fo.com/vi/TuFkxnGYU64/hqdefault.jpg?host=i.ytimg.com&rs=AOn4CLDtdeyu8-0kMCdZ2A3HWhdPEDgeyg&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
       uploaderName: 'ESPN',
@@ -711,8 +702,7 @@ export default {
     {
       url: '/watch?v=5MQL16vO89Y',
       type: 'stream',
-      title:
-        'Pat McAfee Show HIGHLIGHTS from The Rose Bowl: Alabama vs. Michigan | ESPN College Football',
+      title: 'Pat McAfee Show HIGHLIGHTS from The Rose Bowl: Alabama vs. Michigan | ESPN College Football',
       thumbnail:
         'https://pipedproxy.r4fo.com/vi/5MQL16vO89Y/hqdefault.jpg?host=i.ytimg.com&rs=AOn4CLAa4tnGhbIvEkCVOlm3eBrpZRjTig&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
       uploaderName: 'ESPN',
@@ -730,8 +720,7 @@ export default {
     {
       url: '/watch?v=42UNDDkDmU0',
       type: 'stream',
-      title:
-        'Orange Bowl: Georgia Bulldogs vs. Florida State Seminoles | Full Game Highlights',
+      title: 'Orange Bowl: Georgia Bulldogs vs. Florida State Seminoles | Full Game Highlights',
       thumbnail:
         'https://pipedproxy.r4fo.com/vi/42UNDDkDmU0/hqdefault.jpg?host=i.ytimg.com&rs=AOn4CLAOHNVtlgXLSccYXD176NvO9rD9NA&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
       uploaderName: 'ESPN College Football',
@@ -749,8 +738,7 @@ export default {
     {
       url: '/watch?v=o_I68vGERW8',
       type: 'stream',
-      title:
-        "DRAMATIC! EPIC! ICONIC! Full Reaction to Michigan's big win vs. Alabama in the Rose Bowl 🌹 | Get Up",
+      title: "DRAMATIC! EPIC! ICONIC! Full Reaction to Michigan's big win vs. Alabama in the Rose Bowl 🌹 | Get Up",
       thumbnail:
         'https://pipedproxy.r4fo.com/vi/o_I68vGERW8/hqdefault.jpg?host=i.ytimg.com&rs=AOn4CLAn-aLicelqk1BaD7oRJYfuWl_mxg&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
       uploaderName: 'ESPN',
@@ -768,8 +756,7 @@ export default {
     {
       url: '/watch?v=0OBpvV5GeJI',
       type: 'stream',
-      title:
-        '#3 Texas vs #2 Washington Highlights | 2024 Sugar Bowl | CFP Semifinal | College Football Highlights',
+      title: '#3 Texas vs #2 Washington Highlights | 2024 Sugar Bowl | CFP Semifinal | College Football Highlights',
       thumbnail:
         'https://pipedproxy.r4fo.com/vi/0OBpvV5GeJI/hqdefault.jpg?host=i.ytimg.com&rs=AOn4CLBOBl7vhHUkFnoxQxDWQdn-oaBsjQ&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
       uploaderName: 'Wheels',
@@ -805,8 +792,7 @@ export default {
     {
       url: '/watch?v=9Zo_0MhXbaI',
       type: 'stream',
-      title:
-        'What went wrong for Alabama? + Taylor Lewan thinks Harbaugh will leave Michigan for the NFL | Get Up',
+      title: 'What went wrong for Alabama? + Taylor Lewan thinks Harbaugh will leave Michigan for the NFL | Get Up',
       thumbnail:
         'https://pipedproxy.r4fo.com/vi/9Zo_0MhXbaI/hqdefault.jpg?host=i.ytimg.com&rs=AOn4CLCH8vDsCzcrZn7_ig7XqFbwXhuCgg&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
       uploaderName: 'ESPN College Football',
@@ -842,8 +828,7 @@ export default {
     {
       url: '/watch?v=gxF8Cbeexe4',
       type: 'stream',
-      title:
-        'Michigan OUTLASTS Alabama In OT To Advance To National Champ. I FULL BREAKDOWN I Rose Bowl Recap',
+      title: 'Michigan OUTLASTS Alabama In OT To Advance To National Champ. I FULL BREAKDOWN I Rose Bowl Recap',
       thumbnail:
         'https://pipedproxy.r4fo.com/vi/gxF8Cbeexe4/hqdefault.jpg?host=i.ytimg.com&rs=AOn4CLCiKAG95FVeWi0EZ_JYcEvZI6ZSDQ&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
       uploaderName: 'CBS Sports',
@@ -861,8 +846,7 @@ export default {
     {
       url: '/watch?v=XbNW5HxApqU',
       type: 'stream',
-      title:
-        'Citrus Bowl: Iowa Hawkeyes vs. Tennessee Volunteers | Full Game Highlights',
+      title: 'Citrus Bowl: Iowa Hawkeyes vs. Tennessee Volunteers | Full Game Highlights',
       thumbnail:
         'https://pipedproxy.r4fo.com/vi/XbNW5HxApqU/hqdefault.jpg?host=i.ytimg.com&rs=AOn4CLBcot_WwkftD2uY9W8_f3n3g5w1uA&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
       uploaderName: 'ESPN College Football',
@@ -880,8 +864,7 @@ export default {
     {
       url: '/watch?v=4Par8tf38ts',
       type: 'stream',
-      title:
-        'Washington & Michigan ADVANCE to the National Championship 👀 Kirk Herbstreit previews | SC with SVP',
+      title: 'Washington & Michigan ADVANCE to the National Championship 👀 Kirk Herbstreit previews | SC with SVP',
       thumbnail:
         'https://pipedproxy.r4fo.com/vi/4Par8tf38ts/hqdefault.jpg?host=i.ytimg.com&rs=AOn4CLATOoKAEB7uPkyvExDVkn3s6nMw6Q&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
       uploaderName: 'ESPN',
@@ -899,8 +882,7 @@ export default {
     {
       url: '/watch?v=jL04MQV6RhU',
       type: 'stream',
-      title:
-        'Miami Dolphins vs. Baltimore Ravens | 2023 Week 17 Game Highlights',
+      title: 'Miami Dolphins vs. Baltimore Ravens | 2023 Week 17 Game Highlights',
       thumbnail:
         'https://pipedproxy.r4fo.com/vi/jL04MQV6RhU/hqdefault.jpg?host=i.ytimg.com&rs=AOn4CLAXkKJoI3eZ3qajUFAldIA8Sf73dQ&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
       uploaderName: 'NFL',
@@ -918,8 +900,7 @@ export default {
     {
       url: '/watch?v=dDYo3Kxh7SI',
       type: 'stream',
-      title:
-        'UNDISPUTED | Skip reacts to Michigan beat Alabama 27-20 in OT thriller to reach CFP title game',
+      title: 'UNDISPUTED | Skip reacts to Michigan beat Alabama 27-20 in OT thriller to reach CFP title game',
       thumbnail:
         'https://pipedproxy.r4fo.com/vi/dDYo3Kxh7SI/hqdefault.jpg?host=i.ytimg.com&rs=AOn4CLDknv-umbM71laDgIa8ea5XVo9akQ&sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg%3D%3D',
       uploaderName: 'Skip and Shannon: Undisputed 2023',

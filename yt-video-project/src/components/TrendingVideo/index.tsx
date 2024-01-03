@@ -37,9 +37,7 @@ export const TrendingVideo = ({ data }: { data: ITrendingVideo }) => {
           <p className="group-hover/container:text-blue-400 text-base text-white mb-2 font-bold transition-all duration-[0.3s] ease-[ease]">
             {abbrevTitle(data.title)}
           </p>
-          <span className="text-xs text-gray-400 mb-1">
-            {data.uploaderName}
-          </span>
+          <span className="text-xs text-gray-400 mb-1">{data.uploaderName}</span>
           <span className="text-xs text-gray-400">{data.views} views</span>
         </footer>
       </div>
