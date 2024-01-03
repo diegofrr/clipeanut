@@ -32,9 +32,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    (async () => {
-      await handleGetTrendingVideos();
-    })();
+    handleGetTrendingVideos();
   }, [instance, handleGetTrendingVideos]);
 
   return (
