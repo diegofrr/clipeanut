@@ -17,7 +17,7 @@ interface IFakeTrendingVideosProps {
 }
 
 export async function getTrendingVideos({ options }: ITrendingVideosProps): Promise<ITrendingVideo[]> {
-  return fetch(`${options.endpoint}/trending?region=${options?.region || DEFAULT_VALUES.PIPED_REGION}`)
+  return await fetch(`${options.endpoint}/trending?region=${options?.region || DEFAULT_VALUES.PIPED_REGION}`)
     .then((res) => res.json())
     .then((data) => data as ITrendingVideo[]);
 }

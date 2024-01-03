@@ -31,11 +31,9 @@ export default function Settings() {
           ))}
         </Select>
       </div>
-      <Link href="/">
-        <Button color="primary" radius="sm" className="mt-5">
-          Go to Home
-        </Button>
-      </Link>
+      <Button color="primary" radius="sm" className="mt-5">
+        <Link href={'/'}>Go to Home</Link>
+      </Button>
     </div>
   );
 }

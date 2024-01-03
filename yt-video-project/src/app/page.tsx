@@ -3,7 +3,7 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 
 import ITrendingVideo from '@/types/TrendingVideo';
-import { _getTrendingVideos } from '@/services/actions/trendingVideos';
+import { _getTrendingVideos, getTrendingVideos } from '@/services/actions/trendingVideos';
 import { TrendingVideo } from '@/components/TrendingVideo';
 import { Button, Spinner } from '@nextui-org/react';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
@@ -18,18 +18,18 @@ export default function Home() {
 
   const handleGetTrendingVideos = useCallback(async () => {
     setLoading(true);
-    // const options = { endpoint, region };
+    const options = { endpoint, region };
 
-    // await getTrendingVideos({ options })
-    //   .then((data) => setTrendingVideos(data))
-    //   .catch((error) => console.error(error))
-    //   .finally(() => setLoading(false));
-
-    await _getTrendingVideos({ delay: 1 })
+    await getTrendingVideos({ options })
       .then((data) => setTrendingVideos(data))
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
-  }, []);
+
+    // await _getTrendingVideos({ delay: 1 })
+    //   .then((data) => setTrendingVideos(data))
+    //   .catch((error) => console.error(error))
+    //   .finally(() => setLoading(false));
+  }, [endpoint, region]);
 
   useEffect(() => {
     handleGetTrendingVideos();
@@ -45,11 +45,9 @@ export default function Home() {
           <h2 className="text-gray-600 text-sm">Instância: {instance}</h2>
           <Button onClick={() => setRegion('US')}>Alterar região</Button>
           <Button onClick={() => setInstance('lunar.icu')}>Alterar instância</Button>
-          <Link href="/settings">
-            <Button color="primary" radius="sm" className="mt-5">
-              Go to Settings
-            </Button>
-          </Link>
+          <Button color="primary" radius="sm" className="mt-5">
+            <Link href="/settings">Go to Settings</Link>
+          </Button>
         </header>
 
         {loading && <Spinner />}
