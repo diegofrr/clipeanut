@@ -27,6 +27,13 @@ for (const instance of instances) {
         port: '',
         pathname: '/**'
     });
+
+    remotePatterns.push({
+        protocol: 'https',
+        hostname: 'pipedimageproxy.' + instance,
+        port: '',
+        pathname: '/**'
+    });
 }
 
 /** @type {import('next').NextConfig} */
