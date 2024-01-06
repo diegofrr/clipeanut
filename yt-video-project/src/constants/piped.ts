@@ -129,6 +129,7 @@ export default {
   ],
   VIDEO_TYPES: {
     DASH_XML_DATA_URI: 'data:application/dash+xml;charset=utf-8;base64,',
-    DASH_XML_VIDEO_TYPE: 'application/dash+xml'
+    DASH_XML_VIDEO_TYPE: 'application/dash+xml',
+    HLS_VIDEO_TYPE: 'application/x-mpegURL'
   }
 };
