@@ -20,15 +20,15 @@ export default function Home() {
     setLoading(true);
     const options = { endpoint, region };
 
-    await getTrendingVideos({ options })
+    // await getTrendingVideos({ options })
+    //   .then((data) => setTrendingVideos(data))
+    //   .catch(() => {})
+    //   .finally(() => setLoading(false));
+
+    await _getTrendingVideos({ delay: 1 })
       .then((data) => setTrendingVideos(data))
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
-
-    // await _getTrendingVideos({ delay: 1 })
-    //   .then((data) => setTrendingVideos(data))
-    //   .catch((error) => console.error(error))
-    //   .finally(() => setLoading(false));
   }, [endpoint, region]);
 
   useEffect(() => {
