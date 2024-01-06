@@ -12,9 +12,17 @@ export default function Watch() {
 
   if (!videoId) return <NotFound />;
 
-  function onGetStreamFailed() {
+  function onGetStreamFailure() {
     setVideoNotExists(true);
   }
 
-  return videoNotExists ? <NotFound /> : <VideoPlayer videoId={videoId} callbackOnVideoNotExists={onGetStreamFailed} />;
+  function onGetStreamSuccess() {
+    console.log('success');
+  }
+
+  return videoNotExists ? (
+    <NotFound />
+  ) : (
+    <VideoPlayer videoId={videoId} onFailure={onGetStreamFailure} onSuccess={onGetStreamSuccess} />
+  );
 }
