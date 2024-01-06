@@ -3,7 +3,7 @@
 import trendingVideosData from '@/mocks/trendingVideosData';
 import ITrendingVideo from '@/types/TrendingVideo';
 
-import { DEFAULT_VALUES } from '@/constants';
+import { DEFAULT_VALUES, PIPED_VALUES } from '@/constants';
 
 interface ITrendingVideosProps {
   options: {
@@ -17,7 +17,7 @@ interface IFakeTrendingVideosProps {
 }
 
 export async function getTrendingVideos({ options }: ITrendingVideosProps): Promise<ITrendingVideo[]> {
-  return await fetch(`${options.endpoint}/trending?region=${options?.region || DEFAULT_VALUES.PIPED_REGION}`)
+  return await fetch(`${options.endpoint}/trending?region=${options?.region || PIPED_VALUES.DEFAULT_REGION}`)
     .then((res) => res.json())
     .then((data) => data as ITrendingVideo[]);
 }
