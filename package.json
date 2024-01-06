@@ -1,6 +1,8 @@
 {
-  "name": "yt-video-project",
+  "name": "clipeanut",
   "version": "0.1.0",
+  "description": "An alternative front-end to YouTube",
+  "author": "Diêgo Ferreira <diegofrr.19@gmail.com>",
   "private": true,
   "scripts": {
     "dev": "next dev",
