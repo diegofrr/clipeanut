@@ -1,13 +1,14 @@
 'use client';
 
-import { PIPED_VALUES } from '@/constants';
-import { PipedInstanceContext } from '@/contexts/pipedInstance';
-import { Select, SelectItem, Button } from '@nextui-org/react';
 import Link from 'next/link';
 import { useContext } from 'react';
 
+import { PIPED_VALUES } from '@/constants';
+import { PipedInstanceContext } from '@/contexts/pipedInstance';
+import { Select, SelectItem, Button } from '@nextui-org/react';
+
 export default function Settings() {
-  const { endpoint, instance, setInstance, region, setRegion } = useContext(PipedInstanceContext);
+  const { instance, setInstance, region, setRegion } = useContext(PipedInstanceContext);
 
   const handleSelectionChangeInstance = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setInstance(e.target.value);
