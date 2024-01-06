@@ -1,8 +1,9 @@
 export default {
-  NAME: 'YT Video',
-  PATH_TITLES: {
-    HOME: 'Home',
-    WATCH: 'Watch',
-    SETTINGS: 'Settings'
+  NAME: 'Clipeanut',
+  DESCRIPTION: 'An alternative front-end to YouTube',
+  PAGE_TITLES: {
+    HOME: 'Início',
+    WATCH: 'Assistir',
+    SETTINGS: 'Configurações'
   }
 };
