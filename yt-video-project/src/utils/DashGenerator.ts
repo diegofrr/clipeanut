@@ -2,8 +2,8 @@
 // Based of https://github.com/GilgusMaximus/yt-dash-manifest-generator/blob/master/src/DashGenerator.js
 import { XMLBuilder } from 'fast-xml-parser';
 
-export async function generateDashFileFromFormats(VideoFormats, VideoLength) {
-    const generatedJSON = generateXMLJsonFromData(VideoFormats, VideoLength);
+export async function generateDashFileFromFormats(VideoFormats: VideoFormat[] | unknown[], VideoLength: number): Promise<string> {
+    const generatedJSON = generateXMLJsonFromData(VideoFormats as VideoFormat[], VideoLength);
     const builder = new XMLBuilder({
         ignoreAttributes: false,
         allowBooleanAttributes: true,
@@ -13,8 +13,8 @@ export async function generateDashFileFromFormats(VideoFormats, VideoLength) {
     return builder.build(generatedJSON);
 }
 
-function generateXMLJsonFromData(VideoFormatArray, VideoLength) {
-    const convertJSON = {
+function generateXMLJsonFromData(VideoFormatArray: VideoFormat[], VideoLength: number): XMLJson {
+    const convertJSON: XMLJson = {
         '?xml': {
             _version: '1.0',
             _encoding: 'utf-8',
@@ -33,10 +33,10 @@ function generateXMLJsonFromData(VideoFormatArray, VideoLength) {
     return convertJSON;
 }
 
-function generateAdaptationSet(VideoFormatArray) {
-    const adaptationSets = [];
+function generateAdaptationSet(VideoFormatArray: VideoFormat[]): AdaptationSet[] {
+    const adaptationSets: AdaptationSet[] = [];
 
-    let mimeAudioObjs = [];
+    const mimeAudioObjs: MimeAudioObj[] = [];
 
     VideoFormatArray.forEach((videoFormat) => {        // the dual formats should not be used
         if (
@@ -66,7 +66,7 @@ function generateAdaptationSet(VideoFormatArray) {
     });
 
     mimeAudioObjs.forEach((mimeAudioObj) => {
-        const adapSet = {
+        const adapSet: AdaptationSet = {
             _id: mimeAudioObj.audioTrackId,
             _lang: mimeAudioObj.audioTrackId?.substr(0, 2),
             _mimeType: mimeAudioObj.mimeType,
@@ -82,7 +82,7 @@ function generateAdaptationSet(VideoFormatArray) {
             adapSet['_scanType'] = 'progressive';
         }
 
-        for (var i = 0; i < mimeAudioObj.videoFormats.length; i++) {
+        for (let i = 0; i < mimeAudioObj.videoFormats.length; i++) {
             const videoFormat = mimeAudioObj.videoFormats[i];
             if (isVideoFormat) {
                 adapSet.Representation.push(generateRepresentationVideo(videoFormat));
@@ -96,8 +96,8 @@ function generateAdaptationSet(VideoFormatArray) {
     return adaptationSets;
 }
 
-function generateRepresentationAudio(Format) {
-    const representation = {
+function generateRepresentationAudio(Format: VideoFormat): Representation {
+    const representation: Representation = {
         _id: Format.itag,
         _codecs: Format.codec,
         _bandwidth: Format.bitrate,
@@ -116,8 +116,8 @@ function generateRepresentationAudio(Format) {
     return representation;
 }
 
-function generateRepresentationVideo(Format) {
-    const representation = {
+function generateRepresentationVideo(Format: VideoFormat): Representation {
+    const representation: Representation = {
         _id: Format.itag,
         _codecs: Format.codec,
         _bandwidth: Format.bitrate,
@@ -134,4 +134,75 @@ function generateRepresentationVideo(Format) {
         }
     };
     return representation;
+}
+
+interface VideoFormat {
+    mimeType: string;
+    videoOnly: boolean;
+    audioTrackId: string;
+    itag: string;
+    codec: string;
+    bitrate: number;
+    width: number;
+    height: number;
+    fps: number;
+    url: string;
+    indexStart: number;
+    indexEnd: number;
+    initStart: number;
+    initEnd: number;
+}
+
+interface MimeAudioObj {
+    audioTrackId: string;
+    mimeType: string;
+    videoFormats: VideoFormat[];
+}
+
+interface AdaptationSet {
+    _id: string;
+    _lang: string;
+    _mimeType: string;
+    _startWithSAP: string;
+    _subsegmentAlignment: string;
+    _scanType?: string;
+    Representation: Representation[];
+}
+
+interface Representation {
+    _id: string;
+    _codecs: string;
+    _bandwidth: number;
+    _width?: number;
+    _height?: number;
+    _maxPlayoutRate?: string;
+    _frameRate?: number;
+    BaseURL: string;
+    SegmentBase: {
+        _indexRange: string;
+        Initialization: {
+            _range: string;
+        }
+    };
+    AudioChannelConfiguration?: {
+        _schemeIdUri: string;
+        _value: string;
+    }
+}
+
+interface XMLJson {
+    '?xml': {
+        _version: string;
+        _encoding: string;
+        MPD: {
+            _xmlns: string;
+            _profiles: string;
+            _minBufferTime: string;
+            _type: string;
+            _mediaPresentationDuration: string;
+            Period: {
+                AdaptationSet: AdaptationSet[];
+            }
+        }
+    }
 }

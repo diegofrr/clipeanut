@@ -4,10 +4,10 @@ import { createRef, useCallback, useContext, useEffect } from 'react';
 
 import shaka from '@/lib/shaka-player';
 
-import { generateDashFileFromFormats } from '@/utils/DashGenerator';
-import { PipedInstanceContext } from '@/contexts/pipedInstance';
-import { FetchStreamOptionsType, fetchStream } from '@/services/actions/fetchStreamData';
 import { PIPED_VALUES } from '@/constants';
+import { PipedInstanceContext } from '@/contexts/pipedInstance';
+import { generateDashFileFromFormats } from '@/utils/DashGenerator';
+import { FetchStreamOptionsType, fetchStream } from '@/services/actions/fetchStreamData';
 
 interface IVideoPlayerProps {
   videoId: string;
