@@ -6,7 +6,7 @@ import Link from 'next/link';
 import NavBar from '@/components/Navbar';
 import ITrendingVideo from '@/types/TrendingVideo';
 
-import { OptionsTrendingVideos, getTrendingVideos } from '@/services/actions/trending';
+import { FetchTrendingVideosOptionsType, fetchTrendingVideos } from '@/services/actions/fetchTrendingVideosData';
 import { TrendingVideo } from '@/components/TrendingVideo';
 import { Button, Spinner } from '@nextui-org/react';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
@@ -19,9 +19,9 @@ export default function Home() {
 
   const handleGetTrendingVideos = useCallback(async () => {
     setLoading(true);
-    const options = { endpoint, region, isFake: true, delay: 1 } as OptionsTrendingVideos;
+    const options = { endpoint, region, isFake: true, delay: 1 } as FetchTrendingVideosOptionsType;
 
-    await getTrendingVideos({ options })
+    await fetchTrendingVideos({ options })
       .then((data) => setTrendingVideos(data))
       .catch(() => {})
       .finally(() => setLoading(false));

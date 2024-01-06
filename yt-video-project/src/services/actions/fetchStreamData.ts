@@ -5,28 +5,28 @@ import IStream from '@/types/Stream';
 
 import { DEFAULT_VALUES } from '@/constants';
 
-interface IStreamProps {
-  options: OptionsStream;
+interface IFetchStreamProps {
+  options: FetchStreamOptionsType;
 }
 
-export type OptionsStream = {
+export type FetchStreamOptionsType = {
   videoId: string;
   endpoint: string;
   isFake?: boolean;
   delay?: number;
 };
 
-export async function getStream({ options }: IStreamProps): Promise<IStream> {
+export async function fetchStream({ options }: IFetchStreamProps): Promise<IStream> {
   return options.isFake ? fetchFakeData(options.delay) : fetchData(options);
 }
 
-export async function fetchData(options: OptionsStream): Promise<IStream> {
+async function fetchData(options: FetchStreamOptionsType): Promise<IStream> {
   return fetch(`${options.endpoint}/streams/${options.videoId}`)
     .then((res) => res.json())
     .then((data) => data as IStream);
 }
 
-export async function fetchFakeData(delay?: number): Promise<IStream> {
+async function fetchFakeData(delay?: number): Promise<IStream> {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(streamData as IStream);

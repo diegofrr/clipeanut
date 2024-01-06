@@ -6,7 +6,7 @@ import shaka from '@/lib/shaka-player';
 
 import { generateDashFileFromFormats } from '@/utils/DashGenerator';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
-import { OptionsStream, getStream } from '@/services/actions/stream';
+import { FetchStreamOptionsType, fetchStream } from '@/services/actions/fetchStreamData';
 import { PIPED_VALUES } from '@/constants';
 
 interface IVideoPlayerProps {
@@ -27,9 +27,9 @@ export default function VideoPlayer(props: IVideoPlayerProps) {
     let mimeType = '';
     let uri = '';
 
-    const options = { videoId, endpoint, isFake: true, delay: 1 } as OptionsStream;
+    const options = { videoId, endpoint, isFake: true, delay: 1 } as FetchStreamOptionsType;
 
-    const stream = await getStream({ options });
+    const stream = await fetchStream({ options });
 
     streamFormats.push(...stream.videoStreams);
     streamFormats.push(...stream.audioStreams);
