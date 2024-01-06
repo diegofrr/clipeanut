@@ -2,13 +2,14 @@
 
 import { useCallback, useContext, useEffect, useState } from 'react';
 
+import Link from 'next/link';
+import NavBar from '@/components/Navbar';
 import ITrendingVideo from '@/types/TrendingVideo';
-import { _getTrendingVideos, getTrendingVideos } from '@/services/actions/trendingVideos';
+
+import { OptionsTrendingVideos, getTrendingVideos } from '@/services/actions/trendingVideos';
 import { TrendingVideo } from '@/components/TrendingVideo';
 import { Button, Spinner } from '@nextui-org/react';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
-import NavBar from '@/components/Navbar';
-import Link from 'next/link';
 
 export default function Home() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -18,16 +19,11 @@ export default function Home() {
 
   const handleGetTrendingVideos = useCallback(async () => {
     setLoading(true);
-    const options = { endpoint, region };
+    const options = { endpoint, region, isFake: true, delay: 1 } as OptionsTrendingVideos;
 
-    // await getTrendingVideos({ options })
-    //   .then((data) => setTrendingVideos(data))
-    //   .catch(() => {})
-    //   .finally(() => setLoading(false));
-
-    await _getTrendingVideos({ delay: 1 })
+    await getTrendingVideos({ options })
       .then((data) => setTrendingVideos(data))
-      .catch((error) => console.error(error))
+      .catch(() => {})
       .finally(() => setLoading(false));
   }, [endpoint, region]);
 
@@ -45,8 +41,8 @@ export default function Home() {
           <h2 className="text-gray-600 text-sm">Instância: {instance}</h2>
           <Button onClick={() => setRegion('US')}>Alterar região</Button>
           <Button onClick={() => setInstance('lunar.icu')}>Alterar instância</Button>
-          <Button color="primary" radius="sm" className="mt-5">
-            <Link href="/settings">Go to Settings</Link>
+          <Button as={Link} href={'/settings'} color="primary" radius="sm" className="mt-5">
+            Go to Settings
           </Button>
         </header>
 

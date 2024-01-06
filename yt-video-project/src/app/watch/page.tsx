@@ -1,10 +1,10 @@
 'use client';
 
+import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 
 import NotFound from '../not-found';
 import VideoPlayer from '@/components/VideoPlayer';
-import { useState } from 'react';
 
 export default function Watch() {
   const videoId = useSearchParams().get('v');

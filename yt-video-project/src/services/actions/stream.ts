@@ -4,27 +4,30 @@ import IStream from '@/types/Stream';
 import { DEFAULT_VALUES } from '@/constants';
 
 interface IStreamProps {
+  options: OptionsStream;
+}
+
+export type OptionsStream = {
   videoId: string;
   endpoint: string;
-}
-
-interface IFakeStreamProps {
+  isFake?: boolean;
   delay?: number;
+};
+
+export async function getStream({ options }: IStreamProps): Promise<IStream> {
+  return options.isFake ? _getStreamData(options.delay) : getStreamData(options);
 }
 
-export async function getStream(props: IStreamProps): Promise<IStream> {
-  return fetch(`${props.endpoint}/streams/${props.videoId}`)
+export async function getStreamData(options: OptionsStream): Promise<IStream> {
+  return fetch(`${options.endpoint}/streams/${options.videoId}`)
     .then((res) => res.json())
     .then((data) => data as IStream);
 }
 
-export async function _getStream(props?: IFakeStreamProps): Promise<IStream> {
+export async function _getStreamData(delay?: number): Promise<IStream> {
   return new Promise((resolve) => {
-    setTimeout(
-      () => {
-        resolve(streamData as IStream);
-      },
-      props?.delay || DEFAULT_VALUES.FAKE_REQUEST_DELAY
-    );
+    setTimeout(() => {
+      resolve(streamData as IStream);
+    }, delay || DEFAULT_VALUES.FAKE_REQUEST_DELAY);
   });
 }

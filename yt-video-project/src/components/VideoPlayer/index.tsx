@@ -4,9 +4,9 @@ import { createRef, useCallback, useContext, useEffect } from 'react';
 
 import shaka from '@/lib/shaka-player';
 
-import { generateDashFileFromFromats } from '@/utils/DashGenerator';
+import { generateDashFileFromFormats } from '@/utils/DashGenerator';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
-import { getStream, _getStream } from '@/services/actions/stream';
+import { OptionsStream, getStream } from '@/services/actions/stream';
 import { PIPED_VALUES } from '@/constants';
 
 interface IVideoPlayerProps {
@@ -27,8 +27,9 @@ export default function VideoPlayer(props: IVideoPlayerProps) {
     let mimeType = '';
     let uri = '';
 
-    // const stream = await getStream({ videoId, endpoint });
-    const stream = await _getStream();
+    const options = { videoId, endpoint, isFake: true, delay: 1 } as OptionsStream;
+
+    const stream = await getStream({ options });
 
     streamFormats.push(...stream.videoStreams);
     streamFormats.push(...stream.audioStreams);
@@ -42,7 +43,7 @@ export default function VideoPlayer(props: IVideoPlayerProps) {
         url.searchParams.set('rewrite', 'false');
         uri = url.toString();
       } else {
-        const dash = await generateDashFileFromFromats(streamFormats, stream.duration);
+        const dash = await generateDashFileFromFormats(streamFormats, stream.duration);
         uri = PIPED_VALUES.VIDEO_TYPES.DASH_XML_DATA_URI + btoa(dash);
         mimeType = PIPED_VALUES.VIDEO_TYPES.DASH_XML_VIDEO_TYPE;
       }
@@ -61,7 +62,7 @@ export default function VideoPlayer(props: IVideoPlayerProps) {
     const videoContainer = videoContainerRef.current;
     const player = new shaka.Player(videoElement);
     const ui = new shaka.ui.Overlay(player, videoContainer, videoElement);
-    const controls = ui.getControls();
+    ui.getControls();
 
     getVideoData()
       .then((data) => {
@@ -72,8 +73,8 @@ export default function VideoPlayer(props: IVideoPlayerProps) {
             videoElement?.setAttribute('poster', stream.thumbnailUrl);
             onSuccess && onSuccess();
           })
-          .catch((err: Error) => {
-            console.error(err);
+          .catch(() => {
+            onFailure && onFailure();
           });
       })
       .catch(() => {

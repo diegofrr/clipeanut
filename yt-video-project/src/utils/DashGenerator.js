@@ -2,7 +2,7 @@
 // Based of https://github.com/GilgusMaximus/yt-dash-manifest-generator/blob/master/src/DashGenerator.js
 import { XMLBuilder } from 'fast-xml-parser';
 
-export async function generateDashFileFromFromats(VideoFormats, VideoLength) {
+export async function generateDashFileFromFormats(VideoFormats, VideoLength) {
     const generatedJSON = generateXMLJsonFromData(VideoFormats, VideoLength);
     const builder = new XMLBuilder({
         ignoreAttributes: false,
