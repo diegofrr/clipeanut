@@ -17,16 +17,16 @@ export type OptionsTrendingVideos = {
 };
 
 export async function getTrendingVideos({ options }: ITrendingVideosProps): Promise<ITrendingVideo[]> {
-  return options.isFake ? _getTrendingVideosData(options.delay) : getTrendingVideosData(options);
+  return options.isFake ? fetchFakeData(options.delay) : fetchData(options);
 }
 
-export async function getTrendingVideosData(options: OptionsTrendingVideos): Promise<ITrendingVideo[]> {
+export async function fetchData(options: OptionsTrendingVideos): Promise<ITrendingVideo[]> {
   return await fetch(`${options.endpoint}/trending?region=${options?.region || PIPED_VALUES.DEFAULT_REGION}`)
     .then((res) => res.json())
     .then((data) => data as ITrendingVideo[]);
 }
 
-export async function _getTrendingVideosData(delay?: number): Promise<ITrendingVideo[]> {
+export async function fetchFakeData(delay?: number): Promise<ITrendingVideo[]> {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(trendingVideosData as ITrendingVideo[]);

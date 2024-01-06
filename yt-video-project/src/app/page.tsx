@@ -6,7 +6,7 @@ import Link from 'next/link';
 import NavBar from '@/components/Navbar';
 import ITrendingVideo from '@/types/TrendingVideo';
 
-import { OptionsTrendingVideos, getTrendingVideos } from '@/services/actions/trendingVideos';
+import { OptionsTrendingVideos, getTrendingVideos } from '@/services/actions/trending';
 import { TrendingVideo } from '@/components/TrendingVideo';
 import { Button, Spinner } from '@nextui-org/react';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';

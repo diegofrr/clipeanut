@@ -1,3 +1,5 @@
+'use server';
+
 import streamData from '@/mocks/streamData';
 import IStream from '@/types/Stream';
 
@@ -15,16 +17,16 @@ export type OptionsStream = {
 };
 
 export async function getStream({ options }: IStreamProps): Promise<IStream> {
-  return options.isFake ? _getStreamData(options.delay) : getStreamData(options);
+  return options.isFake ? fetchFakeData(options.delay) : fetchData(options);
 }
 
-export async function getStreamData(options: OptionsStream): Promise<IStream> {
+export async function fetchData(options: OptionsStream): Promise<IStream> {
   return fetch(`${options.endpoint}/streams/${options.videoId}`)
     .then((res) => res.json())
     .then((data) => data as IStream);
 }
 
-export async function _getStreamData(delay?: number): Promise<IStream> {
+export async function fetchFakeData(delay?: number): Promise<IStream> {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(streamData as IStream);
