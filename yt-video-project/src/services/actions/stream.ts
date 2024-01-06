@@ -1,20 +1,19 @@
-import IPipedInstance from '@/types/PipedInstance';
 import streamData from '@/mocks/streamData';
 import IStream from '@/types/Stream';
 
 import { DEFAULT_VALUES } from '@/constants';
 
 interface IStreamProps {
-  id: string;
-  instance: IPipedInstance;
+  videoId: string;
+  endpoint: string;
 }
 
 interface IFakeStreamProps {
   delay?: number;
 }
 
-export async function getStream({ id, instance }: IStreamProps): Promise<IStream> {
-  return fetch(`${instance.endpoint}/stream?v=${id}`)
+export async function getStream(props: IStreamProps): Promise<IStream> {
+  return fetch(`${props.endpoint}/streams/${props.videoId}`)
     .then((res) => res.json())
     .then((data) => data as IStream);
 }
