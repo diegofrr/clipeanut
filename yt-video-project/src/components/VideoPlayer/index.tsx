@@ -11,7 +11,8 @@ import { PIPED_VALUES } from '@/constants';
 
 interface IVideoPlayerProps {
   videoId: string;
-  callbackOnVideoNotExists: () => void;
+  onFailure?: () => void;
+  onSuccess?: () => void;
 }
 
 export default function VideoPlayer(props: IVideoPlayerProps) {
@@ -32,47 +33,59 @@ export default function VideoPlayer(props: IVideoPlayerProps) {
     streamFormats.push(...stream.videoStreams);
     streamFormats.push(...stream.audioStreams);
 
-    if (!stream.dash) {
-      const dash = await generateDashFileFromFromats(streamFormats, stream.duration);
-      uri = PIPED_VALUES.VIDEO_TYPES.DASH_XML_DATA_URI + btoa(dash);
-      mimeType = PIPED_VALUES.VIDEO_TYPES.DASH_XML_VIDEO_TYPE;
+    if (stream.livestream) {
+      uri = stream.hls;
+      mimeType = PIPED_VALUES.VIDEO_TYPES.HLS_VIDEO_TYPE;
+    } else {
+      if (stream.dash) {
+        const url = new URL(stream.dash);
+        url.searchParams.set('rewrite', 'false');
+        uri = url.toString();
+      } else {
+        const dash = await generateDashFileFromFromats(streamFormats, stream.duration);
+        uri = PIPED_VALUES.VIDEO_TYPES.DASH_XML_DATA_URI + btoa(dash);
+        mimeType = PIPED_VALUES.VIDEO_TYPES.DASH_XML_VIDEO_TYPE;
+      }
     }
 
-    return { mimeType, uri };
+    return { mimeType, uri, stream };
   }, [endpoint, props]);
 
   useEffect(() => {
     if (!window?.document) return;
 
-    const video = videoRef.current;
+    const VIDEO_START_TIME = 0;
+
+    const { onFailure, onSuccess } = props;
+    const videoElement = videoRef.current;
     const videoContainer = videoContainerRef.current;
-
-    const player = new shaka.Player(video);
-
-    const ui = new shaka.ui.Overlay(player, videoContainer, video);
+    const player = new shaka.Player(videoElement);
+    const ui = new shaka.ui.Overlay(player, videoContainer, videoElement);
     const controls = ui.getControls();
-
-    console.log(controls);
 
     getVideoData()
       .then((data) => {
+        const { mimeType, uri, stream } = data;
         player
-          .load(data.uri, 0, data.mimeType)
+          .load(uri, VIDEO_START_TIME, mimeType)
           .then(function () {
-            console.log(player);
+            videoElement?.setAttribute('poster', stream.thumbnailUrl);
+            onSuccess && onSuccess();
           })
           .catch((err: Error) => {
             console.error(err);
           });
       })
       .catch(() => {
-        props.callbackOnVideoNotExists();
+        onFailure && onFailure();
       });
   }, [videoRef, videoContainerRef, props, endpoint, getVideoData]);
 
   return (
-    <div ref={videoContainerRef} className="mx-auto max-w-full w-[800px]">
-      <video className="w-full h-full" ref={videoRef}></video>
+    <div>
+      <div ref={videoContainerRef} className="mx-auto max-w-full w-[800px]">
+        <video className="w-full h-full" ref={videoRef}></video>
+      </div>
     </div>
   );
 }
