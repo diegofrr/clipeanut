@@ -8,21 +8,23 @@ import VideoPlayer from '@/components/VideoPlayer';
 
 export default function Watch() {
   const videoId = useSearchParams().get('v');
-  const [videoNotExists, setVideoNotExists] = useState(false);
 
-  if (!videoId) return <NotFound />;
+  const [videoNotExists, setVideoNotExists] = useState(false);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   function onGetStreamFailure() {
     setVideoNotExists(true);
   }
 
   function onGetStreamSuccess() {
-    console.log('success');
+    setIsVideoLoaded(true);
   }
 
-  return videoNotExists ? (
+  return !videoId || videoNotExists ? (
     <NotFound />
   ) : (
-    <VideoPlayer videoId={videoId} onFailure={onGetStreamFailure} onSuccess={onGetStreamSuccess} />
+    <div className={`${!isVideoLoaded && 'hidden'}`}>
+      <VideoPlayer videoId={videoId} onFailure={onGetStreamFailure} onSuccess={onGetStreamSuccess} />
+    </div>
   );
 }
