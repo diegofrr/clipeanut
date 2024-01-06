@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useEffect, useState } from 'react';
-import { DEFAULT_VALUES } from '@/constants';
+import { PIPED_VALUES } from '@/constants';
 
 type PropsPipedInstanceContext = {
   instance: string;
@@ -13,9 +13,9 @@ type PropsPipedInstanceContext = {
 };
 
 const INITIAL_VALUE = {
-  instance: DEFAULT_VALUES.PIPED_INSTANCE,
-  endpoint: DEFAULT_VALUES.PIPED_BASE + DEFAULT_VALUES.PIPED_INSTANCE,
-  region: DEFAULT_VALUES.PIPED_REGION,
+  instance: PIPED_VALUES.DEFAULT_INSTANCE,
+  endpoint: PIPED_VALUES.PIPED_BASE + PIPED_VALUES.DEFAULT_INSTANCE,
+  region: PIPED_VALUES.DEFAULT_REGION,
   setEndpoint: () => {},
   setInstance: () => {},
   setRegion: () => {}
@@ -29,7 +29,7 @@ export default function PipedInstanceProvider({ children }: { children: React.Re
   const [region, setRegion] = useState<string>(INITIAL_VALUE.region);
 
   useEffect(() => {
-    setEndpoint(DEFAULT_VALUES.PIPED_BASE + instance);
+    setEndpoint(PIPED_VALUES.PIPED_BASE + instance);
   }, [instance]);
 
   return (

@@ -1,4 +1,8 @@
 export default {
+  DEFAULT_INSTANCE: 'kavin.rocks',
+  PIPED_BASE: 'https://pipedapi.',
+  DEFAULT_REGION: 'BR',
+
   INTANCES: [
     'kavin.rocks',
     'syncpundit.io',
@@ -122,5 +126,9 @@ export default {
     'VN',
     'YE',
     'ZW'
-  ]
+  ],
+  VIDEO_TYPES: {
+    DASH_XML_DATA_URI: 'data:application/dash+xml;charset=utf-8;base64,',
+    DASH_XML_VIDEO_TYPE: 'application/dash+xml'
+  }
 };
