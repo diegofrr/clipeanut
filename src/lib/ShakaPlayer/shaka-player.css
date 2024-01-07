@@ -47,3 +47,14 @@
 .shaka-no-propagation.shaka-settings-menu button {
         align-items: center !important;
 }
+
+.shaka-spinner-container .shaka-spinner {
+        width: auto !important;
+        height: auto !important;
+        padding: 0 !important;
+        filter: none !important;
+
+        i {
+                border-width: 6px !important;
+        }
+}
