@@ -1,0 +1,49 @@
+.shaka-overflow-menu.shaka-show-controls-on-mouse-over,
+.shaka-settings-menu.shaka-playback-rates,
+.shaka-settings-menu.shaka-resolutions {
+        max-height: none !important;
+        bottom: 40px !important;
+        right: 24px !important;
+        background-color: black;
+        padding: 16px 24px !important;
+        border-radius: 8px;
+        gap: 10px !important;
+
+        button {
+                padding: 2px !important;
+                transition: all .3s ease;
+                background: none !important;
+                opacity: .7 !important;
+
+                * {
+                        color: #fff !important;
+                }
+
+        
+                &:hover {
+                        opacity: 1 !important;
+                }
+        }
+}
+
+.shaka-no-propagation.shaka-bottom-controls {
+        position: absolute !important;
+        bottom: 0 !important;
+        width: calc(100% - 32px) !important;
+}
+
+.shaka-no-propagation .material-icons-round.shaka-chosen-item {
+        position: absolute !important;
+}
+
+.shaka-no-propagation .material-icons-round {
+        padding-left: 0 !important;
+}
+
+.shaka-no-propagation .shaka-back-to-overflow-button {
+        padding-left: 54px !important;
+}
+
+.shaka-no-propagation.shaka-settings-menu button {
+        align-items: center !important;
+}
