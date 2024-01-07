@@ -1,10 +1,13 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 
 import NotFound from '../not-found';
-import VideoPlayer from '@/components/VideoPlayer';
+const VideoPlayer = dynamic(() => import('@/components/VideoPlayer'), {
+  ssr: false
+});
 
 export default function Watch() {
   const videoId = useSearchParams().get('v');
