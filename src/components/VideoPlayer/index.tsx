@@ -2,9 +2,9 @@
 
 import { createRef, useCallback, useContext, useEffect } from 'react';
 
-import shaka from '@/lib/shaka-player';
+import shaka from '@/lib/ShakaPlayer/shaka-player';
 
-import { PIPED_VALUES } from '@/constants';
+import { DEFAULT_VALUES, PIPED_VALUES } from '@/constants';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { generateDashFileFromFormats } from '@/utils/DashGenerator';
 import { FetchStreamOptionsType, fetchStream } from '@/services/actions/fetchStreamData';
@@ -27,25 +27,30 @@ export default function VideoPlayer(props: IVideoPlayerProps) {
     let mimeType = '';
     let uri = '';
 
-    const options = { videoId, endpoint, isFake: true, delay: 1 } as FetchStreamOptionsType;
+    const options = { videoId, endpoint, isFake: false, delay: 1 } as FetchStreamOptionsType;
 
     const stream = await fetchStream({ options });
 
     streamFormats.push(...stream.videoStreams);
     streamFormats.push(...stream.audioStreams);
 
-    if (stream.livestream) {
-      uri = stream.hls;
-      mimeType = PIPED_VALUES.VIDEO_TYPES.HLS_VIDEO_TYPE;
+    if (options.isFake) {
+      uri = DEFAULT_VALUES.FAKE_VIDEO_URI;
+      mimeType = PIPED_VALUES.VIDEO_TYPES.MP4_VIDEO_TYPE;
     } else {
-      if (stream.dash) {
-        const url = new URL(stream.dash);
-        url.searchParams.set('rewrite', 'false');
-        uri = url.toString();
+      if (stream.livestream) {
+        uri = stream.hls;
+        mimeType = PIPED_VALUES.VIDEO_TYPES.HLS_VIDEO_TYPE;
       } else {
-        const dash = await generateDashFileFromFormats(streamFormats, stream.duration);
-        uri = PIPED_VALUES.VIDEO_TYPES.DASH_XML_DATA_URI + btoa(dash);
-        mimeType = PIPED_VALUES.VIDEO_TYPES.DASH_XML_VIDEO_TYPE;
+        if (stream.dash) {
+          const url = new URL(stream.dash);
+          url.searchParams.set('rewrite', 'false');
+          uri = url.toString();
+        } else {
+          const dash = await generateDashFileFromFormats(streamFormats, stream.duration);
+          uri = PIPED_VALUES.VIDEO_TYPES.DASH_XML_DATA_URI + btoa(dash);
+          mimeType = PIPED_VALUES.VIDEO_TYPES.DASH_XML_VIDEO_TYPE;
+        }
       }
     }
 
