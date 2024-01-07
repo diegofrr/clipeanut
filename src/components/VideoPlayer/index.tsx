@@ -10,7 +10,7 @@ import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { DEFAULT_VALUES, PIPED_VALUES } from '@/constants';
 import { Button } from '@nextui-org/react';
 
-let boundGetVideoData = () => {};
+let boundLoadPlayer = () => {};
 
 interface IVideoPlayerProps {
   videoId: string;
@@ -26,7 +26,7 @@ export default function VideoPlayer(props: IVideoPlayerProps) {
   const videoRef = createRef<HTMLVideoElement>();
   const videoContainerRef = createRef<HTMLDivElement>();
 
-  const getVideoData = useCallback(async () => {
+  const getStreamData = useCallback(async () => {
     const { videoId } = props;
     const streamFormats = [];
     let mimeType = '';
@@ -51,7 +51,6 @@ export default function VideoPlayer(props: IVideoPlayerProps) {
           const url = new URL(stream.dash);
           url.searchParams.set('rewrite', 'false');
           uri = url.toString();
-          console.log('has dash');
         } else {
           const dash = await generateDashFileFromFormats(streamFormats, stream.duration);
           uri = PIPED_VALUES.VIDEO_TYPES.DASH_XML_DATA_URI + btoa(dash);
@@ -73,7 +72,7 @@ export default function VideoPlayer(props: IVideoPlayerProps) {
     const ui = new shaka.ui.Overlay(player, videoContainer, videoElement);
     ui.getControls();
 
-    getVideoData()
+    getStreamData()
       .then(({ mimeType, uri, stream }) => {
         player
           .load(uri, VIDEO_START_TIME, mimeType)
@@ -83,18 +82,18 @@ export default function VideoPlayer(props: IVideoPlayerProps) {
           })
           .catch(() => {
             onFailure && onFailure();
-            boundGetVideoData();
+            boundLoadPlayer();
           });
       })
       .catch(() => {});
-  }, [getVideoData, props, videoContainerRef, videoRef]);
+  }, [getStreamData, props, videoContainerRef, videoRef]);
 
-  boundGetVideoData = useCallback(() => {
+  boundLoadPlayer = useCallback(() => {
     if (pipedInstanceList.length > 0) {
       setCanHandleRetry(false);
       setInstance(pipedInstanceList[0]);
       setPipedInstanceList(pipedInstanceList.slice(1));
-      console.log('Piped Instance:', pipedInstanceList);
+      console.log('Piped Instances:', pipedInstanceList);
       loadPlayer();
     } else setCanHandleRetry(true);
   }, [loadPlayer, setInstance, pipedInstanceList]);
@@ -103,9 +102,9 @@ export default function VideoPlayer(props: IVideoPlayerProps) {
     if (window?.document) loadPlayer();
   }, [loadPlayer]);
 
-  function handleRetryLoadStream() {
+  function handleLoadPlayerRetry() {
     setPipedInstanceList(PIPED_VALUES.INSTANCES);
-    boundGetVideoData();
+    boundLoadPlayer();
   }
 
   return (
@@ -113,7 +112,7 @@ export default function VideoPlayer(props: IVideoPlayerProps) {
       <div ref={videoContainerRef} className="mx-auto max-w-full w-[800px]">
         <video className="w-full h-full" ref={videoRef}></video>
       </div>
-      {canHandleRetry && <Button onClick={handleRetryLoadStream}>Tentar novamente</Button>}
+      {canHandleRetry && <Button onClick={handleLoadPlayerRetry}>Tentar novamente</Button>}
     </div>
   );
 }
