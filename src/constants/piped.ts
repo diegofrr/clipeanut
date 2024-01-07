@@ -3,7 +3,7 @@ export default {
   PIPED_BASE: 'https://pipedapi.',
   DEFAULT_REGION: 'BR',
 
-  INTANCES: [
+  INSTANCES: [
     'kavin.rocks',
     'syncpundit.io',
     'lunar.icu',

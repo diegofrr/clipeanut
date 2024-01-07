@@ -28,7 +28,7 @@ export default function Settings() {
           defaultSelectedKeys={[instance]}
           onChange={handleSelectionChangeInstance}
         >
-          {PIPED_VALUES.INTANCES.map((_instance) => (
+          {PIPED_VALUES.INSTANCES.map((_instance) => (
             <SelectItem key={_instance} value={_instance} className={`${_instance === instance && 'hidden'}`}>
               {_instance}
             </SelectItem>
