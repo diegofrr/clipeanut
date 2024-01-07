@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 // Based of https://github.com/GilgusMaximus/yt-dash-manifest-generator/blob/master/src/DashGenerator.js
-import { XMLBuilder } from 'fast-xml-parser';
+import { XMLBuilder, XmlBuilderOptionsOptional } from 'fast-xml-parser';
 
 export async function generateDashFileFromFormats(VideoFormats: VideoFormat[] | unknown[], VideoLength: number): Promise<string> {
     const generatedJSON = generateXMLJsonFromData(VideoFormats as VideoFormat[], VideoLength);
@@ -9,7 +9,7 @@ export async function generateDashFileFromFormats(VideoFormats: VideoFormat[] | 
         allowBooleanAttributes: true,
         suppressBooleanAttributes: false,
         attributeNamePrefix: '_'
-    });
+    } as XmlBuilderOptionsOptional);
     return builder.build(generatedJSON);
 }
 
