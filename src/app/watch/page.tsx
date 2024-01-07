@@ -1,33 +1,38 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import '@/lib/ShakaPlayer/shaka-player.css';
+
 import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 
 import NotFound from '../not-found';
-const VideoPlayer = dynamic(() => import('@/components/VideoPlayer'), {
-  ssr: false
-});
+import { Spinner } from '@nextui-org/react';
+
+const VideoPlayer = dynamic(() => import('@/components/VideoPlayer'), { ssr: false });
+
+// import VideoPlayer from '@/components/VideoPlayer';
 
 export default function Watch() {
   const videoId = useSearchParams().get('v');
 
   const [videoNotExists, setVideoNotExists] = useState(false);
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   function onGetStreamFailure() {
-    setVideoNotExists(true);
+    // setVideoNotExists(true);
+    console.log('FAILURE');
   }
 
   function onGetStreamSuccess() {
-    setIsVideoLoaded(true);
+    // setIsVideoLoaded(true);
+    console.log('SUCCESS');
   }
 
   return !videoId || videoNotExists ? (
     <NotFound />
   ) : (
-    <div className={`${!isVideoLoaded && 'hidden'}`}>
+    <>
       <VideoPlayer videoId={videoId} onFailure={onGetStreamFailure} onSuccess={onGetStreamSuccess} />
-    </div>
+    </>
   );
 }
