@@ -1,4 +1,4 @@
-export default {
+const PIPED_VALUES = {
   DEFAULT_INSTANCE: 'kavin.rocks',
   PIPED_BASE: 'https://pipedapi.',
   DEFAULT_REGION: 'BR',
@@ -134,3 +134,5 @@ export default {
     MP4_VIDEO_TYPE: 'video/mp4'
   }
 };
+
+export default PIPED_VALUES;

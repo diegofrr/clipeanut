@@ -3,14 +3,14 @@
 import { createContext, useEffect, useState } from 'react';
 import { PIPED_VALUES } from '@/constants';
 
-type PropsPipedInstanceContext = {
+interface IPipedInstanceContext {
   instance: string;
   endpoint: string;
   region: string;
   setInstance: React.Dispatch<React.SetStateAction<string>>;
   setEndpoint: React.Dispatch<React.SetStateAction<string>>;
   setRegion: React.Dispatch<React.SetStateAction<string>>;
-};
+}
 
 const INITIAL_VALUE = {
   instance: PIPED_VALUES.DEFAULT_INSTANCE,
@@ -21,7 +21,7 @@ const INITIAL_VALUE = {
   setRegion: () => {}
 };
 
-export const PipedInstanceContext = createContext<PropsPipedInstanceContext>(INITIAL_VALUE);
+export const PipedInstanceContext = createContext<IPipedInstanceContext>(INITIAL_VALUE);
 
 export default function PipedInstanceProvider({ children }: { children: React.ReactNode }) {
   const [endpoint, setEndpoint] = useState<string>(INITIAL_VALUE.endpoint);

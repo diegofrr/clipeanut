@@ -1,5 +1,7 @@
-export default {
+const DEFAULT_VALUES = {
   FAKE_REQUEST_DELAY: 2000,
   MAX_REQUEST_TIMEOUT: 10000,
   FAKE_VIDEO_URI: '/assets/video.mp4'
 };
+
+export default DEFAULT_VALUES;

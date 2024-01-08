@@ -1,4 +1,4 @@
-export default [
+const trendingVideosData = [
   {
     url: '/watch?v=oROQeV9Fuio',
     type: 'stream',
@@ -888,3 +888,5 @@ export default [
     isShort: false
   }
 ];
+
+export default trendingVideosData;

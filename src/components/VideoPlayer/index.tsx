@@ -18,10 +18,16 @@ interface IVideoPlayerProps {
   onSuccess?: () => void;
 }
 
+const INITIAL_STATE = {
+  pipedInstanceList: PIPED_VALUES.INSTANCES,
+  canHandleRetry: false
+};
+
 export default function VideoPlayer(props: IVideoPlayerProps) {
   const { endpoint, setInstance } = useContext(PipedInstanceContext);
-  const [canHandleRetry, setCanHandleRetry] = useState<boolean>(false);
-  const [pipedInstanceList, setPipedInstanceList] = useState<string[]>(PIPED_VALUES.INSTANCES);
+
+  const [canHandleRetry, setCanHandleRetry] = useState<boolean>(INITIAL_STATE.canHandleRetry);
+  const [pipedInstanceList, setPipedInstanceList] = useState<string[]>(INITIAL_STATE.pipedInstanceList);
 
   const videoRef = createRef<HTMLVideoElement>();
   const videoContainerRef = createRef<HTMLDivElement>();
