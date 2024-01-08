@@ -1,5 +1,3 @@
-'use client';
-
 import StreamProvider from '../contexts/stream';
 
 type VideoPlayerProps = {
