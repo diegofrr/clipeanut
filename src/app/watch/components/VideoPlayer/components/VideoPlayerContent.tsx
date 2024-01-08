@@ -1,25 +1,29 @@
 'use client';
 
 import { createRef, useCallback, useContext, useEffect, useState } from 'react';
+import { StreamContext } from '../contexts/stream';
+import { LoadingVideo } from './LoadingVideo';
 
 import { FetchStreamOptionsType, fetchStream } from '@/services/actions/fetchStreamData';
 import { generateDashFileFromFormats } from '@/utils/DashGenerator';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { DEFAULT_VALUES, PIPED_VALUES } from '@/constants';
-import { StreamContext } from '../contexts/stream';
+import { ErrorOnLoadVideo } from './ErrorOnLoadVideo';
 
 let boundLoadPlayer = () => {};
 
 const INITIAL_STATE = {
   pipedInstanceList: PIPED_VALUES.INSTANCES,
-  canHandleRetry: false
+  isVideoLoaded: false,
+  canRetry: false
 };
 
 export default function VideoPlayerContent() {
   const { setStream, streamId } = useContext(StreamContext);
   const { endpoint, setInstance } = useContext(PipedInstanceContext);
 
-  const [canHandleRetry, setCanHandleRetry] = useState<boolean>(INITIAL_STATE.canHandleRetry);
+  const [isVideoLoaded, setIsVideoLoaded] = useState<boolean>(INITIAL_STATE.isVideoLoaded);
+  const [canRetry, setCanRetry] = useState<boolean>(INITIAL_STATE.canRetry);
   const [pipedInstanceList, setPipedInstanceList] = useState<string[]>(INITIAL_STATE.pipedInstanceList);
 
   const videoRef = createRef<HTMLVideoElement>();
@@ -72,8 +76,8 @@ export default function VideoPlayerContent() {
         player
           .load(uri, VIDEO_START_TIME, mimeType)
           .then(function () {
-            console.log('Video loaded!');
             setStream(stream);
+            setIsVideoLoaded(true);
             videoElement?.setAttribute('poster', stream.thumbnailUrl);
           })
           .catch(() => {
@@ -87,12 +91,13 @@ export default function VideoPlayerContent() {
 
   boundLoadPlayer = useCallback(() => {
     if (pipedInstanceList.length > 0) {
-      setCanHandleRetry(false);
+      setIsVideoLoaded(false);
+      setCanRetry(false);
       setInstance(pipedInstanceList[0]);
       setPipedInstanceList(pipedInstanceList.slice(1));
       console.log('Piped Instances:', pipedInstanceList);
       loadPlayer();
-    } else setCanHandleRetry(true);
+    } else setCanRetry(true);
   }, [loadPlayer, setInstance, pipedInstanceList]);
 
   useEffect(() => {
@@ -107,10 +112,18 @@ export default function VideoPlayerContent() {
 
   return (
     <>
-      <div ref={videoContainerRef} className="mx-auto max-w-full w-full rounded-lg overflow-hidden">
+      {!isVideoLoaded && !canRetry && <LoadingVideo />}
+
+      <div
+        ref={videoContainerRef}
+        className={`${
+          (!isVideoLoaded || canRetry) && 'shaka-hidden'
+        } mx-auto max-w-full w-full rounded-lg overflow-hidden`}
+      >
         <video className="w-full h-full" ref={videoRef}></video>
       </div>
-      {canHandleRetry && <span className="text-red-500 text-center">Algo saiu errado :(</span>}
+
+      {canRetry && <ErrorOnLoadVideo />}
     </>
   );
 }
