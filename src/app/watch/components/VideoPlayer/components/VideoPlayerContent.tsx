@@ -20,7 +20,7 @@ const INITIAL_STATE = {
 
 export default function VideoPlayerContent() {
   const { setStream, streamId } = useContext(StreamContext);
-  const { endpoint, setInstance } = useContext(PipedInstanceContext);
+  const { endpoint, setInstance, instance } = useContext(PipedInstanceContext);
 
   const [isVideoLoaded, setIsVideoLoaded] = useState<boolean>(INITIAL_STATE.isVideoLoaded);
   const [canRetry, setCanRetry] = useState<boolean>(INITIAL_STATE.canRetry);
@@ -34,7 +34,7 @@ export default function VideoPlayerContent() {
     let mimeType = '';
     let uri = '';
 
-    const options = { streamId, endpoint, isFake: false, delay: 1 } as FetchStreamOptionsType;
+    const options = { streamId, endpoint, isFake: true, delay: 1 } as FetchStreamOptionsType;
 
     const stream = await fetchStream({ options });
 
@@ -62,14 +62,22 @@ export default function VideoPlayerContent() {
 
   const loadPlayer = useCallback(async () => {
     const VIDEO_START_TIME = 0;
+    let videoElement = {} as HTMLVideoElement | null;
+    let videoContainer = {} as HTMLDivElement | null;
+    let player = {} as shaka.Player;
+    let ui;
 
     const shaka = (await import('@/lib/ShakaPlayer/shaka-player')).default;
 
-    const videoElement = videoRef.current;
-    const videoContainer = videoContainerRef.current;
-    const player = new shaka.Player(videoElement);
-    const ui = new shaka.ui.Overlay(player, videoContainer, videoElement);
-    ui.getControls();
+    try {
+      videoElement = videoRef.current;
+      videoContainer = videoContainerRef.current;
+      player = new shaka.Player(videoElement);
+      ui = new shaka.ui.Overlay(player, videoContainer, videoElement);
+      ui.getControls();
+    } catch {
+      /* empty */
+    }
 
     getStreamData()
       .then(({ mimeType, uri, stream }) => {
@@ -78,6 +86,8 @@ export default function VideoPlayerContent() {
           .then(function () {
             setStream(stream);
             setIsVideoLoaded(true);
+            setPipedInstanceList(PIPED_VALUES.INSTANCES);
+            setInstance(instance);
             videoElement?.setAttribute('poster', stream.thumbnailUrl);
           })
           .catch(() => {
@@ -87,7 +97,7 @@ export default function VideoPlayerContent() {
       .catch(() => {
         boundLoadPlayer();
       });
-  }, [getStreamData, videoContainerRef, videoRef, setStream]);
+  }, [getStreamData, videoContainerRef, videoRef, setStream, setInstance, instance]);
 
   boundLoadPlayer = useCallback(() => {
     if (pipedInstanceList.length > 0) {
@@ -95,7 +105,6 @@ export default function VideoPlayerContent() {
       setCanRetry(false);
       setInstance(pipedInstanceList[0]);
       setPipedInstanceList(pipedInstanceList.slice(1));
-      console.log('Piped Instances:', pipedInstanceList);
       loadPlayer();
     } else setCanRetry(true);
   }, [loadPlayer, setInstance, pipedInstanceList]);
