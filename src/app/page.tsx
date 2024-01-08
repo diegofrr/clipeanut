@@ -19,7 +19,7 @@ export default function Home() {
 
   const handleGetTrendingVideos = useCallback(async () => {
     setLoading(true);
-    const options = { endpoint, region, isFake: true, delay: 1 } as FetchTrendingVideosOptionsType;
+    const options = { endpoint, region, isFake: false, delay: 1 } as FetchTrendingVideosOptionsType;
 
     await fetchTrendingVideos({ options })
       .then((data) => setTrendingVideos(data))

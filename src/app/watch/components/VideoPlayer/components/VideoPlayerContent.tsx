@@ -34,7 +34,7 @@ export default function VideoPlayerContent() {
     let mimeType = '';
     let uri = '';
 
-    const options = { videoId, endpoint, isFake: true, delay: 1 } as FetchStreamOptionsType;
+    const options = { videoId, endpoint, isFake: false, delay: 1 } as FetchStreamOptionsType;
 
     const stream = await fetchStream({ options });
 
@@ -111,11 +111,11 @@ export default function VideoPlayerContent() {
   }
 
   return (
-    <div>
-      <div ref={videoContainerRef} className="mx-auto max-w-full w-[800px]">
+    <>
+      <div ref={videoContainerRef} className="mx-auto max-w-full w-full rounded-lg overflow-hidden">
         <video className="w-full h-full" ref={videoRef}></video>
       </div>
       {canHandleRetry && <Button onClick={handleLoadPlayerRetry}>Tentar novamente</Button>}
-    </div>
+    </>
   );
 }

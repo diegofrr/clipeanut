@@ -14,11 +14,11 @@ export default function Watch() {
   return !videoId ? (
     <NotFound />
   ) : (
-    <>
+    <main className="h-screen w-full flex items-center justify-center">
       <VideoPlayer.Root>
         <VideoPlayer.Header />
         <VideoPlayer.Content />
       </VideoPlayer.Root>
-    </>
+    </main>
   );
 }
