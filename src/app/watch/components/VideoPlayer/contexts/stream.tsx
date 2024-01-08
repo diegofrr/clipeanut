@@ -6,20 +6,30 @@ import IStream from '@/types/Stream';
 import IStreamUploader from '@/types/StreamUploader';
 
 interface IStreamContext {
+  streamId: string;
   stream: IStream;
   streamUploader: IStreamUploader;
   setStream: React.Dispatch<React.SetStateAction<IStream>>;
+  setStreamId: React.Dispatch<React.SetStateAction<string>>;
 }
 
+type StreamProviderProps = {
+  children: React.ReactNode;
+  streamId: string;
+};
+
 const INITIAL_STATE = {
+  streamId: '',
   stream: {} as IStream,
   streamUploader: {} as IStreamUploader,
-  setStream: () => {}
+  setStream: () => {},
+  setStreamId: () => {}
 };
 
 export const StreamContext = createContext<IStreamContext>(INITIAL_STATE);
 
-export default function StreamProvider({ children }: { children: React.ReactNode }) {
+export default function StreamProvider(props: StreamProviderProps) {
+  const [streamId, setStreamId] = useState<string>(props.streamId);
   const [stream, setStream] = useState<IStream>(INITIAL_STATE.stream);
   const [streamUploader, setStreamUploader] = useState<IStreamUploader>(INITIAL_STATE.streamUploader);
 
@@ -36,12 +46,14 @@ export default function StreamProvider({ children }: { children: React.ReactNode
   return (
     <StreamContext.Provider
       value={{
+        streamId,
         stream,
         streamUploader,
-        setStream
+        setStream,
+        setStreamId
       }}
     >
-      {children}
+      {props.children}
     </StreamContext.Provider>
   );
 }
