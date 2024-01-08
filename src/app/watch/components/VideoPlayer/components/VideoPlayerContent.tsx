@@ -20,7 +20,7 @@ const INITIAL_STATE = {
 export default function VideoPlayerContent() {
   const videoId = useSearchParams().get('v');
 
-  const { setStream, uploader } = useContext(StreamContext);
+  const { setStream } = useContext(StreamContext);
   const { endpoint, setInstance } = useContext(PipedInstanceContext);
 
   const [canHandleRetry, setCanHandleRetry] = useState<boolean>(INITIAL_STATE.canHandleRetry);
@@ -116,7 +116,6 @@ export default function VideoPlayerContent() {
         <video className="w-full h-full" ref={videoRef}></video>
       </div>
       {canHandleRetry && <Button onClick={handleLoadPlayerRetry}>Tentar novamente</Button>}
-      <h1>{uploader.uploader}</h1>
     </div>
   );
 }
