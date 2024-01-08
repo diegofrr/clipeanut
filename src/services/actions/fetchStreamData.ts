@@ -10,7 +10,7 @@ interface IFetchStreamProps {
 }
 
 export type FetchStreamOptionsType = {
-  videoId: string;
+  streamId: string;
   endpoint: string;
   isFake?: boolean;
   delay?: number;
@@ -21,7 +21,7 @@ export async function fetchStream({ options }: IFetchStreamProps): Promise<IStre
 }
 
 async function fetchData(options: FetchStreamOptionsType): Promise<IStream> {
-  return fetch(`${options.endpoint}/streams/${options.videoId}`)
+  return fetch(`${options.endpoint}/streams/${options.streamId}`)
     .then((res) => res.json())
     .then((data) => data as IStream);
 }

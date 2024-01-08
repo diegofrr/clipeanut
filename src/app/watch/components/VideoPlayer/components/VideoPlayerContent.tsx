@@ -6,9 +6,7 @@ import { FetchStreamOptionsType, fetchStream } from '@/services/actions/fetchStr
 import { generateDashFileFromFormats } from '@/utils/DashGenerator';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { DEFAULT_VALUES, PIPED_VALUES } from '@/constants';
-import { useSearchParams } from 'next/navigation';
 import { StreamContext } from '../contexts/stream';
-// import { Button } from '@nextui-org/react';
 
 let boundLoadPlayer = () => {};
 
@@ -18,9 +16,7 @@ const INITIAL_STATE = {
 };
 
 export default function VideoPlayerContent() {
-  const videoId = useSearchParams().get('v');
-
-  const { setStream } = useContext(StreamContext);
+  const { setStream, streamId } = useContext(StreamContext);
   const { endpoint, setInstance } = useContext(PipedInstanceContext);
 
   const [canHandleRetry, setCanHandleRetry] = useState<boolean>(INITIAL_STATE.canHandleRetry);
@@ -34,7 +30,7 @@ export default function VideoPlayerContent() {
     let mimeType = '';
     let uri = '';
 
-    const options = { videoId, endpoint, isFake: true, delay: 1 } as FetchStreamOptionsType;
+    const options = { streamId, endpoint, isFake: false, delay: 1 } as FetchStreamOptionsType;
 
     const stream = await fetchStream({ options });
 
@@ -44,25 +40,21 @@ export default function VideoPlayerContent() {
     if (options.isFake) {
       uri = DEFAULT_VALUES.FAKE_VIDEO_URI;
       mimeType = PIPED_VALUES.VIDEO_TYPES.MP4_VIDEO_TYPE;
+    } else if (stream.livestream) {
+      uri = stream.hls;
+      mimeType = PIPED_VALUES.VIDEO_TYPES.HLS_VIDEO_TYPE;
+    } else if (stream.dash) {
+      const url = new URL(stream.dash);
+      url.searchParams.set('rewrite', 'false');
+      uri = url.toString();
     } else {
-      if (stream.livestream) {
-        uri = stream.hls;
-        mimeType = PIPED_VALUES.VIDEO_TYPES.HLS_VIDEO_TYPE;
-      } else {
-        if (stream.dash) {
-          const url = new URL(stream.dash);
-          url.searchParams.set('rewrite', 'false');
-          uri = url.toString();
-        } else {
-          const dash = await generateDashFileFromFormats(streamFormats, stream.duration);
-          uri = PIPED_VALUES.VIDEO_TYPES.DASH_XML_DATA_URI + btoa(dash);
-          mimeType = PIPED_VALUES.VIDEO_TYPES.DASH_XML_VIDEO_TYPE;
-        }
-      }
+      const dash = await generateDashFileFromFormats(streamFormats, stream.duration);
+      uri = PIPED_VALUES.VIDEO_TYPES.DASH_XML_DATA_URI + btoa(dash);
+      mimeType = PIPED_VALUES.VIDEO_TYPES.DASH_XML_VIDEO_TYPE;
     }
 
     return { mimeType, uri, stream };
-  }, [endpoint, videoId]);
+  }, [endpoint, streamId]);
 
   const loadPlayer = useCallback(async () => {
     const VIDEO_START_TIME = 0;

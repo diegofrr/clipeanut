@@ -9,13 +9,13 @@ import { VideoPlayer } from './components/VideoPlayer';
 // import VideoPlayer from '@/components/VideoPlayer';
 
 export default function Watch() {
-  const videoId = useSearchParams().get('v');
+  const streamId = useSearchParams().get('v');
 
-  return !videoId ? (
+  return !streamId ? (
     <NotFound />
   ) : (
     <main className="h-screen w-full flex items-center justify-center">
-      <VideoPlayer.Root>
+      <VideoPlayer.Root streamId={streamId}>
         <VideoPlayer.Header />
         <VideoPlayer.Content />
       </VideoPlayer.Root>
