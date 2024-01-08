@@ -23,6 +23,11 @@ const config: Config = {
       height: {
         nav: '4rem'
       },
+      maxWidth: {
+        'full-minus-2rem': 'calc(100% - 2rem)',
+        'full-minus-3rem': 'calc(100% - 3rem)',
+        'full-minus-4rem': 'calc(100% - 4rem)'
+      },
       screens: {
         xxs: '420px',
         xs: '480px'

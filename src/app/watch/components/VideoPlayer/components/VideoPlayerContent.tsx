@@ -6,9 +6,9 @@ import { FetchStreamOptionsType, fetchStream } from '@/services/actions/fetchStr
 import { generateDashFileFromFormats } from '@/utils/DashGenerator';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { DEFAULT_VALUES, PIPED_VALUES } from '@/constants';
-import { Button } from '@nextui-org/react';
 import { useSearchParams } from 'next/navigation';
 import { StreamContext } from '../contexts/stream';
+// import { Button } from '@nextui-org/react';
 
 let boundLoadPlayer = () => {};
 
@@ -34,7 +34,7 @@ export default function VideoPlayerContent() {
     let mimeType = '';
     let uri = '';
 
-    const options = { videoId, endpoint, isFake: false, delay: 1 } as FetchStreamOptionsType;
+    const options = { videoId, endpoint, isFake: true, delay: 1 } as FetchStreamOptionsType;
 
     const stream = await fetchStream({ options });
 
@@ -80,6 +80,7 @@ export default function VideoPlayerContent() {
         player
           .load(uri, VIDEO_START_TIME, mimeType)
           .then(function () {
+            console.log('Video loaded!');
             setStream(stream);
             videoElement?.setAttribute('poster', stream.thumbnailUrl);
           })
@@ -87,7 +88,9 @@ export default function VideoPlayerContent() {
             boundLoadPlayer();
           });
       })
-      .catch(() => {});
+      .catch(() => {
+        boundLoadPlayer();
+      });
   }, [getStreamData, videoContainerRef, videoRef, setStream]);
 
   boundLoadPlayer = useCallback(() => {
@@ -105,17 +108,17 @@ export default function VideoPlayerContent() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function handleLoadPlayerRetry() {
-    setPipedInstanceList(PIPED_VALUES.INSTANCES);
-    boundLoadPlayer();
-  }
+  // function handleLoadPlayerRetry() {
+  //   setPipedInstanceList(PIPED_VALUES.INSTANCES);
+  //   boundLoadPlayer();
+  // }
 
   return (
     <>
       <div ref={videoContainerRef} className="mx-auto max-w-full w-full rounded-lg overflow-hidden">
         <video className="w-full h-full" ref={videoRef}></video>
       </div>
-      {canHandleRetry && <Button onClick={handleLoadPlayerRetry}>Tentar novamente</Button>}
+      {canHandleRetry && <span className="text-red-500 text-center">Algo saiu errado :(</span>}
     </>
   );
 }
