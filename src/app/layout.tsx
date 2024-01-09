@@ -14,8 +14,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-br" className="bg-black">
-      <body className={`${plusJakartaSans.className} bg-black`}>
+    <html lang="pt-br">
+      <body className={`${plusJakartaSans.className}`}>
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -35,6 +35,31 @@ const config: Config = {
     }
   },
   darkMode: 'class',
-  plugins: [nextui()]
+  plugins: [
+    nextui({
+      layout: {
+        radius: {
+          small: '4px',
+          medium: '6px',
+          large: '8px'
+        },
+        borderWidth: {
+          small: '1px',
+          medium: '1px',
+          large: '2px'
+        }
+      },
+      themes: {
+        dark: {
+          colors: {
+            default: {
+              DEFAULT: '#FFFFF',
+              foreground: '#000000'
+            }
+          }
+        }
+      }
+    })
+  ]
 };
 export default config;
