@@ -35,8 +35,6 @@ export default function VideoPlayerContent() {
     let mimeType = '';
     let uri = '';
 
-    alert(isFakeDataFetch);
-
     const options = { streamId, endpoint, isFake: isFakeDataFetch, delay: 1 } as FetchStreamOptionsType;
 
     const stream = await fetchStream({ options });

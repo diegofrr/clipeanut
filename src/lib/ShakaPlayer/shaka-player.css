@@ -60,6 +60,10 @@
         }
 }
 
+.shaka-controls-container .shaka-scrim-container {
+        display: none !important;
+}
+
 .custom-nextjs-spinner {
 
         div {

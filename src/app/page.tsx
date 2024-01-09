@@ -2,13 +2,12 @@
 
 import { useCallback, useContext, useEffect, useState } from 'react';
 
-import Link from 'next/link';
 import NavBar from '@/components/Navbar';
 import ITrendingVideo from '@/types/TrendingVideo';
 
 import { FetchTrendingVideosOptionsType, fetchTrendingVideos } from '@/services/actions/fetchTrendingVideosData';
 import { TrendingVideo } from '@/components/TrendingVideo';
-import { Button, Spinner } from '@nextui-org/react';
+import { Spinner } from '@nextui-org/react';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { isFakeDataFetch } from '@/environments';
 
@@ -16,7 +15,7 @@ export default function Home() {
   const [loading, setLoading] = useState<boolean>(false);
   const [trendingVideos, setTrendingVideos] = useState<ITrendingVideo[]>([]);
 
-  const { endpoint, region, setRegion, instance, setInstance } = useContext(PipedInstanceContext);
+  const { endpoint, region, instance } = useContext(PipedInstanceContext);
 
   const handleGetTrendingVideos = useCallback(async () => {
     setLoading(true);
@@ -35,17 +34,10 @@ export default function Home() {
   return (
     <>
       <NavBar />
-      <main className="pt-16 w-full p-5 bg-slate-100 dark:bg-black min-h-screen-minus-navbar">
-        <div className="flex justify-start flex-col items-center gap-10 max-w-7xl m-auto">
+      <main className="w-full p-5 bg-white dark:bg-black min-h-screen-minus-navbar">
+        <div className="flex justify-start flex-col items-center gap-10 max-w-7xl m-auto mt-20 mb-16">
           <header>
-            <h1 className="text-3xl font-bold text-black dark:text-white">Vídeos em alta</h1>
-            <h2 className="text-gray-600 text-sm">Região: {region}</h2>
-            <h2 className="text-gray-600 text-sm">Instância: {instance}</h2>
-            <Button onClick={() => setRegion('US')}>Alterar região</Button>
-            <Button onClick={() => setInstance('lunar.icu')}>Alterar instância</Button>
-            <Button as={Link} href={'/settings'} color="primary" radius="sm" className="mt-5">
-              Go to Settings
-            </Button>
+            <h1 className="text-3xl font-bold text-neutral-800 dark:text-neutral-200">Vídeos em alta</h1>
           </header>
 
           {loading && <Spinner />}

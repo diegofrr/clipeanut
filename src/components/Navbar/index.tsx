@@ -4,6 +4,7 @@ import Link from 'next/link';
 import navLinks from './navLinks';
 import { Button } from '@nextui-org/react';
 import { useTheme } from 'next-themes';
+import { IconMoon, IconSun } from '@tabler/icons-react';
 
 export default function NavBar() {
   const { theme, setTheme } = useTheme();
@@ -18,7 +19,7 @@ export default function NavBar() {
         <ul className="flex gap-5">
           {navLinks.map((link) => (
             <li
-              className="text-black dark:text-neutral-200 hover:opacity-70 font-bold transition-colors-opacity"
+              className="text-neutlral-800 dark:text-neutral-200 hover:opacity-70 font-bold transition-colors-opacity"
               key={link.path}
             >
               <Link href={link.path}>{link.name}</Link>
@@ -26,7 +27,15 @@ export default function NavBar() {
           ))}
         </ul>
 
-        <Button onClick={handleToggleTheme}>Change theme</Button>
+        <Button
+          isIconOnly
+          variant="light"
+          aria-label="Alterar tema"
+          onClick={handleToggleTheme}
+          className="dark:hover:bg-neutral-900"
+        >
+          {theme === 'dark' ? <IconMoon className="text-neutral-200" /> : <IconSun className="text-neutral-800" />}
+        </Button>
       </div>
     </nav>
   );
