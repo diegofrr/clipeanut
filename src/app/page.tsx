@@ -10,6 +10,7 @@ import { FetchTrendingVideosOptionsType, fetchTrendingVideos } from '@/services/
 import { TrendingVideo } from '@/components/TrendingVideo';
 import { Button, Spinner } from '@nextui-org/react';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
+import { isFakeDataFetch } from '@/environments';
 
 export default function Home() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -19,7 +20,7 @@ export default function Home() {
 
   const handleGetTrendingVideos = useCallback(async () => {
     setLoading(true);
-    const options = { endpoint, region, isFake: true, delay: 1 } as FetchTrendingVideosOptionsType;
+    const options = { endpoint, region, isFake: isFakeDataFetch, delay: 1 } as FetchTrendingVideosOptionsType;
 
     await fetchTrendingVideos({ options })
       .then((data) => setTrendingVideos(data))

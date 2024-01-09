@@ -9,6 +9,7 @@ import { generateDashFileFromFormats } from '@/utils/DashGenerator';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { DEFAULT_VALUES, PIPED_VALUES } from '@/constants';
 import { ErrorOnLoadVideo } from './ErrorOnLoadVideo';
+import { isFakeDataFetch } from '@/environments';
 
 let boundLoadPlayer = () => {};
 
@@ -34,7 +35,9 @@ export default function VideoPlayerContent() {
     let mimeType = '';
     let uri = '';
 
-    const options = { streamId, endpoint, isFake: true, delay: 1 } as FetchStreamOptionsType;
+    alert(isFakeDataFetch);
+
+    const options = { streamId, endpoint, isFake: isFakeDataFetch, delay: 1 } as FetchStreamOptionsType;
 
     const stream = await fetchStream({ options });
 
