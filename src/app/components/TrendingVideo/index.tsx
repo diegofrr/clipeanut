@@ -21,7 +21,7 @@ export const TrendingVideo = ({ data }: { data: ITrendingVideo }) => {
     <Link href={data.url}>
       <div
         title={data.title}
-        className="group/container transition-colors cursor-pointer flex flex-col items-center justify-start lg:w-80 gap-4 w-full"
+        className="group/container transition-colors cursor-pointer flex flex-col items-center justify-start gap-4 w-full"
       >
         <div className="flex items-center overflow-hidden justify-center rounded-lg bg-neutral-950 w-full relative">
           <Image

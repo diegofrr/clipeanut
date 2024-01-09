@@ -6,7 +6,7 @@ import NavBar from '@/components/Navbar';
 import ITrendingVideo from '@/types/TrendingVideo';
 
 import { FetchTrendingVideosOptionsType, fetchTrendingVideos } from '@/services/actions/fetchTrendingVideosData';
-import { TrendingVideo } from '@/components/TrendingVideo';
+import { TrendingVideo } from '@/app/components/TrendingVideo';
 import { Spinner } from '@nextui-org/react';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { isFakeDataFetch } from '@/environments';
@@ -34,15 +34,15 @@ export default function Home() {
   return (
     <>
       <NavBar />
-      <main className="w-full p-5 bg-white dark:bg-black min-h-screen-minus-navbar">
+      <main className="w-full p-4 bg-white dark:bg-black min-h-screen">
         <div className="flex flex-col items-center gap-10 max-w-7xl m-auto mt-20 mb-16">
-          <header>
+          <header className="w-full">
             <h1 className="text-3xl font-bold text-neutral-800 dark:text-neutral-200">Vídeos em alta</h1>
           </header>
 
           {loading && <Spinner />}
           {!loading && trendingVideos.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-center max-w-full-minus-2rem">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-center">
               {trendingVideos.map((video, index) => (
                 <TrendingVideo key={index} data={video} />
               ))}
