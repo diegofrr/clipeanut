@@ -21,7 +21,7 @@ export const TrendingVideo = ({ data }: { data: ITrendingVideo }) => {
     <Link href={data.url}>
       <div
         title={data.title}
-        className="group/container transition-colors cursor-pointer flex flex-col items-center justify-start lg:w-80 gap-2 w-full"
+        className="group/container transition-colors cursor-pointer flex flex-col items-center justify-start lg:w-80 gap-4 w-full"
       >
         <div className="flex items-center overflow-hidden justify-center rounded-lg bg-neutral-950 w-full relative">
           <Image
@@ -35,8 +35,8 @@ export const TrendingVideo = ({ data }: { data: ITrendingVideo }) => {
           <Chip
             size="sm"
             radius="full"
-            startContent={<IconEye size={16} />}
-            className="absolute bottom-2 right-2 bg-dark text-white bg-black"
+            startContent={<IconEye size={16} className="mr-1" />}
+            className="absolute bottom-2 right-2 bg-dark text-white bg-black px-2"
           >
             {formatters.streamViews(data.views)}
           </Chip>
