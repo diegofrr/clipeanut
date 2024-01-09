@@ -1,11 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
+import { IconMoon, IconSettings, IconSun } from '@tabler/icons-react';
 import { Button } from '@nextui-org/react';
 import { useTheme } from 'next-themes';
-import { IconMoon, IconSettings, IconSun } from '@tabler/icons-react';
-import { useEffect, useState } from 'react';
 
 export default function NavBar() {
   const { setTheme, resolvedTheme } = useTheme();
