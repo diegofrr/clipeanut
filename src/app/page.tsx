@@ -35,9 +35,9 @@ export default function Home() {
   return (
     <>
       <NavBar />
-      <div className="min-h-screen-minus-navbar mt-16 w-full p-5 flex justify-start flex-col items-center gap-10 max-w-7xl m-auto">
+      <div className="bg-white dark:bg-black min-h-screen-minus-navbar mt-16 w-full p-5 flex justify-start flex-col items-center gap-10 max-w-7xl m-auto">
         <header>
-          <h1 className="text-3xl font-bold text-white">Vídeos em alta</h1>
+          <h1 className="text-3xl font-bold text-black dark:text-white">Vídeos em alta</h1>
           <h2 className="text-gray-600 text-sm">Região: {region}</h2>
           <h2 className="text-gray-600 text-sm">Instância: {instance}</h2>
           <Button onClick={() => setRegion('US')}>Alterar região</Button>

@@ -2,19 +2,32 @@
 
 import Link from 'next/link';
 import navLinks from './navLinks';
+import { Button } from '@nextui-org/react';
+import { useTheme } from 'next-themes';
 
 export default function NavBar() {
-  return (
-    <nav className="flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-xl h-nav p-5 text-zinc-300 fixed top-0 left-0 right-0 z-max">
-      <ul className="flex gap-5 absolute left-5">
-        {navLinks.map((link) => (
-          <li className="hover:text-zinc-50" key={link.path}>
-            <Link href={link.path}>{link.name}</Link>
-          </li>
-        ))}
-      </ul>
+  const { theme, setTheme } = useTheme();
 
-      <div className="bg-red-900 h-8 w-1/2 max-w-sm rounded-full absolute right-5"></div>
+  function handleToggleTheme() {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  }
+
+  return (
+    <nav className="bg-white dark:bg-black bg-opacity-50 dark:bg-opacity-50 backdrop-blur-xl h-nav p-5 text-zinc-300 fixed top-0 left-0 right-0 z-max">
+      <div className="max-w-screen-xl w-full m-auto flex items-center justify-between">
+        <ul className="flex gap-5">
+          {navLinks.map((link) => (
+            <li
+              className="text-black dark:text-white hover:opacity-70 font-bold transition-colors-opacity"
+              key={link.path}
+            >
+              <Link href={link.path}>{link.name}</Link>
+            </li>
+          ))}
+        </ul>
+
+        <Button onClick={handleToggleTheme}>Change theme</Button>
+      </div>
     </nav>
   );
 }
