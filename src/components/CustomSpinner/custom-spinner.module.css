@@ -1,0 +1,27 @@
+.custom-color i {
+    border-bottom-color: #ff8400 !important;
+}
+
+.size-md i {
+    border-width: 4px !important;
+}
+
+.size-lg i {
+    border-width: 6px !important;
+}
+
+.size-xl i {
+    border-width: 8px !important;
+}
+
+.stroke-md i {
+    border-width: 4px !important;
+}
+
+.stroke-lg i {
+    border-width: 6px !important;
+}
+
+.stroke-xl i {
+    border-width: 8px !important;
+}
