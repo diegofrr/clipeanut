@@ -18,18 +18,18 @@ export const TrendingVideo = ({ data }: { data: ITrendingVideo }) => {
   }
 
   return (
-    <Link href={data.url} className="rounded-lg p-4 transition-colors">
+    <Link href={data.url}>
       <div
         title={data.title}
-        className="group/container transition-colors cursor-pointer flex flex-col items-center justify-start lg:w-80 sm:w-64 gap-2 w-screen max-w-lg"
+        className="group/container transition-colors cursor-pointer flex flex-col items-center justify-start lg:w-80 gap-2 w-full"
       >
-        <div className="rounded-lg bg-neutral-950 lg:w-80 lg:h-48 relative overflow-hidden sm:w-64 sm:h-36 w-full xs:h-72 xxs:h-60 h-48">
+        <div className="flex items-center overflow-hidden justify-center rounded-lg bg-neutral-950 w-full relative">
           <Image
             src={data.thumbnail}
             alt={data.title}
-            fill
+            width={720}
+            height={480}
             loading="lazy"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="group-hover/container:scale-105 transition-transform"
           />
           <Chip
