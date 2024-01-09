@@ -48,6 +48,16 @@ const config: Config = {
           medium: '1px',
           large: '2px'
         }
+      },
+      themes: {
+        dark: {
+          colors: {
+            default: {
+              DEFAULT: '#FFFFF',
+              foreground: '#000000'
+            }
+          }
+        }
       }
     })
   ]
