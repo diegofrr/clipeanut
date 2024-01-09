@@ -35,14 +35,14 @@ export default function Home() {
     <>
       <NavBar />
       <main className="w-full p-5 bg-white dark:bg-black min-h-screen-minus-navbar">
-        <div className="flex justify-start flex-col items-center gap-10 max-w-7xl m-auto mt-20 mb-16">
+        <div className="flex flex-col items-center gap-10 max-w-7xl m-auto mt-20 mb-16">
           <header>
             <h1 className="text-3xl font-bold text-neutral-800 dark:text-neutral-200">Vídeos em alta</h1>
           </header>
 
           {loading && <Spinner />}
           {!loading && trendingVideos.length > 0 && (
-            <div className="flex justify-center flex-wrap gap-4 w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-center max-w-full-minus-2rem">
               {trendingVideos.map((video, index) => (
                 <TrendingVideo key={index} data={video} />
               ))}

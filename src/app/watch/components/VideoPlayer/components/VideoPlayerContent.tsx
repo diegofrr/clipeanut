@@ -2,30 +2,26 @@
 
 import { createRef, useCallback, useContext, useEffect, useState } from 'react';
 import { StreamContext } from '../contexts/stream';
-import { LoadingVideo } from './LoadingVideo';
 
 import { FetchStreamOptionsType, fetchStream } from '@/services/actions/fetchStreamData';
 import { generateDashFileFromFormats } from '@/utils/DashGenerator';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
-import { DEFAULT_VALUES, PIPED_VALUES } from '@/constants';
-import { ErrorOnLoadVideo } from './ErrorOnLoadVideo';
+import { VideoPlayerLoading } from './VideoPlayerLoading';
+import { VideoPlayerError } from './VideoPlayerError';
 import { isFakeDataFetch } from '@/environments';
 
-let boundLoadPlayer = () => {};
+import { DEFAULT_VALUES, PIPED_VALUES, WATCH_PAGE_VALUES } from '@/constants';
+const { VIDEO_PLAYER } = WATCH_PAGE_VALUES;
 
-const INITIAL_STATE = {
-  pipedInstanceList: PIPED_VALUES.INSTANCES,
-  isVideoLoaded: false,
-  canRetry: false
-};
+let boundLoadPlayer = () => {};
 
 export default function VideoPlayerContent() {
   const { setStream, streamId } = useContext(StreamContext);
   const { endpoint, setInstance, instance } = useContext(PipedInstanceContext);
 
-  const [isVideoLoaded, setIsVideoLoaded] = useState<boolean>(INITIAL_STATE.isVideoLoaded);
-  const [canRetry, setCanRetry] = useState<boolean>(INITIAL_STATE.canRetry);
-  const [pipedInstanceList, setPipedInstanceList] = useState<string[]>(INITIAL_STATE.pipedInstanceList);
+  const [isVideoLoaded, setIsVideoLoaded] = useState<boolean>(VIDEO_PLAYER.INITIAL_STATE.isVideoLoaded);
+  const [canRetry, setCanRetry] = useState<boolean>(VIDEO_PLAYER.INITIAL_STATE.canRetry);
+  const [pipedInstanceList, setPipedInstanceList] = useState<string[]>(VIDEO_PLAYER.INITIAL_STATE.pipedInstanceList);
 
   const videoRef = createRef<HTMLVideoElement>();
   const videoContainerRef = createRef<HTMLDivElement>();
@@ -122,7 +118,7 @@ export default function VideoPlayerContent() {
 
   return (
     <>
-      {!isVideoLoaded && !canRetry && <LoadingVideo />}
+      {!isVideoLoaded && !canRetry && <VideoPlayerLoading />}
 
       <div
         ref={videoContainerRef}
@@ -133,7 +129,7 @@ export default function VideoPlayerContent() {
         <video className="w-full h-full" ref={videoRef}></video>
       </div>
 
-      {canRetry && <ErrorOnLoadVideo />}
+      {canRetry && <VideoPlayerError />}
     </>
   );
 }
