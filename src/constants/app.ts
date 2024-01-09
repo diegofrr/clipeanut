@@ -1,4 +1,4 @@
-const APP_VALUES = {
+export const APP_VALUES = {
   NAME: 'Clipeanut',
   DESCRIPTION: 'An alternative front-end to YouTube',
   PAGE_TITLES: {
@@ -7,5 +7,3 @@ const APP_VALUES = {
     SETTINGS: 'Configurações'
   }
 };
-
-export default APP_VALUES;

@@ -1,7 +1,6 @@
-const DEFAULT_VALUES = {
+export const DEFAULT_VALUES = {
   FAKE_REQUEST_DELAY: 2000,
   MAX_REQUEST_TIMEOUT: 10000,
-  FAKE_VIDEO_URI: '/assets/video.mp4'
+  FAKE_VIDEO_URI: '/assets/video.mp4',
+  TRENDING_VIDEO_TITLE_MAX_LENGTH: 50
 };
-
-export default DEFAULT_VALUES;

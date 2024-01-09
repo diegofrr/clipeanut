@@ -7,11 +7,14 @@ import { Chip } from '@nextui-org/react';
 import { formatters } from '@/utils';
 import { IconEye } from '@tabler/icons-react';
 
-const MAX_TITLE_LENGTH = 50;
+import { HOME_PAGE_VALUES } from '@/constants';
+const { TRENDING_VIDEO } = HOME_PAGE_VALUES;
 
 export const TrendingVideo = ({ data }: { data: ITrendingVideo }) => {
   function abbrevTitle(title: string) {
-    return title.length > MAX_TITLE_LENGTH ? title.slice(0, MAX_TITLE_LENGTH) + '...' : title;
+    if (title.length > TRENDING_VIDEO.TITLE_MAX_LENGTH) {
+      return title.slice(0, TRENDING_VIDEO.TITLE_MAX_LENGTH) + '...';
+    } else return title;
   }
 
   return (
