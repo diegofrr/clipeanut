@@ -35,27 +35,29 @@ export default function Home() {
   return (
     <>
       <NavBar />
-      <div className="bg-white dark:bg-black min-h-screen-minus-navbar mt-16 w-full p-5 flex justify-start flex-col items-center gap-10 max-w-7xl m-auto">
-        <header>
-          <h1 className="text-3xl font-bold text-black dark:text-white">Vídeos em alta</h1>
-          <h2 className="text-gray-600 text-sm">Região: {region}</h2>
-          <h2 className="text-gray-600 text-sm">Instância: {instance}</h2>
-          <Button onClick={() => setRegion('US')}>Alterar região</Button>
-          <Button onClick={() => setInstance('lunar.icu')}>Alterar instância</Button>
-          <Button as={Link} href={'/settings'} color="primary" radius="sm" className="mt-5">
-            Go to Settings
-          </Button>
-        </header>
+      <main className="pt-16 w-full p-5 bg-slate-100 dark:bg-black min-h-screen-minus-navbar">
+        <div className="flex justify-start flex-col items-center gap-10 max-w-7xl m-auto">
+          <header>
+            <h1 className="text-3xl font-bold text-black dark:text-white">Vídeos em alta</h1>
+            <h2 className="text-gray-600 text-sm">Região: {region}</h2>
+            <h2 className="text-gray-600 text-sm">Instância: {instance}</h2>
+            <Button onClick={() => setRegion('US')}>Alterar região</Button>
+            <Button onClick={() => setInstance('lunar.icu')}>Alterar instância</Button>
+            <Button as={Link} href={'/settings'} color="primary" radius="sm" className="mt-5">
+              Go to Settings
+            </Button>
+          </header>
 
-        {loading && <Spinner />}
-        {!loading && trendingVideos.length > 0 && (
-          <div className="flex justify-center flex-wrap gap-8 w-full">
-            {trendingVideos.map((video, index) => (
-              <TrendingVideo key={index} data={video} />
-            ))}
-          </div>
-        )}
-      </div>
+          {loading && <Spinner />}
+          {!loading && trendingVideos.length > 0 && (
+            <div className="flex justify-center flex-wrap gap-4 w-full">
+              {trendingVideos.map((video, index) => (
+                <TrendingVideo key={index} data={video} />
+              ))}
+            </div>
+          )}
+        </div>
+      </main>
     </>
   );
 }
