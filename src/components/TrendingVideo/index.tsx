@@ -11,10 +11,7 @@ const MAX_TITLE_LENGTH = 50;
 
 export const TrendingVideo = ({ data }: { data: ITrendingVideo }) => {
   function abbrevTitle(title: string) {
-    if (title.length > MAX_TITLE_LENGTH) {
-      return title.slice(0, MAX_TITLE_LENGTH) + '...';
-    }
-    return title;
+    return title.length > MAX_TITLE_LENGTH ? title.slice(0, MAX_TITLE_LENGTH) + '...' : title;
   }
 
   return (
