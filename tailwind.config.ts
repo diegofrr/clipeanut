@@ -76,7 +76,7 @@ const config: Config = {
         dark: {
           colors: {
             default: {
-              DEFAULT: '#FFFFF',
+              DEFAULT: '#FFFFFF',
               foreground: '#000000'
             }
           }
