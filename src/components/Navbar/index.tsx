@@ -9,15 +9,13 @@ import { IconMoon, IconSun } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 
 export default function NavBar() {
-  const { theme, setTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
   const [isClient, setIsClient] = useState(false);
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  useEffect(() => setIsClient(true), []);
 
   function handleToggleTheme() {
-    setTheme(theme === 'light' ? 'dark' : 'light');
+    setTheme(resolvedTheme === 'light' ? 'dark' : 'light');
   }
 
   return !isClient ? null : (
@@ -26,7 +24,7 @@ export default function NavBar() {
         <ul className="flex gap-5">
           {navLinks.map((link) => (
             <li
-              className="text-neutlral-800 dark:text-neutral-200 hover:opacity-70 font-bold transition-colors-opacity"
+              className="text-neutral-800 dark:text-neutral-200 hover:opacity-70 font-bold transition-colors-opacity"
               key={link.path}
             >
               <Link href={link.path}>{link.name}</Link>
@@ -41,7 +39,11 @@ export default function NavBar() {
           onClick={handleToggleTheme}
           className="dark:hover:bg-neutral-900"
         >
-          {theme === 'dark' ? <IconMoon className="text-neutral-200" /> : <IconSun className="text-neutral-800" />}
+          {resolvedTheme === 'dark' ? (
+            <IconMoon className="text-neutral-200" />
+          ) : (
+            <IconSun className="text-neutral-800" />
+          )}
         </Button>
       </div>
     </nav>
