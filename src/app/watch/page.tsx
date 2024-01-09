@@ -16,7 +16,7 @@ export default function Watch() {
   ) : (
     <>
       <NavBar />
-      <main className="h-screen w-full flex items-center justify-center">
+      <main className="h-screen w-full flex items-center justify-center min-h-screen">
         <VideoPlayer.Root streamId={streamId}>
           <VideoPlayer.Header />
           <VideoPlayer.Content />

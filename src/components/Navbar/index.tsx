@@ -1,12 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import navLinks from './navLinks';
+import { useEffect, useState } from 'react';
 
+import { IconMoon, IconSettings, IconSun } from '@tabler/icons-react';
 import { Button } from '@nextui-org/react';
 import { useTheme } from 'next-themes';
-import { IconMoon, IconSun } from '@tabler/icons-react';
-import { useEffect, useState } from 'react';
 
 export default function NavBar() {
   const { setTheme, resolvedTheme } = useTheme();
@@ -21,30 +20,35 @@ export default function NavBar() {
   return !isClient ? null : (
     <nav className="bg-transparent bg-opacity-50 dark:bg-opacity-50 backdrop-blur-xl h-nav p-5 fixed top-0 left-0 right-0 z-max">
       <div className="max-w-screen-xl w-full h-full m-auto flex items-center justify-between">
-        <ul className="flex gap-5">
-          {navLinks.map((link) => (
-            <li
-              className="text-neutral-800 dark:text-neutral-200 hover:opacity-70 font-bold transition-colors-opacity"
-              key={link.path}
-            >
-              <Link href={link.path}>{link.name}</Link>
-            </li>
-          ))}
-        </ul>
+        <Link href="/" className="font-bold">
+          Clipeanut
+        </Link>
+        <div>
+          <Button
+            isIconOnly
+            variant="light"
+            aria-label="Alterar tema"
+            onClick={handleToggleTheme}
+            className="dark:hover:bg-neutral-900"
+          >
+            {resolvedTheme === 'dark' ? (
+              <IconMoon className="text-neutral-200" />
+            ) : (
+              <IconSun className="text-neutral-800" />
+            )}
+          </Button>
 
-        <Button
-          isIconOnly
-          variant="light"
-          aria-label="Alterar tema"
-          onClick={handleToggleTheme}
-          className="dark:hover:bg-neutral-900"
-        >
-          {resolvedTheme === 'dark' ? (
-            <IconMoon className="text-neutral-200" />
-          ) : (
-            <IconSun className="text-neutral-800" />
-          )}
-        </Button>
+          <Button
+            href="/settings"
+            as={Link}
+            isIconOnly
+            variant="light"
+            aria-label="Alterar tema"
+            className="dark:hover:bg-neutral-900"
+          >
+            <IconSettings className={`${resolvedTheme === 'dark' ? 'text-neutral-200' : 'text-neutral-800'}`} />
+          </Button>
+        </div>
       </div>
     </nav>
   );

@@ -11,7 +11,7 @@ import { VideoPlayerError } from './VideoPlayerError';
 import { isFakeDataFetch } from '@/environments';
 
 import { DEFAULT_VALUES, PIPED_VALUES, WATCH_PAGE_VALUES } from '@/constants';
-const { VIDEO_PLAYER } = WATCH_PAGE_VALUES;
+const { INITIAL_STATE } = WATCH_PAGE_VALUES.VIDEO_PLAYER;
 
 let boundLoadPlayer = () => {};
 
@@ -19,9 +19,9 @@ export default function VideoPlayerContent() {
   const { setStream, streamId } = useContext(StreamContext);
   const { endpoint, setInstance, instance } = useContext(PipedInstanceContext);
 
-  const [isVideoLoaded, setIsVideoLoaded] = useState<boolean>(VIDEO_PLAYER.INITIAL_STATE.isVideoLoaded);
-  const [canRetry, setCanRetry] = useState<boolean>(VIDEO_PLAYER.INITIAL_STATE.canRetry);
-  const [pipedInstanceList, setPipedInstanceList] = useState<string[]>(VIDEO_PLAYER.INITIAL_STATE.pipedInstanceList);
+  const [isVideoLoaded, setIsVideoLoaded] = useState<boolean>(INITIAL_STATE.isVideoLoaded);
+  const [canRetry, setCanRetry] = useState<boolean>(INITIAL_STATE.canRetry);
+  const [pipedInstanceList, setPipedInstanceList] = useState<string[]>(INITIAL_STATE.pipedInstanceList);
 
   const videoRef = createRef<HTMLVideoElement>();
   const videoContainerRef = createRef<HTMLDivElement>();
@@ -97,13 +97,12 @@ export default function VideoPlayerContent() {
   }, [getStreamData, videoContainerRef, videoRef, setStream, setInstance, instance]);
 
   boundLoadPlayer = useCallback(() => {
-    if (pipedInstanceList.length > 0) {
-      setIsVideoLoaded(false);
-      setCanRetry(false);
-      setInstance(pipedInstanceList[0]);
-      setPipedInstanceList(pipedInstanceList.slice(1));
-      loadPlayer();
-    } else setCanRetry(true);
+    if (!pipedInstanceList.length) return setCanRetry(true);
+    setIsVideoLoaded(false);
+    setCanRetry(false);
+    setInstance(pipedInstanceList[0]);
+    setPipedInstanceList(pipedInstanceList.slice(1));
+    loadPlayer();
   }, [loadPlayer, setInstance, pipedInstanceList]);
 
   useEffect(() => {

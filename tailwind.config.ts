@@ -31,12 +31,35 @@ const config: Config = {
       screens: {
         xxs: '420px',
         xs: '480px'
+      },
+      colors: {
+        app_orange: {
+          50: 'FDF0D8',
+          100: 'FCE9C5',
+          150: 'FBE1B1',
+          200: 'FADA9E',
+          250: 'F9D28B',
+          300: 'F8CB77',
+          350: 'F7C364',
+          400: 'F6BC51',
+          450: 'F5B53D',
+          500: 'F4AD2A',
+          550: 'F3A616',
+          600: 'E99B0C',
+          650: 'D58E0B',
+          700: 'C2820A',
+          750: 'AE7509',
+          800: '9B6808',
+          850: '885B07',
+          900: '744E06'
+        }
       }
     }
   },
   darkMode: 'class',
   plugins: [
     nextui({
+      addCommonColors: true,
       layout: {
         radius: {
           small: '4px',
