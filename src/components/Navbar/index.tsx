@@ -2,18 +2,25 @@
 
 import Link from 'next/link';
 import navLinks from './navLinks';
+
 import { Button } from '@nextui-org/react';
 import { useTheme } from 'next-themes';
 import { IconMoon, IconSun } from '@tabler/icons-react';
+import { useEffect, useState } from 'react';
 
 export default function NavBar() {
   const { theme, setTheme } = useTheme();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   function handleToggleTheme() {
     setTheme(theme === 'light' ? 'dark' : 'light');
   }
 
-  return (
+  return !isClient ? null : (
     <nav className="bg-transparent bg-opacity-50 dark:bg-opacity-50 backdrop-blur-xl h-nav p-5 fixed top-0 left-0 right-0 z-max">
       <div className="max-w-screen-xl w-full h-full m-auto flex items-center justify-between">
         <ul className="flex gap-5">
