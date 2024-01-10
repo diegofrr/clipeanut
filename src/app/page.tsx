@@ -53,10 +53,10 @@ export default function Home() {
   return (
     <>
       <NavBar />
-      <main className="w-full p-4 bg-white dark:bg-black min-h-screen">
-        <div className="flex flex-col items-center gap-10 max-w-7xl m-auto mt-20 mb-16">
-          <header className="w-full">
-            <h1 className="text-3xl font-bold text-neutral-800 dark:text-neutral-200">Vídeos em alta</h1>
+      <main className="w-full  min-h-screen">
+        <div className="flex flex-col items-center max-w-7xl m-auto p-6">
+          <header className="w-full mb-6">
+            <h1 className="text-3xl font-bold">Vídeos em alta</h1>
           </header>
 
           {loading && <CustomSpinner size="lg" stroke="md" />}
