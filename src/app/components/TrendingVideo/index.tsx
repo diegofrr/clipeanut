@@ -3,7 +3,7 @@ import { Chip, Image } from '@nextui-org/react';
 
 import ITrendingVideo from '@/types/TrendingVideo';
 
-import { channelImagemUrlGenerator, formatters, translateUploadedDate } from '@/utils';
+import { formatters, translateUploadedDate } from '@/utils';
 import { IconEye } from '@tabler/icons-react';
 
 type TrendingVideoProps = {
