@@ -38,7 +38,7 @@ export const TrendingVideo = ({ data }: { data: ITrendingVideo }) => {
             alt={data.uploaderName + ' avatar'}
             width={40}
             height={40}
-            className="max-w-[40px] max-h-[40px] rounded-full"
+            className="max-w-[40px] max-h-[40px] min-w-[40px] min-h-[40px] rounded-full"
           />
           <footer className="flex w-full flex-col">
             <span className="text-xs text-gray-800 dark:text-gray-300 mb-1">
