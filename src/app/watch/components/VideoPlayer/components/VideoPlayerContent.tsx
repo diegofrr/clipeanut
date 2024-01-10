@@ -123,7 +123,7 @@ export default function VideoPlayerContent() {
         ref={videoContainerRef}
         className={`${
           (!isVideoLoaded || canRetry) && 'shaka-hidden'
-        } mx-auto max-w-full w-full rounded-lg overflow-hidden`}
+        } mx-auto max-w-full w-full rounded-lg overflow-hidden relative`}
       >
         <video className="w-full h-full" ref={videoRef}></video>
       </div>
