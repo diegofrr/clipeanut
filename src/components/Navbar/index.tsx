@@ -13,7 +13,6 @@ import {
   DropdownTrigger,
   Input,
   Navbar,
-  NavbarBrand,
   NavbarContent
 } from '@nextui-org/react';
 import { useTheme } from 'next-themes';
