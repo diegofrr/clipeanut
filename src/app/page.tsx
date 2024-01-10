@@ -11,6 +11,8 @@ import { TrendingVideo } from '@/app/components/TrendingVideo';
 import { isFakeDataFetch } from '@/environments';
 
 import { HOME_PAGE_VALUES, PIPED_VALUES } from '@/constants';
+import { IconFlame } from '@tabler/icons-react';
+import { Header } from '@/components/Header';
 const { INITIAL_STATE } = HOME_PAGE_VALUES.TRENDING_VIDEO;
 
 let boundLoadTrendingVideos = () => {};
@@ -52,9 +54,13 @@ export default function Home() {
   return (
     <main className="w-full  min-h-screen">
       <div className="flex flex-col items-center max-w-7xl m-auto p-6">
-        <header className="w-full mb-6">
-          <h1 className="text-3xl font-bold">Vídeos em alta</h1>
-        </header>
+        <Header.Root>
+          <Header.Content>
+            <Header.Title>
+              <IconFlame size={32} /> <h1 className="text-3xl font-bold">Vídeos em alta</h1>
+            </Header.Title>
+          </Header.Content>
+        </Header.Root>
 
         {loading && <CustomSpinner size="lg" stroke="md" />}
         {!loading && trendingVideos.length > 0 && (
