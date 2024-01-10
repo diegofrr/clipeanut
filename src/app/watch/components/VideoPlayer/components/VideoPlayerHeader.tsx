@@ -3,7 +3,7 @@
 import { useContext } from 'react';
 import { Image } from '@nextui-org/react';
 import { StreamContext } from '../contexts/stream';
-import { formatters } from '@/utils';
+import { channelImagemUrlGenerator, formatters } from '@/utils';
 
 export function VideoPlayerHeader() {
   const { streamUploader, stream } = useContext(StreamContext);
@@ -14,7 +14,7 @@ export function VideoPlayerHeader() {
         <>
           <div className="bg-default-200 relative min-w-[40px] min-h-[40px] w-10 h-10 rounded-full overflow-hidden">
             <Image
-              src={streamUploader.uploaderAvatar}
+              src={channelImagemUrlGenerator(streamUploader.uploaderAvatar)}
               alt={streamUploader.uploader + ' avatar'}
               width={40}
               height={40}
