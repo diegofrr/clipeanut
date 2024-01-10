@@ -8,9 +8,10 @@ import { IconEye } from '@tabler/icons-react';
 
 type TrendingVideoProps = {
   data: ITrendingVideo;
+  onError: () => void;
 };
 
-export const TrendingVideo = ({ data }: TrendingVideoProps) => {
+export const TrendingVideo = ({ data, onError }: TrendingVideoProps) => {
   return (
     <Link href={data.url}>
       <div
@@ -19,6 +20,7 @@ export const TrendingVideo = ({ data }: TrendingVideoProps) => {
       >
         <div className="flex items-center overflow-hidden justify-center rounded-lg bg-neutral-950 w-full relative">
           <Image
+            onError={onError}
             isBlurred
             src={data.thumbnail}
             alt={data.title}
