@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { Chip, Image } from '@nextui-org/react';
-import { useEffect } from 'react';
 
 import ITrendingVideo from '@/types/TrendingVideo';
 
@@ -13,11 +12,6 @@ type TrendingVideoProps = {
 };
 
 export const TrendingVideo = ({ data, onError }: TrendingVideoProps) => {
-  useEffect(() => {
-    data.uploaderAvatar = streamGenerators.channelImage(data.uploaderAvatar);
-    data.thumbnail = streamGenerators.thumbnailGenerator(data.thumbnail);
-  }, [data]);
-
   return (
     <Link href={data.url}>
       <div
@@ -27,7 +21,7 @@ export const TrendingVideo = ({ data, onError }: TrendingVideoProps) => {
         <div className="flex items-center overflow-hidden justify-center rounded-lg bg-neutral-950 w-full relative">
           <Image
             onError={onError}
-            src={data.thumbnail}
+            src={streamGenerators.thumbnailGenerator(data.thumbnail)}
             alt={data.title}
             width={720}
             height={480}
@@ -46,7 +40,7 @@ export const TrendingVideo = ({ data, onError }: TrendingVideoProps) => {
         <div className="flex flex-row gap-4 w-full relative">
           <div className="bg-default-200 relative min-w-[40px] min-h-[40px] w-10 h-10 rounded-full overflow-hidden">
             <Image
-              src={data.uploaderAvatar}
+              src={streamGenerators.channelImage(data.uploaderAvatar)}
               alt={data.uploaderName + ' avatar'}
               width={40}
               height={40}
