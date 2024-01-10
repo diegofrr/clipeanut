@@ -40,7 +40,7 @@ export const TrendingVideo = ({ data, onError }: TrendingVideoProps) => {
         <div className="flex flex-row gap-4 w-full relative">
           <div className="bg-default-200 relative min-w-[40px] min-h-[40px] w-10 h-10 rounded-full overflow-hidden">
             <Image
-              src={channelImagemUrlGenerator(data.uploaderAvatar)}
+              src={data.uploaderAvatar}
               alt={data.uploaderName + ' avatar'}
               width={40}
               height={40}
