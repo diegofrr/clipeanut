@@ -45,7 +45,7 @@ export default function NavBar() {
             input: 'text-small',
             inputWrapper: 'h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20'
           }}
-          placeholder="Pesquisar no Clipeanut"
+          placeholder="Pesquisar..."
           size="sm"
           radius="full"
           startContent={<IconSearch size={18} />}
@@ -70,6 +70,7 @@ export default function NavBar() {
           </DropdownTrigger>
           <DropdownMenu closeOnSelect={false} aria-label="Profile Actions" variant="flat">
             <DropdownItem
+              textValue="Piped Details"
               isReadOnly
               showDivider
               key="profile"
@@ -80,7 +81,7 @@ export default function NavBar() {
               <Chip size="sm">Região: {region}</Chip>
             </DropdownItem>
 
-            <DropdownItem key="settings" closeOnSelect={true} startContent={<IconSettings />}>
+            <DropdownItem textValue="Settings" key="settings" closeOnSelect={true} startContent={<IconSettings />}>
               <Link href="/settings" className="font-semibold">
                 Configurações
               </Link>
