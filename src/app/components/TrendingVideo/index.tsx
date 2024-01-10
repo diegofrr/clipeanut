@@ -1,9 +1,10 @@
 import Link from 'next/link';
+import { Chip, Image } from '@nextui-org/react';
+import { useEffect } from 'react';
 
 import ITrendingVideo from '@/types/TrendingVideo';
 
-import { Chip, Image } from '@nextui-org/react';
-import { formatters, translateUploadedDate } from '@/utils';
+import { streamGenerators, formatters, translateUploadedDate } from '@/utils';
 import { IconEye } from '@tabler/icons-react';
 
 type TrendingVideoProps = {
@@ -12,6 +13,11 @@ type TrendingVideoProps = {
 };
 
 export const TrendingVideo = ({ data, onError }: TrendingVideoProps) => {
+  useEffect(() => {
+    data.uploaderAvatar = streamGenerators.channelImage(data.uploaderAvatar);
+    data.thumbnail = streamGenerators.thumbnailGenerator(data.thumbnail);
+  }, [data]);
+
   return (
     <Link href={data.url}>
       <div
@@ -32,7 +38,7 @@ export const TrendingVideo = ({ data, onError }: TrendingVideoProps) => {
             size="sm"
             radius="full"
             startContent={<IconEye size={16} className="mr-1" />}
-            className="absolute bottom-2 right-2 bg-dark text-white bg-black px-2"
+            className="absolute bottom-2 right-2 bg-dark text-white bg-black px-2 z-10"
           >
             {formatters.streamViews(data.views)}
           </Chip>
