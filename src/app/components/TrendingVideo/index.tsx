@@ -3,7 +3,7 @@ import { Chip, Image } from '@nextui-org/react';
 
 import ITrendingVideo from '@/types/TrendingVideo';
 
-import { streamGenerators, formatters, translateUploadedDate } from '@/utils';
+import { channelImagemUrlGenerator, formatters, translateUploadedDate } from '@/utils';
 import { IconEye } from '@tabler/icons-react';
 
 type TrendingVideoProps = {
@@ -21,7 +21,7 @@ export const TrendingVideo = ({ data, onError }: TrendingVideoProps) => {
         <div className="flex items-center overflow-hidden justify-center rounded-lg bg-neutral-950 w-full relative">
           <Image
             onError={onError}
-            src={streamGenerators.thumbnailGenerator(data.thumbnail)}
+            src={`https://i.ytimg.com/vi/${data.url.split('v=')[1]}/mqdefault.jpg`}
             alt={data.title}
             width={720}
             height={480}
@@ -40,7 +40,7 @@ export const TrendingVideo = ({ data, onError }: TrendingVideoProps) => {
         <div className="flex flex-row gap-4 w-full relative">
           <div className="bg-default-200 relative min-w-[40px] min-h-[40px] w-10 h-10 rounded-full overflow-hidden">
             <Image
-              src={streamGenerators.channelImage(data.uploaderAvatar)}
+              src={data.uploaderAvatar}
               alt={data.uploaderName + ' avatar'}
               width={40}
               height={40}

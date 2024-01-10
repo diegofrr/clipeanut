@@ -1,6 +1,6 @@
 import * as formatters from './formatters';
-import * as streamGenerators from './streamUrlGenerators';
 import { generateDashFileFromFormats } from './DashGenerator';
 import { translateUploadedDate } from './translateUploadedDate';
+import { channelImagemUrlGenerator } from './channelImagemUrlGenerator';
 
-export { generateDashFileFromFormats, formatters, translateUploadedDate, streamGenerators };
+export { generateDashFileFromFormats, formatters, translateUploadedDate, channelImagemUrlGenerator };
