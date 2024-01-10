@@ -4,19 +4,10 @@ import Link from 'next/link';
 import ITrendingVideo from '@/types/TrendingVideo';
 
 import { Chip } from '@nextui-org/react';
-import { formatters } from '@/utils';
+import { formatters, translateUploadedDate } from '@/utils';
 import { IconEye } from '@tabler/icons-react';
 
-import { HOME_PAGE_VALUES } from '@/constants';
-const { TRENDING_VIDEO } = HOME_PAGE_VALUES;
-
 export const TrendingVideo = ({ data }: { data: ITrendingVideo }) => {
-  function abbrevTitle(title: string) {
-    if (title.length > TRENDING_VIDEO.TITLE_MAX_LENGTH) {
-      return title.slice(0, TRENDING_VIDEO.TITLE_MAX_LENGTH) + '...';
-    } else return title;
-  }
-
   return (
     <Link href={data.url}>
       <div
@@ -44,15 +35,17 @@ export const TrendingVideo = ({ data }: { data: ITrendingVideo }) => {
         <div className="flex flex-row gap-4 w-full">
           <Image
             src={data.uploaderAvatar}
-            alt={data.uploaderName}
+            alt={data.uploaderName + ' avatar'}
             width={40}
             height={40}
             className="max-w-[40px] max-h-[40px] rounded-full"
           />
           <footer className="flex w-full flex-col">
-            <span className="text-xs text-gray-800 dark:text-gray-300 mb-1">{data.uploaderName}</span>
-            <p className="text-base text-black dark:text-white font-bold transition-colors">
-              {abbrevTitle(data.title)}
+            <span className="text-xs text-gray-800 dark:text-gray-300 mb-1">
+              {data.uploaderName} <span className="mx-1">•</span> {translateUploadedDate(data.uploadedDate)}
+            </span>
+            <p className="text-base text-black dark:text-white font-bold line-clamp-2 h-auto overflow-hidden">
+              {data.title}
             </p>
           </footer>
         </div>
