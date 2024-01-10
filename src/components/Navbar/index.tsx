@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useContext, useEffect, useState } from 'react';
 
-import { IconMenuDeep, IconMoon, IconSearch, IconSettings, IconSun } from '@tabler/icons-react';
+import { IconHome, IconMenuDeep, IconMoon, IconSearch, IconSettings, IconSun } from '@tabler/icons-react';
 import {
   Button,
   Chip,
@@ -33,16 +33,15 @@ export default function NavBar() {
 
   return (
     <Navbar isBordered isBlurred={false} maxWidth="xl">
-      <NavbarBrand className="mr-4">
-        <Link href={'/'} className="text-lg font-bold cursor-pointer text-app_orange-600">
-          Clipeanut
-        </Link>
-      </NavbarBrand>
+      <Link href={'/'} className="cursor-pointer">
+        <span className="hidden sm:inline text-lg font-bold text-app_orange-600">Clipeanut</span>
+        <IconHome className="inline sm:hidden" />
+      </Link>
 
       <NavbarContent as="div" className="items-center" justify="end">
         <Input
           classNames={{
-            base: 'min-w-[260px] sm:max-w-md h-10',
+            base: 'sm:max-w-[320px] w-full h-10',
             mainWrapper: 'h-full',
             input: 'text-small',
             inputWrapper: 'h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20'
