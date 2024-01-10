@@ -4,7 +4,6 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 
 import CustomSpinner from '@/components/CustomSpinner';
 import ITrendingVideo from '@/types/TrendingVideo';
-import NavBar from '@/components/Navbar';
 
 import { FetchTrendingVideosOptionsType, fetchTrendingVideos } from '@/services/actions/fetchTrendingVideosData';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
@@ -51,24 +50,21 @@ export default function Home() {
   }, []);
 
   return (
-    <>
-      <NavBar />
-      <main className="w-full  min-h-screen">
-        <div className="flex flex-col items-center max-w-7xl m-auto p-6">
-          <header className="w-full mb-6">
-            <h1 className="text-3xl font-bold">Vídeos em alta</h1>
-          </header>
+    <main className="w-full  min-h-screen">
+      <div className="flex flex-col items-center max-w-7xl m-auto p-6">
+        <header className="w-full mb-6">
+          <h1 className="text-3xl font-bold">Vídeos em alta</h1>
+        </header>
 
-          {loading && <CustomSpinner size="lg" stroke="md" />}
-          {!loading && trendingVideos.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-center">
-              {trendingVideos.map((video, index) => (
-                <TrendingVideo key={index} data={video} />
-              ))}
-            </div>
-          )}
-        </div>
-      </main>
-    </>
+        {loading && <CustomSpinner size="lg" stroke="md" />}
+        {!loading && trendingVideos.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-center">
+            {trendingVideos.map((video, index) => (
+              <TrendingVideo key={index} data={video} />
+            ))}
+          </div>
+        )}
+      </div>
+    </main>
   );
 }
