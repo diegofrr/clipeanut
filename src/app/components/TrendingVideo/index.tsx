@@ -6,7 +6,12 @@ import { Chip, Image } from '@nextui-org/react';
 import { formatters, translateUploadedDate } from '@/utils';
 import { IconEye } from '@tabler/icons-react';
 
-export const TrendingVideo = ({ data }: { data: ITrendingVideo }) => {
+type TrendingVideoProps = {
+  data: ITrendingVideo;
+  onError: () => void;
+};
+
+export const TrendingVideo = ({ data, onError }: TrendingVideoProps) => {
   return (
     <Link href={data.url}>
       <div
@@ -15,6 +20,7 @@ export const TrendingVideo = ({ data }: { data: ITrendingVideo }) => {
       >
         <div className="flex items-center overflow-hidden justify-center rounded-lg bg-neutral-950 w-full relative">
           <Image
+            onError={onError}
             isBlurred
             src={data.thumbnail}
             alt={data.title}
@@ -35,6 +41,7 @@ export const TrendingVideo = ({ data }: { data: ITrendingVideo }) => {
         <div className="flex flex-row gap-4 w-full relative">
           <div className="bg-default-200 relative min-w-[40px] min-h-[40px] w-10 h-10 rounded-full overflow-hidden">
             <Image
+              onError={onError}
               src={data.uploaderAvatar}
               alt={data.uploaderName + ' avatar'}
               width={40}
