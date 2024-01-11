@@ -13,15 +13,12 @@ import { isFakeDataFetch } from '@/environments';
 import { DEFAULT_VALUES, PIPED_VALUES, WATCH_PAGE_VALUES } from '@/constants';
 const { INITIAL_STATE } = WATCH_PAGE_VALUES.VIDEO_PLAYER;
 
-let boundLoadPlayer = () => {};
-
 export default function VideoPlayerContent() {
   const { setStream, streamId } = useContext(StreamContext);
-  const { endpoint, setInstance, instance } = useContext(PipedInstanceContext);
+  const { instance } = useContext(PipedInstanceContext);
 
   const [isVideoLoaded, setIsVideoLoaded] = useState<boolean>(INITIAL_STATE.isVideoLoaded);
   const [canRetry, setCanRetry] = useState<boolean>(INITIAL_STATE.canRetry);
-  const [pipedInstanceList, setPipedInstanceList] = useState<string[]>(INITIAL_STATE.pipedInstanceList);
 
   const videoRef = createRef<HTMLVideoElement>();
   const videoContainerRef = createRef<HTMLDivElement>();
@@ -31,7 +28,7 @@ export default function VideoPlayerContent() {
     let mimeType = '';
     let uri = '';
 
-    const options = { streamId, endpoint, isFake: isFakeDataFetch, delay: 1 } as FetchStreamOptionsType;
+    const options = { streamId, instance, isFake: isFakeDataFetch, delay: 1 } as FetchStreamOptionsType;
 
     const stream = await fetchStream({ options });
 
@@ -55,7 +52,7 @@ export default function VideoPlayerContent() {
     }
 
     return { mimeType, uri, stream };
-  }, [endpoint, streamId]);
+  }, [instance, streamId]);
 
   const loadPlayer = useCallback(async () => {
     const VIDEO_START_TIME = 0;
@@ -76,34 +73,20 @@ export default function VideoPlayerContent() {
       /* empty */
     }
 
-    getStreamData()
-      .then(({ mimeType, uri, stream }) => {
-        player
-          .load(uri, VIDEO_START_TIME, mimeType)
-          .then(function () {
-            setStream(stream);
-            setIsVideoLoaded(true);
-            setPipedInstanceList(PIPED_VALUES.INSTANCES);
-            setInstance(instance);
-            videoElement?.setAttribute('poster', stream.thumbnailUrl);
-          })
-          .catch(() => {
-            boundLoadPlayer();
-          });
-      })
-      .catch(() => {
-        boundLoadPlayer();
-      });
-  }, [getStreamData, videoContainerRef, videoRef, setStream, setInstance, instance]);
-
-  boundLoadPlayer = useCallback(() => {
-    if (!pipedInstanceList.length) return setCanRetry(true);
-    setIsVideoLoaded(false);
-    setCanRetry(false);
-    setInstance(pipedInstanceList[0]);
-    setPipedInstanceList(pipedInstanceList.slice(1));
-    loadPlayer();
-  }, [loadPlayer, setInstance, pipedInstanceList]);
+    getStreamData().then(({ mimeType, uri, stream }) => {
+      player
+        .load(uri, VIDEO_START_TIME, mimeType)
+        .then(function () {
+          setStream(stream);
+          setIsVideoLoaded(true);
+          videoElement?.setAttribute('poster', stream.thumbnailUrl);
+        })
+        .catch((error: Error) => {
+          console.error(error);
+          setCanRetry(true);
+        });
+    });
+  }, [getStreamData, videoContainerRef, videoRef, setStream]);
 
   useEffect(() => {
     if (window?.document) loadPlayer();

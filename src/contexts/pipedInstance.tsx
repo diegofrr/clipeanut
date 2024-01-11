@@ -1,22 +1,20 @@
 'use client';
 
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useState } from 'react';
 import { PIPED_VALUES } from '@/constants';
 
+import IPipedInstance from '@/types/PipedInstance';
+
 interface IPipedInstanceContext {
-  instance: string;
-  endpoint: string;
+  instance: IPipedInstance;
   region: string;
-  setInstance: React.Dispatch<React.SetStateAction<string>>;
-  setEndpoint: React.Dispatch<React.SetStateAction<string>>;
+  setInstance: React.Dispatch<React.SetStateAction<IPipedInstance>>;
   setRegion: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const INITIAL_VALUE = {
   instance: PIPED_VALUES.DEFAULT_INSTANCE,
-  endpoint: PIPED_VALUES.PIPED_BASE + PIPED_VALUES.DEFAULT_INSTANCE,
   region: PIPED_VALUES.DEFAULT_REGION,
-  setEndpoint: () => {},
   setInstance: () => {},
   setRegion: () => {}
 };
@@ -24,21 +22,14 @@ const INITIAL_VALUE = {
 export const PipedInstanceContext = createContext<IPipedInstanceContext>(INITIAL_VALUE);
 
 export default function PipedInstanceProvider({ children }: { children: React.ReactNode }) {
-  const [endpoint, setEndpoint] = useState<string>(INITIAL_VALUE.endpoint);
-  const [instance, setInstance] = useState<string>(INITIAL_VALUE.instance);
+  const [instance, setInstance] = useState<IPipedInstance>(INITIAL_VALUE.instance);
   const [region, setRegion] = useState<string>(INITIAL_VALUE.region);
-
-  useEffect(() => {
-    setEndpoint(PIPED_VALUES.PIPED_BASE + instance);
-  }, [instance]);
 
   return (
     <PipedInstanceContext.Provider
       value={{
         instance,
         setInstance,
-        endpoint,
-        setEndpoint,
         region,
         setRegion
       }}

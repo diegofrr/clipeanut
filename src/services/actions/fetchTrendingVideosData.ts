@@ -2,6 +2,7 @@
 
 import trendingVideosData from '@/mocks/trendingVideosData';
 import ITrendingVideo from '@/types/TrendingVideo';
+import IPipedInstance from '@/types/PipedInstance';
 
 import { DEFAULT_VALUES, PIPED_VALUES } from '@/constants';
 
@@ -10,7 +11,7 @@ interface IFetchTrendingVideosProps {
 }
 
 export type FetchTrendingVideosOptionsType = {
-  endpoint: string;
+  instance: IPipedInstance;
   region?: string;
   isFake?: boolean;
   delay?: number;
@@ -21,7 +22,7 @@ export async function fetchTrendingVideos({ options }: IFetchTrendingVideosProps
 }
 
 async function fetchData(options: FetchTrendingVideosOptionsType): Promise<ITrendingVideo[]> {
-  return await fetch(`${options.endpoint}/trending?region=${options?.region || PIPED_VALUES.DEFAULT_REGION}`)
+  return await fetch(`${options.instance.api_url}/trending?region=${options?.region || PIPED_VALUES.DEFAULT_REGION}`)
     .then((res) => res.json())
     .then((data) => data as ITrendingVideo[]);
 }

@@ -19,7 +19,7 @@ export async function fetchTrendingVideos({ options }: IFetchPipedInstancesData)
 }
 
 async function fetchData(): Promise<IPipedInstance[]> {
-  return await fetch(PIPED_VALUES.DEFAULT_ENDPOINTS.INSTANCES)
+  return await fetch(PIPED_VALUES.ENDPOINTS.INSTANCES)
     .then((res) => res.json())
     .then((data) => data as IPipedInstance[]);
 }

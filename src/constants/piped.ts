@@ -1,5 +1,4 @@
 export const PIPED_VALUES = {
-  DEFAULT_INSTANCE: 'kavin.rocks',
   PIPED_BASE: 'https://pipedapi.',
   DEFAULT_REGION: 'BR',
 
@@ -133,7 +132,24 @@ export const PIPED_VALUES = {
     HLS_VIDEO_TYPE: 'application/x-mpegURL',
     MP4_VIDEO_TYPE: 'video/mp4'
   },
-  DEFAULT_ENDPOINTS: {
+  ENDPOINTS: {
     INSTANCES: 'https://piped-instances.kavin.rocks/'
+  },
+  DEFAULT_INSTANCE: {
+    name: 'kavin.rocks (Official)',
+    api_url: 'https://pipedapi.kavin.rocks',
+    locations: '🇺🇸, 🇮🇳, 🇳🇱, 🇨🇦, 🇬🇧, 🇫🇷',
+    version: '2023-12-19-c746794',
+    up_to_date: true,
+    cdn: true,
+    registered: 219247,
+    last_checked: 1704962948,
+    cache: true,
+    s3_enabled: true,
+    image_proxy_url: 'https://pipedproxy.kavin.rocks',
+    registration_disabled: false,
+    uptime_24h: 99.836334,
+    uptime_7d: 99.39295,
+    uptime_30d: 92.95372
   }
 };

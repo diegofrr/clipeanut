@@ -8,10 +8,13 @@ import { IconEye } from '@tabler/icons-react';
 
 type TrendingVideoProps = {
   data: ITrendingVideo;
-  onError: () => void;
 };
 
-export const TrendingVideo = ({ data, onError }: TrendingVideoProps) => {
+export const TrendingVideo = ({ data }: TrendingVideoProps) => {
+  function onImageLoaderError() {
+    console.log('Image error');
+  }
+
   return (
     <Link href={data.url}>
       <div
@@ -20,7 +23,7 @@ export const TrendingVideo = ({ data, onError }: TrendingVideoProps) => {
       >
         <div className="flex items-center overflow-hidden justify-center rounded-lg bg-neutral-950 w-full relative">
           <Image
-            onError={onError}
+            onError={onImageLoaderError}
             src={`https://i.ytimg.com/vi/${data.url.split('v=')[1]}/mqdefault.jpg`}
             alt={data.title}
             width={720}

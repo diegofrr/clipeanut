@@ -2,6 +2,7 @@
 
 import streamData from '@/mocks/streamData';
 import IStream from '@/types/Stream';
+import IPipedInstance from '@/types/PipedInstance';
 
 import { DEFAULT_VALUES } from '@/constants';
 
@@ -11,7 +12,7 @@ interface IFetchStreamProps {
 
 export type FetchStreamOptionsType = {
   streamId: string;
-  endpoint: string;
+  instance: IPipedInstance;
   isFake?: boolean;
   delay?: number;
 };
@@ -21,7 +22,7 @@ export async function fetchStream({ options }: IFetchStreamProps): Promise<IStre
 }
 
 async function fetchData(options: FetchStreamOptionsType): Promise<IStream> {
-  return fetch(`${options.endpoint}/streams/${options.streamId}`)
+  return fetch(`${options.instance.api_url}/streams/${options.streamId}`)
     .then((res) => res.json())
     .then((data) => data as IStream);
 }
