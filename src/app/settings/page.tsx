@@ -43,10 +43,10 @@ export default function Settings() {
         <div className="flex items-center justify-center flex-row gap-5">
           {instanceList && (
             <Select className="w-full" label="Alterar instância" defaultSelectedKeys={[instance.name]}>
-              {instanceList.map((_instance, index) => (
+              {instanceList.map((_instance) => (
                 <SelectItem
                   onClick={() => handleSelectionChangeInstance(_instance)}
-                  key={index}
+                  key={_instance.name}
                   value={_instance.name}
                   className={`${_instance.name === instance.name && 'hidden'}`}
                 >
@@ -57,10 +57,10 @@ export default function Settings() {
           )}
 
           <Select className="w-full" label="Alterar região" defaultSelectedKeys={[region]}>
-            {PIPED_VALUES.REGIONS.map((_region, index) => (
+            {PIPED_VALUES.REGIONS.map((_region) => (
               <SelectItem
                 onClick={() => handleSelectionChangeRegion(_region)}
-                key={index}
+                key={_region}
                 value={_region}
                 className={`${_region === region && 'hidden'}`}
               >
