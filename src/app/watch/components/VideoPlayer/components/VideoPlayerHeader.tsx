@@ -28,7 +28,7 @@ export function VideoPlayerHeader() {
             </span>
           </div>
           {streamUploader.uploaderVerified && <span>✅</span>}
-          <span>👀 {StreamUtils.formatStreamViews(stream.views)}</span>
+          <span>👀 {StreamUtils.formatStreamStats(stream.views)}</span>
           <span>👍 {StreamUtils.formatStreamStats(stream.likes)}</span>
           <span>👎 {StreamUtils.formatStreamStats(stream.dislikes)}</span>
         </>
