@@ -27,10 +27,6 @@ export function formatStreamStats(count: number) {
   else return count?.toString();
 }
 
-export function formatStreamViews(count: number) {
-  return count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-}
-
 export function secondsToMinutes(seconds: number) {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;

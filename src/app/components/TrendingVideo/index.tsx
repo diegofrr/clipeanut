@@ -34,7 +34,7 @@ export const TrendingVideo = ({ data, onError }: TrendingVideoProps) => {
             startContent={<IconEye size={16} className="mr-1" />}
             className="absolute bottom-2 right-2 bg-dark text-white bg-black px-2 z-10"
           >
-            {StreamUtils.formatStreamViews(data.views)}
+            {StreamUtils.formatStreamStats(data.views)}
           </Chip>
         </div>
 
