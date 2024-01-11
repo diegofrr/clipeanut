@@ -77,7 +77,7 @@ export default function NavBar() {
               className="gap-2 mb-4 cursor-default hover:bg-none ext-xl  pointer-events-none flex-shrink-0"
             >
               <span className="text-xs text-default-600">Instância</span>
-              <p className="font-semibold mb-2">{instance}</p>
+              <p className="font-semibold mb-2">{instance.name}</p>
               <Chip size="sm">Região: {region}</Chip>
             </DropdownItem>
 
