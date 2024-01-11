@@ -3,7 +3,7 @@
 import { useContext } from 'react';
 import { Image } from '@nextui-org/react';
 import { StreamContext } from '../contexts/stream';
-import { channelImagemUrlGenerator, formatters } from '@/utils';
+import { StreamUtils } from '@/utils';
 
 export function VideoPlayerHeader() {
   const { streamUploader, stream } = useContext(StreamContext);
@@ -14,7 +14,7 @@ export function VideoPlayerHeader() {
         <>
           <div className="bg-default-200 relative min-w-[40px] min-h-[40px] w-10 h-10 rounded-full overflow-hidden">
             <Image
-              src={channelImagemUrlGenerator(streamUploader.uploaderAvatar)}
+              src={StreamUtils.channelImagemUrlGenerator(streamUploader.uploaderAvatar)}
               alt={streamUploader.uploader + ' avatar'}
               width={40}
               height={40}
@@ -24,13 +24,13 @@ export function VideoPlayerHeader() {
           <div className="flex items-start justify-center flex-col">
             <h1>{streamUploader.uploader}</h1>
             <span className="text-xs text-gray-400">
-              {formatters.streamStats(streamUploader.uploaderSubscriberCount)}
+              {StreamUtils.formatStreamStats(streamUploader.uploaderSubscriberCount)}
             </span>
           </div>
           {streamUploader.uploaderVerified && <span>✅</span>}
-          <span>👀 {formatters.streamViews(stream.views)}</span>
-          <span>👍 {formatters.streamStats(stream.likes)}</span>
-          <span>👎 {formatters.streamStats(stream.dislikes)}</span>
+          <span>👀 {StreamUtils.formatStreamViews(stream.views)}</span>
+          <span>👍 {StreamUtils.formatStreamStats(stream.likes)}</span>
+          <span>👎 {StreamUtils.formatStreamStats(stream.dislikes)}</span>
         </>
       )}
     </header>

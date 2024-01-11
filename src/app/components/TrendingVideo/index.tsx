@@ -3,7 +3,7 @@ import { Chip, Image } from '@nextui-org/react';
 
 import ITrendingVideo from '@/types/TrendingVideo';
 
-import { channelImagemUrlGenerator, formatters, translateUploadedDate } from '@/utils';
+import { StreamUtils } from '@/utils';
 import { IconEye } from '@tabler/icons-react';
 
 type TrendingVideoProps = {
@@ -34,28 +34,29 @@ export const TrendingVideo = ({ data, onError }: TrendingVideoProps) => {
             startContent={<IconEye size={16} className="mr-1" />}
             className="absolute bottom-2 right-2 bg-dark text-white bg-black px-2 z-10"
           >
-            {formatters.streamViews(data.views)}
+            {StreamUtils.formatStreamViews(data.views)}
           </Chip>
         </div>
-        <div className="flex flex-row gap-4 w-full relative">
+
+        <footer className="flex flex-row gap-4 w-full relative">
           <div className="bg-default-200 relative min-w-[40px] min-h-[40px] w-10 h-10 rounded-full overflow-hidden">
             <Image
-              src={channelImagemUrlGenerator(data.uploaderAvatar)}
+              src={StreamUtils.channelImagemUrlGenerator(data.uploaderAvatar)}
               alt={data.uploaderName + ' avatar'}
               width={40}
               height={40}
               className="h-10 w-10 min-w-10 min-h-10"
             />
           </div>
-          <footer className="flex w-full flex-col">
+          <div className="flex w-full flex-col">
             <span className="text-xs text-gray-800 dark:text-gray-300 mb-1">
-              {data.uploaderName} <span className="mx-1">•</span> {translateUploadedDate(data.uploadedDate)}
+              {data.uploaderName} <span className="mx-1">•</span> {StreamUtils.translateUploadedDate(data.uploadedDate)}
             </span>
             <p className="text-base text-black dark:text-white font-bold line-clamp-2 h-auto overflow-hidden">
               {data.title}
             </p>
-          </footer>
-        </div>
+          </div>
+        </footer>
       </div>
     </Link>
   );

@@ -4,7 +4,7 @@ import { createRef, useCallback, useContext, useEffect, useState } from 'react';
 import { StreamContext } from '../contexts/stream';
 
 import { FetchStreamOptionsType, fetchStream } from '@/services/actions/fetchStreamData';
-import { generateDashFileFromFormats } from '@/utils/DashGenerator';
+import { ShakaUtils } from '@/utils';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { VideoPlayerLoading } from './VideoPlayerLoading';
 import { VideoPlayerError } from './VideoPlayerError';
@@ -49,7 +49,7 @@ export default function VideoPlayerContent() {
       url.searchParams.set('rewrite', 'false');
       uri = url.toString();
     } else {
-      const dash = await generateDashFileFromFormats(streamFormats, stream.duration);
+      const dash = await ShakaUtils.generateDashFileFromFormats(streamFormats, stream.duration);
       uri = PIPED_VALUES.VIDEO_TYPES.DASH_XML_DATA_URI + btoa(dash);
       mimeType = PIPED_VALUES.VIDEO_TYPES.DASH_XML_VIDEO_TYPE;
     }

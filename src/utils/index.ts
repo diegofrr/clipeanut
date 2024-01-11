@@ -1,6 +1,4 @@
-import * as formatters from './formatters';
-import { generateDashFileFromFormats } from './DashGenerator';
-import { translateUploadedDate } from './translateUploadedDate';
-import { channelImagemUrlGenerator } from './channelImagemUrlGenerator';
+import * as StreamUtils from './Stream';
+import * as ShakaUtils from './ShakaPlayer';
 
-export { generateDashFileFromFormats, formatters, translateUploadedDate, channelImagemUrlGenerator };
+export { StreamUtils, ShakaUtils };
