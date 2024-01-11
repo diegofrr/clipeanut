@@ -14,7 +14,7 @@ export type FetchPipedInstancesOptionsType = {
   delay?: number;
 };
 
-export async function fetchTrendingVideos({ options }: IFetchPipedInstancesData): Promise<IPipedInstance[]> {
+export async function fetchPipedInstancesData({ options }: IFetchPipedInstancesData): Promise<IPipedInstance[]> {
   return options.isFake ? fetchFakeData(options.delay) : fetchData();
 }
 
