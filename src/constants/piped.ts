@@ -132,5 +132,8 @@ export const PIPED_VALUES = {
     DASH_XML_VIDEO_TYPE: 'application/dash+xml',
     HLS_VIDEO_TYPE: 'application/x-mpegURL',
     MP4_VIDEO_TYPE: 'video/mp4'
+  },
+  DEFAULT_ENDPOINTS: {
+    INSTANCES: 'https://piped-instances.kavin.rocks/'
   }
 };
