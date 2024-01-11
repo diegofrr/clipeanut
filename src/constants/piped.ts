@@ -151,5 +151,9 @@ export const PIPED_VALUES = {
     uptime_24h: 99.836334,
     uptime_7d: 99.39295,
     uptime_30d: 92.95372
+  },
+  LOCAL_STORAGE_KEYS: {
+    STORAGED_INSTANCES: '@piped-saved-instances',
+    CURRENT_INSTANCE: '@piped-current-instance'
   }
 };
