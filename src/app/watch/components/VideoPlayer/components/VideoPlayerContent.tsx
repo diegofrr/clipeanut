@@ -83,7 +83,7 @@ export default function VideoPlayerContent() {
         })
         .catch((error: Error) => {
           console.error(error);
-          setCanRetry(true);
+          setCanRetry(false);
         });
     });
   }
