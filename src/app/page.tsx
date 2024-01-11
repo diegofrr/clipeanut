@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import CustomSpinner from '@/components/CustomSpinner';
 import ITrendingVideo from '@/types/TrendingVideo';
@@ -21,10 +21,15 @@ export default function Home() {
   const [loading, setLoading] = useState<boolean>(INITIAL_STATE.LOADING);
   const [trendingVideos, setTrendingVideos] = useState<ITrendingVideo[]>(INITIAL_STATE.TRENDING_VIDEOS);
 
-  const loadTrendingVideos = useCallback(async () => {
+  async function loadTrendingVideos() {
     setLoading(true);
 
-    const options = { instance, region, isFake: isFakeDataFetch, delay: 1 } as FetchTrendingVideosOptionsType;
+    const options = {
+      instance,
+      region,
+      isFake: isFakeDataFetch,
+      delay: 1
+    } as FetchTrendingVideosOptionsType;
 
     await fetchTrendingVideos({ options })
       .then((data) => {
@@ -34,7 +39,7 @@ export default function Home() {
       .catch((error: Error) => {
         console.error(error);
       });
-  }, [instance, region]);
+  }
 
   useEffect(() => {
     if (window?.document) loadTrendingVideos();

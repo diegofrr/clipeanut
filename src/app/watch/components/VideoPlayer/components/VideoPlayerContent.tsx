@@ -54,7 +54,7 @@ export default function VideoPlayerContent() {
     return { mimeType, uri, stream };
   }, [instance, streamId]);
 
-  const loadPlayer = useCallback(async () => {
+  async function loadPlayer() {
     const VIDEO_START_TIME = 0;
     let videoElement = {} as HTMLVideoElement | null;
     let videoContainer = {} as HTMLDivElement | null;
@@ -86,7 +86,7 @@ export default function VideoPlayerContent() {
           setCanRetry(true);
         });
     });
-  }, [getStreamData, videoContainerRef, videoRef, setStream]);
+  }
 
   useEffect(() => {
     if (window?.document) loadPlayer();
