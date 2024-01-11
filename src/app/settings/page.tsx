@@ -1,20 +1,36 @@
 'use client';
 
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { PIPED_VALUES } from '@/constants';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { Select, SelectItem } from '@nextui-org/react';
+import IPipedInstance from '@/types/PipedInstance';
+import { fetchPipedInstancesData } from '@/services/actions/fetchPipedInstancesData';
+import { getStoragedInstances } from '@/services/actions/useLocalStorage';
 
 export default function Settings() {
   const { instance, setInstance, region, setRegion } = useContext(PipedInstanceContext);
 
-  const handleSelectionChangeInstance = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setInstance(e.target.value);
+  const [instanceList, setInstanceList] = useState<IPipedInstance[] | null>(null);
+
+  useEffect(() => {
+    fetchPipedInstancesData({ options: { isFake: true } })
+      .then((data) => {
+        setInstanceList(data);
+      })
+      .catch(() => {
+        const storagedInstances = getStoragedInstances();
+        setInstanceList(storagedInstances);
+      });
+  }, []);
+
+  const handleSelectionChangeInstance = (instance: IPipedInstance) => {
+    setInstance(instance);
   };
 
-  const handleSelectionChangeRegion = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setRegion(e.target.value);
+  const handleSelectionChangeRegion = (region: string) => {
+    setRegion(region);
   };
 
   return (
@@ -25,27 +41,29 @@ export default function Settings() {
         </header>
 
         <div className="flex items-center justify-center flex-row gap-5">
-          <Select
-            className="w-full"
-            label="Alterar instância"
-            defaultSelectedKeys={[instance]}
-            onChange={handleSelectionChangeInstance}
-          >
-            {PIPED_VALUES.INSTANCES.map((_instance) => (
-              <SelectItem key={_instance} value={_instance} className={`${_instance === instance && 'hidden'}`}>
-                {_instance}
-              </SelectItem>
-            ))}
-          </Select>
+          {instanceList && (
+            <Select className="w-full" label="Alterar instância" defaultSelectedKeys={[instance.name]}>
+              {instanceList.map((_instance, index) => (
+                <SelectItem
+                  onClick={() => handleSelectionChangeInstance(_instance)}
+                  key={index}
+                  value={_instance.name}
+                  className={`${_instance.name === instance.name && 'hidden'}`}
+                >
+                  {_instance.name}
+                </SelectItem>
+              ))}
+            </Select>
+          )}
 
-          <Select
-            className="w-full"
-            label="Alterar região"
-            defaultSelectedKeys={[region]}
-            onChange={handleSelectionChangeRegion}
-          >
-            {PIPED_VALUES.REGIONS.map((_region) => (
-              <SelectItem key={_region} value={_region} className={`${_region === region && 'hidden'}`}>
+          <Select className="w-full" label="Alterar região" defaultSelectedKeys={[region]}>
+            {PIPED_VALUES.REGIONS.map((_region, index) => (
+              <SelectItem
+                onClick={() => handleSelectionChangeRegion(_region)}
+                key={index}
+                value={_region}
+                className={`${_region === region && 'hidden'}`}
+              >
                 {_region}
               </SelectItem>
             ))}
