@@ -56,37 +56,46 @@ export default function VideoPlayerContent() {
     return { mimeType, uri, stream };
   }, [instance, streamId]);
 
-  async function loadPlayer() {
+  async function boundLoadPlayer() {
     const VIDEO_START_TIME = 0;
+    let MAX_LOAD_ATTEMPTS = 5;
     const { mimeType, uri, stream } = await getStreamData();
-
-    const videoElement = videoRef.current;
-    const videoContainer = videoContainerRef.current;
 
     const shaka = (await import('@/lib/ShakaPlayer/shaka-player')).default;
 
-    try {
-      const player = new shaka.Player(videoElement);
-      const ui = new shaka.ui.Overlay(player, videoContainer, videoElement);
-      ui.getControls();
+    async function loadPlayer() {
+      const videoElement = videoRef.current;
+      const videoContainer = videoContainerRef.current;
 
-      player
-        .load(uri, VIDEO_START_TIME, mimeType)
-        .then(function () {
-          setStream(stream);
-          setIsVideoLoaded(true);
-          videoElement?.setAttribute('poster', stream.thumbnailUrl);
-        })
-        .catch(() => {
-          setCanRetry(true);
-        });
-    } catch {
-      /* empty */
+      try {
+        const player = new shaka.Player(videoElement);
+        const ui = new shaka.ui.Overlay(player, videoContainer, videoElement);
+        ui.getControls();
+
+        player
+          .load(uri, VIDEO_START_TIME, mimeType)
+          .then(function () {
+            setStream(stream);
+            setIsVideoLoaded(true);
+            videoElement?.setAttribute('poster', stream.thumbnailUrl);
+          })
+          .catch((err: Error) => {
+            setCanRetry(true);
+            console.error(err);
+            if (MAX_LOAD_ATTEMPTS > 0) loadPlayer();
+          })
+          .finally(() => {
+            MAX_LOAD_ATTEMPTS--;
+          });
+      } catch {
+        /* empty */
+      }
     }
+    loadPlayer();
   }
 
   useEffect(() => {
-    if (window?.document) loadPlayer();
+    if (window?.document) boundLoadPlayer();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [successFetch]);
 
