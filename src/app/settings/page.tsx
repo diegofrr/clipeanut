@@ -47,7 +47,7 @@ export default function Settings() {
 
   return (
     <main className="w-full">
-      <div className="max-w-7xl m-auto py-6 sm:p-6">
+      <div className="max-w-7xl m-auto p-6">
         <Header.Root>
           <Header.Content>
             <Header.Title>
@@ -56,7 +56,7 @@ export default function Settings() {
           </Header.Content>
         </Header.Root>
 
-        <div className="flex items-center justify-center flex-row gap-5 px-6">
+        <div className="flex items-center justify-center flex-row gap-5">
           {!instanceList && <CustomSpinner />}
           {instanceList && (
             <>

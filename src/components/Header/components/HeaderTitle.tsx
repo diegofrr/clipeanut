@@ -4,7 +4,7 @@ type HeaderTitleProps = React.HTMLAttributes<HTMLDivElement> & {
 
 export function HeaderTitle({ children, ...props }: HeaderTitleProps) {
   return (
-    <div {...props} className={`${props.className || ''} flex items-center justify-start gap-2`}>
+    <div {...props} className={'flex items-center justify-start gap-2 ' + props.className || ''}>
       {children}
     </div>
   );

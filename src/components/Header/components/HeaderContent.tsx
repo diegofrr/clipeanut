@@ -1,8 +1,10 @@
-import { HeaderProps } from '../types';
+type HeaderContentProps = React.HTMLAttributes<HTMLDivElement> & {
+  children: React.ReactNode;
+};
 
-export function HeaderContent({ children, ...props }: HeaderProps) {
+export function HeaderContent({ children, ...props }: HeaderContentProps) {
   return (
-    <div {...props} className={`${props.className || ''} w-full`}>
+    <div {...props} className={'w-full ' + props.className || ''}>
       {children}
     </div>
   );

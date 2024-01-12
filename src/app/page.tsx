@@ -43,8 +43,8 @@ export default function Home() {
 
   return (
     <main className="w-full min-h-screen-minus-navbar">
-      <div className="max-w-7xl m-auto py-6 sm:p-6">
-        <Header.Root>
+      <div className="max-w-7xl m-auto py-6 sm:p-6 flex flex-col justify-center">
+        <Header.Root className="px-6 sm:px-0">
           <Header.Content>
             <Header.Title>
               <IconFlame size={24} /> <h1 className="text-2xl font-bold">Vídeos em alta</h1>
