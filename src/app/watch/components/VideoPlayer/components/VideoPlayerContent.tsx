@@ -19,6 +19,7 @@ export default function VideoPlayerContent() {
 
   const [isVideoLoaded, setIsVideoLoaded] = useState<boolean>(INITIAL_STATE.isVideoLoaded);
   const [canRetry, setCanRetry] = useState<boolean>(INITIAL_STATE.canRetry);
+  const [successFetch, setSuccessFetch] = useState(false);
 
   const videoRef = createRef<HTMLVideoElement>();
   const videoContainerRef = createRef<HTMLDivElement>();
@@ -31,6 +32,7 @@ export default function VideoPlayerContent() {
     const options = { streamId, instance, isFake: isFakeDataFetch, delay: 1 } as FetchStreamOptionsType;
 
     const stream = await fetchStream({ options });
+    setSuccessFetch(!!stream);
 
     streamFormats.push(...stream.videoStreams);
     streamFormats.push(...stream.audioStreams);
@@ -56,46 +58,37 @@ export default function VideoPlayerContent() {
 
   async function loadPlayer() {
     const VIDEO_START_TIME = 0;
-    let videoElement = {} as HTMLVideoElement | null;
-    let videoContainer = {} as HTMLDivElement | null;
-    let player = {} as shaka.Player;
-    let ui;
+    const { mimeType, uri, stream } = await getStreamData();
+
+    const videoElement = videoRef.current;
+    const videoContainer = videoContainerRef.current;
 
     const shaka = (await import('@/lib/ShakaPlayer/shaka-player')).default;
 
-    console.log(shaka);
+    const player = new shaka.Player(videoElement);
+    const ui = new shaka.ui.Overlay(player, videoContainer, videoElement);
+    ui.getControls();
 
-    try {
-      videoElement = videoRef.current;
-      videoContainer = videoContainerRef.current;
-      player = new shaka.Player(videoElement);
-      ui = new shaka.ui.Overlay(player, videoContainer, videoElement);
-      ui.getControls();
-    } catch {
-      /* empty */
-    }
+    console.log(uri, mimeType);
 
-    getStreamData().then(({ mimeType, uri, stream }) => {
-      player.destroy().then(() => {
-        player
-          .load(uri, VIDEO_START_TIME, mimeType)
-          .then(function () {
-            setStream(stream);
-            setIsVideoLoaded(true);
-            videoElement?.setAttribute('poster', stream.thumbnailUrl);
-          })
-          .catch((error: Error) => {
-            console.error(error);
-            setCanRetry(false);
-          });
+    player
+      .load(uri, VIDEO_START_TIME, mimeType)
+      .then(function () {
+        setStream(stream);
+        setIsVideoLoaded(true);
+        videoElement?.setAttribute('poster', stream.thumbnailUrl);
+      })
+      .catch((error: Error) => {
+        console.error(error); // Registre detalhes do erro
+        setCanRetry(true); // Ofereça opção de recarregar
+        // Exiba mensagem de erro ao usuário
       });
-    });
   }
 
   useEffect(() => {
     if (window?.document) loadPlayer();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [successFetch]);
 
   // function handleLoadPlayerRetry() {
   //   setPipedInstanceList(PIPED_VALUES.INSTANCES);

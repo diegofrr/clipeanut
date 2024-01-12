@@ -18,7 +18,7 @@ const config: Config = {
         max: '9999999'
       },
       minHeight: {
-        'screen-minus-navbar': 'calc(100vh - 4rem)'
+        'screen-minus-navbar': 'calc(100vh - 65px)'
       },
       height: {
         nav: '4rem'

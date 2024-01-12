@@ -13,7 +13,7 @@ export default function Watch() {
   return !streamId ? (
     <NotFound />
   ) : (
-    <main className="h-screen w-full flex items-center justify-center min-h-screen">
+    <main className="w-full flex items-center justify-center min-h-screen-minus-navbar">
       <VideoPlayer.Root streamId={streamId}>
         <VideoPlayer.Header />
         <VideoPlayer.Content />

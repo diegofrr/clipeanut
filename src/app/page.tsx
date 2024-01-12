@@ -28,7 +28,7 @@ export default function Home() {
       instance,
       region,
       isFake: isFakeDataFetch,
-      delay: 1
+      delay: 10000000
     } as FetchTrendingVideosOptionsType;
 
     await fetchTrendingVideos({ options })
@@ -47,7 +47,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="w-full  min-h-screen">
+    <main className="w-full min-h-screen-minus-navbar">
       <div className="flex flex-col items-center max-w-7xl m-auto p-6">
         <Header.Root>
           <Header.Content>
