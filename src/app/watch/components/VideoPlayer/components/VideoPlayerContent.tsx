@@ -96,11 +96,9 @@ export default function VideoPlayerContent() {
 
       <div
         ref={videoContainerRef}
-        className={`${
-          (!isVideoLoaded || canRetry) && 'shaka-hidden'
-        } mx-auto max-w-full w-full rounded-lg overflow-hidden relative`}
+        className={`${(!isVideoLoaded || canRetry) && 'shaka-hidden'} mx-auto max-w-full w-full relative`}
       >
-        <video className="w-full h-full" ref={videoRef}></video>
+        <video className="w-full h-full rounded-lg overflow-hidden" ref={videoRef}></video>
       </div>
 
       {canRetry && <VideoPlayerError />}
