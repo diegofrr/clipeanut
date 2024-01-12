@@ -20,7 +20,7 @@ export const TrendingVideo = ({ data }: TrendingVideoProps) => {
         title={data.title}
         className="group/container transition-colors cursor-pointer flex flex-col items-center justify-start gap-4 w-full"
       >
-        <div className="flex items-center overflow-hidden justify-center bg-neutral-950 w-full relative">
+        <div className="flex items-center overflow-hidden justify-center bg-neutral-950 w-full relative rounded-none sm:rounded-lg">
           <Image
             onError={onImageLoaderError}
             src={`https://i.ytimg.com/vi/${data.url.split('v=')[1]}/mqdefault.jpg`}
