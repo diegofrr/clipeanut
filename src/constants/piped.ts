@@ -11,21 +11,21 @@ export const PIPED_VALUES = {
   },
 
   DEFAULT_INSTANCE: {
-    name: 'kavin.rocks (Official)',
-    api_url: 'https://pipedapi.kavin.rocks',
-    locations: '🇺🇸, 🇮🇳, 🇳🇱, 🇨🇦, 🇬🇧, 🇫🇷',
+    name: 'kavin.rocks libre (Official)',
+    api_url: 'https://pipedapi-libre.kavin.rocks',
+    locations: '🇳🇱',
     version: '2023-12-19-c746794',
     up_to_date: true,
-    cdn: true,
-    registered: 219247,
-    last_checked: 1704962948,
+    cdn: false,
+    registered: 219427,
+    last_checked: 1705044218,
     cache: true,
-    s3_enabled: true,
-    image_proxy_url: 'https://pipedproxy.kavin.rocks',
+    s3_enabled: false,
+    image_proxy_url: 'https://pipedproxy-ams-2.kavin.rocks',
     registration_disabled: false,
-    uptime_24h: 99.836334,
-    uptime_7d: 99.39295,
-    uptime_30d: 92.95372
+    uptime_24h: 99.754105,
+    uptime_7d: 99.497665,
+    uptime_30d: 47.201653
   },
 
   DEFAULT_REGION: 'BR',
