@@ -1,9 +1,6 @@
-import { PIPED_VALUES } from '.';
-
 export const HOME_PAGE_VALUES = {
   TRENDING_VIDEO: {
     INITIAL_STATE: {
-      pipedInstanceList: PIPED_VALUES.INSTANCES,
       TRENDING_VIDEOS: [],
       LOADING: false
     }
@@ -13,7 +10,6 @@ export const HOME_PAGE_VALUES = {
 export const WATCH_PAGE_VALUES = {
   VIDEO_PLAYER: {
     INITIAL_STATE: {
-      pipedInstanceList: PIPED_VALUES.INSTANCES,
       isVideoLoaded: false,
       canRetry: false
     }

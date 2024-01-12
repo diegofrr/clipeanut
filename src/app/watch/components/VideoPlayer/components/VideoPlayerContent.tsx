@@ -63,6 +63,8 @@ export default function VideoPlayerContent() {
 
     const shaka = (await import('@/lib/ShakaPlayer/shaka-player')).default;
 
+    console.log(shaka);
+
     try {
       videoElement = videoRef.current;
       videoContainer = videoContainerRef.current;
@@ -74,17 +76,19 @@ export default function VideoPlayerContent() {
     }
 
     getStreamData().then(({ mimeType, uri, stream }) => {
-      player
-        .load(uri, VIDEO_START_TIME, mimeType)
-        .then(function () {
-          setStream(stream);
-          setIsVideoLoaded(true);
-          videoElement?.setAttribute('poster', stream.thumbnailUrl);
-        })
-        .catch((error: Error) => {
-          console.error(error);
-          setCanRetry(false);
-        });
+      player.destroy().then(() => {
+        player
+          .load(uri, VIDEO_START_TIME, mimeType)
+          .then(function () {
+            setStream(stream);
+            setIsVideoLoaded(true);
+            videoElement?.setAttribute('poster', stream.thumbnailUrl);
+          })
+          .catch((error: Error) => {
+            console.error(error);
+            setCanRetry(false);
+          });
+      });
     });
   }
 
