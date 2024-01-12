@@ -43,7 +43,7 @@ export default function Home() {
 
   return (
     <main className="w-full min-h-screen-minus-navbar">
-      <div className="flex flex-col items-center max-w-7xl m-auto p-6">
+      <div className="flex flex-col items-center max-w-7xl m-auto py-6 sm:p-6 gap-6">
         <Header.Root>
           <Header.Content>
             <Header.Title>

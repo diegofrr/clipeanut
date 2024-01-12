@@ -20,7 +20,7 @@ export const TrendingVideo = ({ data }: TrendingVideoProps) => {
         title={data.title}
         className="group/container transition-colors cursor-pointer flex flex-col items-center justify-start gap-4 w-full"
       >
-        <div className="flex items-center overflow-hidden justify-center rounded-lg bg-neutral-950 w-full relative">
+        <div className="flex items-center overflow-hidden justify-center bg-neutral-950 w-full relative">
           <Image
             onError={onImageLoaderError}
             src={`https://i.ytimg.com/vi/${data.url.split('v=')[1]}/mqdefault.jpg`}
@@ -28,7 +28,7 @@ export const TrendingVideo = ({ data }: TrendingVideoProps) => {
             width={720}
             height={480}
             loading="lazy"
-            className="group-hover/container:scale-105 transition-transform"
+            className="group-hover/container:scale-105 transition-transform rounded-none sm:rounded-lg"
           />
           <Chip
             size="sm"
@@ -40,7 +40,7 @@ export const TrendingVideo = ({ data }: TrendingVideoProps) => {
           </Chip>
         </div>
 
-        <footer className="flex flex-row gap-4 w-full relative">
+        <footer className="flex flex-row gap-4 w-full relative px-6 sm:p-0">
           <div className="bg-default-200 relative min-w-[40px] min-h-[40px] w-10 h-10 rounded-full overflow-hidden">
             <Image
               src={StreamUtils.channelImagemUrlGenerator(data.uploaderAvatar)}
