@@ -2,30 +2,36 @@
 
 import { useContext, useEffect, useState } from 'react';
 
-import type { IPipedInstance } from '@/types';
 import CustomSpinner from '@/components/CustomSpinner';
 
-import { PIPED_VALUES } from '@/constants';
+import type { IPipedInstance } from '@/types';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { Select, SelectItem } from '@nextui-org/react';
 import { fetchPipedInstancesData } from '@/services/actions/fetchPipedInstancesData';
-import { getStoragedInstances } from '@/services/actions/useLocalStorage';
 import { isFakeDataFetch } from '@/environments';
+import { useLocalStorageWithExpiration } from '@/hooks';
+
+import { PIPED_VALUES } from '@/constants';
+const { LOCAL_STORAGE_KEYS } = PIPED_VALUES;
 
 export default function Settings() {
   const { instance, setInstance, region, setRegion } = useContext(PipedInstanceContext);
+  const { getStoragedItem, setStoragedItem, isExistsItem } = useLocalStorageWithExpiration();
 
   const [instanceList, setInstanceList] = useState<IPipedInstance[] | null>(null);
 
   useEffect(() => {
-    fetchPipedInstancesData({ options: { isFake: isFakeDataFetch, delay: 1 } })
-      .then((data) => {
-        setInstanceList(data);
-      })
-      .catch(() => {
-        const storagedInstances = getStoragedInstances();
-        setInstanceList(storagedInstances);
-      });
+    if (isExistsItem(LOCAL_STORAGE_KEYS.STORAGED_INSTANCES)) {
+      const storagedInstances = getStoragedItem<IPipedInstance[]>(LOCAL_STORAGE_KEYS.STORAGED_INSTANCES);
+      if (storagedInstances) setInstanceList(storagedInstances.value);
+    } else {
+      fetchPipedInstancesData({ options: { isFake: isFakeDataFetch, delay: 1 } })
+        .then((data) => {
+          setInstanceList(data);
+          setStoragedItem(LOCAL_STORAGE_KEYS.STORAGED_INSTANCES, data, { minutes: 60 });
+        })
+        .catch(() => setInstanceList([PIPED_VALUES.DEFAULT_INSTANCE]));
+    }
   }, []);
 
   const handleSelectionChangeInstance = (instance: IPipedInstance) => {

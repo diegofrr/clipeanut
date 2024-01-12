@@ -9,16 +9,17 @@ interface IStoragedItem<T> {
   expirationTime?: number;
 }
 
-type UseLocalStoragedWithExpiration<T> = {
-  getStoragedItem: (key: string) => IStoragedItem<T> | null;
-  setStoragedItem: (key: string, value: T, expireOptions: IExpireOptions) => void;
+type UseLocalStoragedWithExpiration = {
+  getStoragedItem: <T>(key: string) => IStoragedItem<T> | null;
+  getStoragedValue: <T>(key: string) => T | null;
+  setStoragedItem: <T>(key: string, value: T, expireOptions: IExpireOptions) => void;
   removeStoragedItem: (key: string) => void;
   isExpiredItem: (key: string) => boolean;
   isExistsItem: (key: string) => boolean;
 };
 
-export function useLocalStorageWithExpiration<T>(): UseLocalStoragedWithExpiration<T> {
-  const getStoragedItem = (key: string): IStoragedItem<T> | null => {
+export function useLocalStorageWithExpiration(): UseLocalStoragedWithExpiration {
+  const getStoragedItem = <T>(key: string): IStoragedItem<T> | null => {
     const storagedItem = JSON.parse(localStorage.getItem(key) || 'null') as IStoragedItem<T>;
 
     if (!storagedItem) return null;
@@ -29,7 +30,11 @@ export function useLocalStorageWithExpiration<T>(): UseLocalStoragedWithExpirati
     }
   };
 
-  const setStoragedItem = (key: string, value: T, expireOptions: IExpireOptions) => {
+  const getStoragedValue = <T>(key: string): T | null => {
+    return getStoragedItem<T>(key)?.value || null;
+  };
+
+  const setStoragedItem = <T>(key: string, value: T, expireOptions: IExpireOptions) => {
     const { seconds, minutes, days } = expireOptions;
     let expirationTime;
 
@@ -60,5 +65,5 @@ export function useLocalStorageWithExpiration<T>(): UseLocalStoragedWithExpirati
     return new Date().getTime() > expirationTime;
   };
 
-  return { getStoragedItem, setStoragedItem, removeStoragedItem, isExpiredItem, isExistsItem };
+  return { getStoragedItem, getStoragedValue, setStoragedItem, removeStoragedItem, isExpiredItem, isExistsItem };
 }
