@@ -24,12 +24,7 @@ export default function Home() {
   async function loadTrendingVideos() {
     setLoading(true);
 
-    const options = {
-      instance,
-      region,
-      isFake: isFakeDataFetch,
-      delay: 10000000
-    } as FetchTrendingVideosOptionsType;
+    const options = { instance, region, isFake: isFakeDataFetch, delay: 1 } as FetchTrendingVideosOptionsType;
 
     await fetchTrendingVideos({ options })
       .then((data) => {
