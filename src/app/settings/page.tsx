@@ -32,6 +32,7 @@ export default function Settings() {
         })
         .catch(() => setInstanceList([PIPED_VALUES.DEFAULT_INSTANCE]));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSelectionChangeInstance = (instance: IPipedInstance) => {
