@@ -1,4 +1,4 @@
-import SVGProps from '@/types/SVGProps';
+import { SVGProps } from '@/types';
 
 export default function SearchIcon(props: SVGProps) {
   return (

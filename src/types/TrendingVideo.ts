@@ -1,4 +1,4 @@
-export default interface ITrendingVideo {
+export interface ITrendingVideo {
   url: string;
   type: string;
   title: string;

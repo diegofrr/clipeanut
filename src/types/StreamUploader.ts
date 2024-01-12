@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export default interface IStreamUploader {
+export interface IStreamUploader {
   uploader: string;
   uploaderUrl: string;
   uploaderAvatar: string;

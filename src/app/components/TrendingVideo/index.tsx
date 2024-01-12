@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import { Chip, Image } from '@nextui-org/react';
 
-import ITrendingVideo from '@/types/TrendingVideo';
-
+import type { ITrendingVideo } from '@/types';
 import { StreamUtils } from '@/utils';
 import { IconEye } from '@tabler/icons-react';
 

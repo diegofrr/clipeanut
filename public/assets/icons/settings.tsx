@@ -1,4 +1,4 @@
-import SVGProps from '@/types/SVGProps';
+import type { SVGProps } from '@/types';
 
 export default function SettingsIcon(props: SVGProps) {
   return (

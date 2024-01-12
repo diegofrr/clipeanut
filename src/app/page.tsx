@@ -3,8 +3,8 @@
 import { useContext, useEffect, useState } from 'react';
 
 import CustomSpinner from '@/components/CustomSpinner';
-import ITrendingVideo from '@/types/TrendingVideo';
 
+import type { ITrendingVideo } from '@/types';
 import { FetchTrendingVideosOptionsType, fetchTrendingVideos } from '@/services/actions/fetchTrendingVideosData';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { TrendingVideo } from '@/app/components/TrendingVideo';

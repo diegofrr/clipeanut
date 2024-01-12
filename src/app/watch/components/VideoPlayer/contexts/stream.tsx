@@ -2,8 +2,7 @@
 
 import { createContext, useEffect, useState } from 'react';
 
-import IStream from '@/types/Stream';
-import IStreamUploader from '@/types/StreamUploader';
+import type { IStream, IStreamUploader } from '@/types';
 
 interface IStreamContext {
   streamId: string;

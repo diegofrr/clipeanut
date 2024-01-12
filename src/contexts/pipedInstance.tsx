@@ -3,7 +3,7 @@
 import { createContext, useState } from 'react';
 import { PIPED_VALUES } from '@/constants';
 
-import IPipedInstance from '@/types/PipedInstance';
+import type { IPipedInstance } from '@/types';
 
 interface IPipedInstanceContext {
   instance: IPipedInstance;

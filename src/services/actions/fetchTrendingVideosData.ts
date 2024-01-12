@@ -1,10 +1,9 @@
 'use server';
 
 import trendingVideosData from '@/mocks/trendingVideosData';
-import ITrendingVideo from '@/types/TrendingVideo';
-import IPipedInstance from '@/types/PipedInstance';
 
 import { DEFAULT_VALUES, PIPED_VALUES } from '@/constants';
+import type { IPipedInstance, ITrendingVideo } from '@/types';
 
 interface IFetchTrendingVideosProps {
   options: FetchTrendingVideosOptionsType;

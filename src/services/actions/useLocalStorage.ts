@@ -1,4 +1,4 @@
-import IPipedInstance from '@/types/PipedInstance';
+import type { IPipedInstance } from '@/types';
 
 import { PIPED_VALUES } from '@/constants';
 const { LOCAL_STORAGE_KEYS } = PIPED_VALUES;

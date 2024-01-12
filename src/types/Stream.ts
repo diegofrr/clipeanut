@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export default interface IStream {
+export interface IStream {
   title: string;
   description: string;
   uploadDate: string;

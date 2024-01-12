@@ -1,8 +1,8 @@
 'use server';
 
 import streamData from '@/mocks/streamData';
-import IStream from '@/types/Stream';
-import IPipedInstance from '@/types/PipedInstance';
+
+import type { IStream, IPipedInstance } from '@/types';
 
 import { DEFAULT_VALUES } from '@/constants';
 

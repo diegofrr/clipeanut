@@ -1,4 +1,4 @@
-export default interface IPipedInstance {
+export interface IPipedInstance {
   name: string;
   api_url: string;
   locations: string;
@@ -14,4 +14,11 @@ export default interface IPipedInstance {
   uptime_24h: number;
   uptime_7d: number;
   uptime_30d: number;
+}
+
+export interface IPipedInstanceConfig {
+  imageProxyUrl: string;
+  countries: string[];
+  s3Enabled: boolean;
+  regionstrationDisabled: boolean;
 }
