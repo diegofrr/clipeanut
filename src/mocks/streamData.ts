@@ -1,4 +1,4 @@
-const streamData = {
+export const streamData = {
   title: 'AMIGO SECRETO EM FAMÍLIA NO NATAL | CASA HICKMANN',
   description:
     'Oi, pessoal! Tudo bem? Por aqui nós continuamos com o vlog de Natal em casa. Depois da ceia que tivemos na véspera, fizemos um almoço delicioso e com a mesa bem decorada com enfeites e cores festivas. &nbsp;<br><br>É claro que as crianças aproveitaram para abrir os presentes que estavam embaixo da árvore. E o Alezinho até ganhou uma carta super especial do Papai Noel, ele amou! &nbsp;<br><br>No fim do dia, curtimos o amigo secreto com todos reunidos na sala e foi muito engraçado e incrível ouvir todas as pistas de pessoas tão queridas pra mim. E pra finalizar, nós tivemos mais uma ceia muito saborosa de Natal. <br><br>Gostaram? Contem aqui embaixo que eu quero saber e não esqueçam de curtir e se inscrever no canal. Espero que todos tenham tido um fim de ano maravilhoso e cheio de amor; Beijos e até a próxima!<br><br>INSCREVA-SE: <a href="https://goo.gl/FaiZHX">https://goo.gl/FaiZHX</a><br><br>SIGAM: @ahickmann - <a href="https://www.instagram.com/ahickmann/">ahickmann</a><br>FACEBOOK: <a href="https://www.facebook.com/anahickmannoficial">anahickmannoficial</a><br>TWITTER: @ahickmann - <a href="https://twitter.com/ahickmann">ahickmann</a><br><br><a href="https://www.youtube.com/hashtag/anahickmann">#AnaHickmann</a> <a href="https://www.youtube.com/hashtag/natal">#Natal</a> <a href="https://www.youtube.com/hashtag/casahickmann">#CasaHickmann</a>',
@@ -931,5 +931,3 @@ const streamData = {
     }
   ]
 };
-
-export default streamData;

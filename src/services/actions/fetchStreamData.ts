@@ -1,10 +1,8 @@
 'use server';
 
-import streamData from '@/mocks/streamData';
-
 import type { IStream, IPipedInstance } from '@/types';
-
 import { DEFAULT_VALUES } from '@/constants';
+import { streamData } from '@/mocks';
 
 interface IFetchStreamProps {
   options: FetchStreamOptionsType;

@@ -1,9 +1,8 @@
 'use server';
 
 import type { IPipedInstance } from '@/types';
-
-import pipedInstancesData from '@/mocks/pipedInstancesData';
 import { DEFAULT_VALUES, PIPED_VALUES } from '@/constants';
+import { pipedInstancesData } from '@/mocks';
 
 interface IFetchPipedInstancesData {
   options: FetchPipedInstancesOptionsType;

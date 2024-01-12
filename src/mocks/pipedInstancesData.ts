@@ -1,4 +1,4 @@
-const instancesData = [
+export const pipedInstancesData = [
   {
     name: 'kavin.rocks (Official)',
     api_url: 'https://pipedapi.kavin.rocks',
@@ -187,5 +187,3 @@ const instancesData = [
     uptime_30d: 86.183365
   }
 ];
-
-export default instancesData;
