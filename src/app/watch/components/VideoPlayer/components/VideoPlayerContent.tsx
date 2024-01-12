@@ -65,35 +65,30 @@ export default function VideoPlayerContent() {
 
     const shaka = (await import('@/lib/ShakaPlayer/shaka-player')).default;
 
-    const player = new shaka.Player(videoElement);
-    const ui = new shaka.ui.Overlay(player, videoContainer, videoElement);
-    ui.getControls();
+    try {
+      const player = new shaka.Player(videoElement);
+      const ui = new shaka.ui.Overlay(player, videoContainer, videoElement);
+      ui.getControls();
 
-    console.log(uri, mimeType);
-
-    player
-      .load(uri, VIDEO_START_TIME, mimeType)
-      .then(function () {
-        setStream(stream);
-        setIsVideoLoaded(true);
-        videoElement?.setAttribute('poster', stream.thumbnailUrl);
-      })
-      .catch((error: Error) => {
-        console.error(error); // Registre detalhes do erro
-        setCanRetry(true); // Ofereça opção de recarregar
-        // Exiba mensagem de erro ao usuário
-      });
+      player
+        .load(uri, VIDEO_START_TIME, mimeType)
+        .then(function () {
+          setStream(stream);
+          setIsVideoLoaded(true);
+          videoElement?.setAttribute('poster', stream.thumbnailUrl);
+        })
+        .catch(() => {
+          setCanRetry(true);
+        });
+    } catch {
+      /* empty */
+    }
   }
 
   useEffect(() => {
     if (window?.document) loadPlayer();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [successFetch]);
-
-  // function handleLoadPlayerRetry() {
-  //   setPipedInstanceList(PIPED_VALUES.INSTANCES);
-  //   boundLoadPlayer();
-  // }
 
   return (
     <>
