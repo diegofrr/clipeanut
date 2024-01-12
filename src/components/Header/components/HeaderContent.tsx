@@ -1,3 +1,9 @@
-export function HeaderContent({ children }: { children: React.ReactNode }) {
-  return <div className="w-full">{children}</div>;
+import { HeaderProps } from '../types';
+
+export function HeaderContent({ children, ...props }: HeaderProps) {
+  return (
+    <div {...props} className={`${props.className || ''} w-full`}>
+      {children}
+    </div>
+  );
 }
