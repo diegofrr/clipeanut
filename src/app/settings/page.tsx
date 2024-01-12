@@ -12,6 +12,8 @@ import { isFakeDataFetch } from '@/environments';
 import { useLocalStorageWithExpiration } from '@/hooks';
 
 import { PIPED_VALUES } from '@/constants';
+import { Header } from '@/components/Header';
+import { IconSettings } from '@tabler/icons-react';
 const { LOCAL_STORAGE_KEYS } = PIPED_VALUES;
 
 export default function Settings() {
@@ -45,16 +47,20 @@ export default function Settings() {
 
   return (
     <main className="w-full">
-      <div className="max-w-7xl m-auto p-6">
-        <header className="w-full mb-6">
-          <h1 className="text-3xl font-bold">Configurações</h1>
-        </header>
+      <div className="max-w-7xl m-auto py-6 sm:p-6">
+        <Header.Root>
+          <Header.Content>
+            <Header.Title>
+              <IconSettings size={24} /> <h1 className="text-2xl font-bold">Configurações</h1>
+            </Header.Title>
+          </Header.Content>
+        </Header.Root>
 
-        <div className="flex items-center justify-center flex-row gap-5">
+        <div className="flex items-center justify-center flex-row gap-5 px-6">
           {!instanceList && <CustomSpinner />}
           {instanceList && (
             <>
-              <Select className="w-full" label="Alterar instância" defaultSelectedKeys={[instance.name]}>
+              <Select className="w-full" label="Instância" defaultSelectedKeys={[instance.name]}>
                 {instanceList.map((_instance) => (
                   <SelectItem
                     onClick={() => handleSelectionChangeInstance(_instance)}
@@ -67,7 +73,7 @@ export default function Settings() {
                 ))}
               </Select>
 
-              <Select className="w-full" label="Alterar região" defaultSelectedKeys={[region]}>
+              <Select className="w-full max-w-[100px]" label="Região" defaultSelectedKeys={[region]}>
                 {PIPED_VALUES.REGIONS.map((_region) => (
                   <SelectItem
                     onClick={() => handleSelectionChangeRegion(_region)}
