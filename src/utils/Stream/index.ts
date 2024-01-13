@@ -20,11 +20,26 @@ export function channelImagemUrlGenerator(url: string) {
   return 'https://' + host + path + data;
 }
 
-export function formatStreamStats(count: number) {
-  if (count >= 1e9) return (count / 1e9).toFixed(1).replace(/\.0$/, '') + 'bi';
-  else if (count >= 1e6) return (Math.floor(count / 1e5) / 10).toFixed(1).replace(/\.0$/, '') + 'mi';
-  else if (count >= 1e3) return (Math.floor(count / 1e2) / 10).toFixed(1).replace(/\.0$/, '') + 'mil';
-  else return count?.toString();
+export function formatStreamStats(num: number) {
+  const numStr = String(num);
+
+  if (num < 1e3) return num;
+
+  if (num < 1e4) return numStr.slice(0, 1) + addDecimal(numStr, 'mil');
+  if (num < 1e5) return numStr.slice(0, 2) + ' mil';
+  if (num < 1e6) return numStr.slice(0, 3) + ' mil';
+
+  if (num < 1e7) return numStr.slice(0, 1) + addDecimal(numStr, 'mi');
+  if (num < 1e8) return numStr.slice(0, 2) + ' mi';
+  if (num < 1e9) return numStr.slice(0, 3) + ' mi';
+
+  if (num < 1e10) return numStr.slice(0, 1) + addDecimal(numStr, 'bi');
+  if (num < 1e11) return numStr.slice(0, 2) + ' bi';
+  if (num < 1e12) return numStr.slice(0, 3) + ' bi';
+
+  function addDecimal(numStr: string, unit: string) {
+    return `${numStr[1] !== '0' ? '.' + numStr[1] : ''} ${unit}`;
+  }
 }
 
 export function secondsToMinutes(seconds: number) {
