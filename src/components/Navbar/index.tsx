@@ -34,8 +34,8 @@ export default function NavBar() {
   return (
     <Navbar isBordered isBlurred={false} maxWidth="xl">
       <Link href={'/'} className="cursor-pointer">
-        <AppLogo className="inline sm:hidden" />
-        <AppBanner className="hidden sm:inline" />
+        <AppLogo className="inline sm:hidden fill-app_orange-600" />
+        <AppBanner className="hidden sm:inline fill-app_orange-600" />
       </Link>
 
       <NavbarContent as="div" className="items-center" justify="end">
@@ -55,11 +55,7 @@ export default function NavBar() {
 
         {isClient && (
           <Button isIconOnly variant="light" aria-label="Alterar tema" onClick={handleToggleTheme}>
-            {resolvedTheme === 'dark' ? (
-              <IconMoon className="text-neutral-200" />
-            ) : (
-              <IconSun className="text-neutral-800" />
-            )}
+            {resolvedTheme === 'dark' ? <IconMoon /> : <IconSun />}
           </Button>
         )}
 
