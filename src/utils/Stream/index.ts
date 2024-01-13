@@ -42,12 +42,6 @@ export function formatStreamStats(num: number) {
   }
 }
 
-export function secondsToMinutes(seconds: number) {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
-
-  const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
-  const formattedSeconds = remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds;
-
-  return `${formattedMinutes}:${formattedSeconds}`;
+export function formatStreamDuration(seconds: number) {
+  return new Date(seconds * 1000).toISOString().substring(seconds < 3600 ? 14 : 11, 19);
 }

@@ -46,7 +46,7 @@ export const TrendingVideo = ({ data }: TrendingVideoProps) => {
               startContent={<IconClock size={16} className="mr-1" />}
               className="text-white bg-black px-2 z-10"
             >
-              {StreamUtils.secondsToMinutes(data.duration)}
+              {StreamUtils.formatStreamDuration(data.duration)}
             </Chip>
           </div>
         </div>
