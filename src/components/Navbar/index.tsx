@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import { useContext, useEffect, useState } from 'react';
 
-import { IconHome, IconMenuDeep, IconMoon, IconSearch, IconSettings, IconSun } from '@tabler/icons-react';
+import { AppLogo, AppBanner } from '../../../public/assets';
+import { IconMenuDeep, IconMoon, IconSearch, IconSettings, IconSun } from '@tabler/icons-react';
 import {
   Button,
   Chip,
@@ -33,8 +34,8 @@ export default function NavBar() {
   return (
     <Navbar isBordered isBlurred={false} maxWidth="xl">
       <Link href={'/'} className="cursor-pointer">
-        <span className="hidden sm:inline text-lg font-bold text-app_orange-600">Clipeanut</span>
-        <IconHome className="inline sm:hidden" />
+        <AppLogo className="inline sm:hidden" />
+        <AppBanner className="hidden sm:inline" />
       </Link>
 
       <NavbarContent as="div" className="items-center" justify="end">
