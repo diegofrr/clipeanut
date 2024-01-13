@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import { Chip, Image } from '@nextui-org/react';
+import { Avatar, Chip, Image } from '@nextui-org/react';
 
 import type { ITrendingVideo } from '@/types';
 import { StreamUtils } from '@/utils';
-import { IconEye } from '@tabler/icons-react';
+import { IconCircleCheckFilled, IconClock, IconEye } from '@tabler/icons-react';
 
 type TrendingVideoProps = {
   data: ITrendingVideo;
@@ -30,29 +30,41 @@ export const TrendingVideo = ({ data }: TrendingVideoProps) => {
             loading="lazy"
             className="group-hover/container:scale-105 transition-transform rounded-none sm:rounded-lg"
           />
-          <Chip
-            size="sm"
-            radius="full"
-            startContent={<IconEye size={16} className="mr-1" />}
-            className="absolute bottom-2 right-2 bg-dark text-white bg-black px-2 z-10"
-          >
-            {StreamUtils.formatStreamStats(data.views)}
-          </Chip>
+          <div className="absolute bottom-2 right-2 bg-dark flex flex-row rounded-full overflow-hidden">
+            <Chip
+              size="sm"
+              radius="none"
+              startContent={<IconEye size={16} className="mr-1" />}
+              className="text-white bg-black px-2 z-10 border-r-1 border-neutral-800"
+            >
+              {StreamUtils.formatStreamStats(data.views)}
+            </Chip>
+
+            <Chip
+              size="sm"
+              radius="none"
+              startContent={<IconClock size={16} className="mr-1" />}
+              className="text-white bg-black px-2 z-10"
+            >
+              {StreamUtils.secondsToMinutes(data.duration)}
+            </Chip>
+          </div>
         </div>
 
         <footer className="flex flex-row gap-4 w-full relative px-6 sm:p-0">
-          <div className="bg-default-200 relative min-w-[40px] min-h-[40px] w-10 h-10 rounded-full overflow-hidden">
-            <Image
-              src={StreamUtils.channelImagemUrlGenerator(data.uploaderAvatar)}
-              alt={data.uploaderName + ' avatar'}
-              width={40}
-              height={40}
-              className="h-10 w-10 min-w-10 min-h-10"
-            />
+          <div className="bg-default-200 relative min-w-[40px] min-h-[40px] w-10 h-10 rounded-full">
+            <Avatar name={data.uploaderName} src={StreamUtils.channelImagemUrlGenerator(data.uploaderAvatar)} />
+            {data.uploaderVerified && (
+              <IconCircleCheckFilled
+                size={18}
+                className="absolute rounded-full p-[1px] bottom-[-2px] right-[-2px] bg-background text-app_orange-600"
+              />
+            )}
           </div>
           <div className="flex w-full flex-col">
-            <span className="text-xs text-gray-800 dark:text-gray-300 mb-1">
-              {data.uploaderName} <span className="mx-1">•</span> {StreamUtils.translateUploadedDate(data.uploadedDate)}
+            <span className="text-xs text-gray-800 dark:text-gray-300 mb-1 inline-flex">
+              {data.uploaderName} <span className="mx-2 leading-normal text-[9px]">•</span>
+              {StreamUtils.translateUploadedDate(data.uploadedDate)}
             </span>
             <p className="text-base text-black dark:text-white font-bold line-clamp-2 h-auto overflow-hidden">
               {data.title}
