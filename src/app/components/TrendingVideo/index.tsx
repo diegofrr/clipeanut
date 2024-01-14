@@ -53,7 +53,11 @@ export const TrendingVideo = ({ data }: TrendingVideoProps) => {
 
         <footer className="flex flex-row gap-4 w-full relative px-6 sm:p-0">
           <div className="bg-default-200 relative min-w-[40px] min-h-[40px] w-10 h-10 rounded-full">
-            <Avatar name={data.uploaderName} src={StreamUtils.channelImagemUrlGenerator(data.uploaderAvatar)} />
+            <Avatar
+              name={data.uploaderName}
+              // src={data.uploaderAvatar}
+              src={StreamUtils.channelImagemUrlGenerator(data.uploaderAvatar)}
+            />
             {data.uploaderVerified && (
               <IconCircleCheckFilled
                 size={18}
