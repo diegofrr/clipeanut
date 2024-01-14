@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 
+import Script from 'next/script';
 import { APP_VALUES } from '@/constants';
 
 export const metadata: Metadata = {
@@ -7,5 +8,11 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return (
+    <>
+      <Script src="scripts/hls.min.js" />
+      <Script src="scripts/dash.all.min.js" />
+      {children}
+    </>
+  );
 }
