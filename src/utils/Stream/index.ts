@@ -1,3 +1,7 @@
+import { generateDashFileFromFormats } from './DashGenerator';
+
+export { generateDashFileFromFormats };
+
 export function translateUploadedDate(uploadedDate: string): string {
   return uploadedDate
     .replace('Streamed', 'Transmitido há')
