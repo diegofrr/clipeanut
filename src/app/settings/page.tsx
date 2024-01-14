@@ -1,6 +1,6 @@
 'use client';
 
-import { useContext, useEffect, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 
 import CustomSpinner from '@/components/CustomSpinner';
 
@@ -37,12 +37,9 @@ export default function Settings() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleSelectionChangeInstance = (instance: IPipedInstance) => {
-    setInstance(instance);
-  };
-
-  const handleSelectionChangeRegion = (region: string) => {
-    setRegion(region);
+  const handleChangeItem = (type: string, { target: { value } }: ChangeEvent<HTMLSelectElement>) => {
+    if (type === 'region') setRegion(value);
+    else setInstance(instanceList?.find((i) => i.name === value) as IPipedInstance);
   };
 
   return (
@@ -60,10 +57,14 @@ export default function Settings() {
           {!instanceList && <CustomSpinner />}
           {instanceList && (
             <>
-              <Select className="w-full" label="Instância" defaultSelectedKeys={[instance.name]}>
+              <Select
+                onChange={(e) => handleChangeItem('instance', e)}
+                className="w-full"
+                label="Instância"
+                defaultSelectedKeys={[instance.name]}
+              >
                 {instanceList.map((_instance) => (
                   <SelectItem
-                    onClick={() => handleSelectionChangeInstance(_instance)}
                     key={_instance.name}
                     value={_instance.name}
                     className={`${_instance.name === instance.name && 'hidden'}`}
@@ -73,14 +74,14 @@ export default function Settings() {
                 ))}
               </Select>
 
-              <Select className="w-full max-w-[100px]" label="Região" defaultSelectedKeys={[region]}>
+              <Select
+                onChange={(e) => handleChangeItem('region', e)}
+                className="w-full max-w-[100px]"
+                label="Região"
+                defaultSelectedKeys={[region]}
+              >
                 {PIPED_VALUES.REGIONS.map((_region) => (
-                  <SelectItem
-                    onClick={() => handleSelectionChangeRegion(_region)}
-                    key={_region}
-                    value={_region}
-                    className={`${_region === region && 'hidden'}`}
-                  >
+                  <SelectItem key={_region} value={_region} className={`${_region === region && 'hidden'}`}>
                     {_region}
                   </SelectItem>
                 ))}
