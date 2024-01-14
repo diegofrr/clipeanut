@@ -14,6 +14,10 @@
   },
   "dependencies": {
     "@nextui-org/react": "^2.2.9",
+    "@oplayer/core": "^1.2.31",
+    "@oplayer/dash": "^1.2.23",
+    "@oplayer/hls": "^1.2.23",
+    "@oplayer/ui": "^1.2.34",
     "@tabler/icons-react": "^2.45.0",
     "fast-xml-parser": "4.3.2",
     "framer-motion": "^10.16.16",
