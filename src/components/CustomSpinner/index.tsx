@@ -1,3 +1,4 @@
+import './custom-spinner.css';
 import styles from './custom-spinner.module.css';
 
 import { Spinner } from '@nextui-org/react';

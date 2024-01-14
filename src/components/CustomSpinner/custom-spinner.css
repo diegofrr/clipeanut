@@ -1,0 +1,12 @@
+.custom-nextjs-spinner {
+
+    div {
+            width: 3.5rem !important;
+            height: 3.5rem !important;
+    }
+
+    i {
+            border-width: 6px !important;
+            border-bottom-color: #ff8400 !important;
+    }
+}

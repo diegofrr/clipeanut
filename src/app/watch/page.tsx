@@ -1,6 +1,5 @@
 'use client';
 
-import '@/lib/ShakaPlayer/shaka-player.css';
 import { useSearchParams } from 'next/navigation';
 
 import NotFound from '../not-found';

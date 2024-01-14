@@ -1,5 +1,6 @@
 'use client';
 
+import '@/components/CustomSpinner/custom-spinner.css';
 import { Spinner } from '@nextui-org/react';
 
 export function VideoPlayerLoading() {
