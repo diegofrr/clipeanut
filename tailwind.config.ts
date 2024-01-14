@@ -74,7 +74,15 @@ const config: Config = {
       },
       themes: {
         dark: {
-          colors: {}
+          colors: {
+            focus: '#F4AD2A'
+          }
+        },
+
+        light: {
+          colors: {
+            focus: '#F4AD2A'
+          }
         }
       }
     })
