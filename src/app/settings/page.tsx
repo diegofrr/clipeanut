@@ -5,15 +5,15 @@ import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import CustomSpinner from '@/components/CustomSpinner';
 
 import type { IPipedInstance } from '@/types';
-import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { Select, SelectItem } from '@nextui-org/react';
+import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { fetchPipedInstancesData } from '@/services/actions/fetchPipedInstancesData';
-import { isFakeDataFetch } from '@/environments';
 import { useLocalStorageWithExpiration } from '@/hooks';
-
-import { PIPED_VALUES } from '@/constants';
+import { isFakeDataFetch } from '@/environments';
 import { Header } from '@/components/Header';
 import { IconSettings } from '@tabler/icons-react';
+import { PIPED_VALUES } from '@/constants';
+
 const { LOCAL_STORAGE_KEYS } = PIPED_VALUES;
 
 export default function Settings() {
