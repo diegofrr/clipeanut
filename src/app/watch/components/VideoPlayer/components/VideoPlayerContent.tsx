@@ -3,7 +3,7 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { StreamContext } from '../contexts/stream';
 
-import Player, { Lang, PlayerPlugin } from '@oplayer/core';
+import Player, { Lang } from '@oplayer/core';
 import ui from '@oplayer/ui';
 import ODash from '@oplayer/dash';
 import OHls from '@oplayer/hls';
@@ -17,7 +17,7 @@ import { isFakeDataFetch } from '@/environments';
 import { PIPED_VALUES } from '@/constants';
 import { VideoPlayerLoading } from './VideoPlayerLoading';
 import { Button } from '@nextui-org/react';
-import { IconMessages } from '@tabler/icons-react';
+import { IconExternalLink } from '@tabler/icons-react';
 import { languages } from './languages';
 
 export default function VideoPlayerContent() {
@@ -62,11 +62,8 @@ export default function VideoPlayerContent() {
 
   async function loadPlayer() {
     const { mimeType, uri, stream } = await getStreamData();
-
-    let type = (() => {}) as () => PlayerPlugin;
-    type = mimeType === 'dash' ? ODash : mimeType === 'hls' ? OHls : type;
-
     const hasSubtitles = stream.subtitles.length;
+    const type = mimeType === 'dash' ? ODash : OHls;
 
     try {
       const player = Player.make('#oplayer', {
@@ -104,7 +101,7 @@ export default function VideoPlayerContent() {
       player.on('loadstart', () => setIsVideoLoaded(true));
       player.on('loadeddata', () => !hasSubtitles && removeSubtitleOption());
     } catch (error) {
-      console.error('Error fetching stream:', error);
+      console.error(error);
     }
   }
 
@@ -132,7 +129,7 @@ export default function VideoPlayerContent() {
       {isVideoLoaded && stream.livestream && (
         <Button
           onClick={handleOpenChat}
-          endContent={<IconMessages />}
+          endContent={<IconExternalLink size={18} />}
           className="bg-app_orange-500 text-black font-medium"
         >
           Abrir chat em outra janela
