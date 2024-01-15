@@ -3,7 +3,7 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { StreamContext } from '../contexts/stream';
 
-import Player, { PlayerPlugin } from '@oplayer/core';
+import Player, { Lang, PlayerPlugin } from '@oplayer/core';
 import ui from '@oplayer/ui';
 import ODash from '@oplayer/dash';
 import OHls from '@oplayer/hls';
@@ -14,10 +14,11 @@ import { PipedInstanceContext } from '@/contexts/pipedInstance';
 
 import { isFakeDataFetch } from '@/environments';
 
-import { DEFAULT_VALUES, PIPED_VALUES } from '@/constants';
+import { PIPED_VALUES } from '@/constants';
 import { VideoPlayerLoading } from './VideoPlayerLoading';
 import { Button } from '@nextui-org/react';
 import { IconMessages } from '@tabler/icons-react';
+import { languages } from './languages';
 
 export default function VideoPlayerContent() {
   const { stream, setStream, streamId } = useContext(StreamContext);
@@ -42,10 +43,7 @@ export default function VideoPlayerContent() {
       /* empty */
     }
 
-    if (options.isFake) {
-      uri = DEFAULT_VALUES.FAKE_VIDEO_URI;
-      mimeType = 'auto';
-    } else if (stream.livestream) {
+    if (stream.livestream) {
       uri = stream.hls;
       mimeType = 'hls';
     } else if (stream.dash) {
@@ -65,17 +63,16 @@ export default function VideoPlayerContent() {
   async function loadPlayer() {
     const { mimeType, uri, stream } = await getStreamData();
 
-    let type = {} as () => PlayerPlugin;
+    let type = (() => {}) as () => PlayerPlugin;
     type = mimeType === 'dash' ? ODash : mimeType === 'hls' ? OHls : type;
 
-    console.log(type, stream.livestream);
+    const hasSubtitles = stream.subtitles.length;
 
     try {
-      Player.make('#oplayer', {
+      const player = Player.make('#oplayer', {
         isLive: stream.livestream,
         autoplay: stream.livestream,
-        muted: !stream.livestream,
-        lang: 'en',
+        muted: stream.livestream,
         preload: 'metadata',
         source: {
           src: uri,
@@ -83,22 +80,36 @@ export default function VideoPlayerContent() {
           title: stream.title,
           poster: stream.thumbnailUrl
         }
-      })
-        .use([
-          ui({
-            pictureInPicture: true,
-            theme: {
-              primaryColor: 'orange'
-            },
-            slideToSeek: 'always'
-          }),
-          type()
-        ])
-        .create()
-        .on('loadstart', () => setIsVideoLoaded(true));
+      });
+
+      player.locales.update(languages);
+      player.locales.lang = 'pt' as Lang;
+
+      player.use([
+        ui({
+          pictureInPicture: true,
+          keyboard: { focused: true, global: true },
+          theme: { primaryColor: '#F4AD2A' },
+          slideToSeek: 'always',
+          settings: ['loop'],
+          miniProgressBar: false,
+          controlBar: {
+            back: 'always'
+          }
+        }),
+        type()
+      ]);
+
+      player.create();
+      player.on('loadstart', () => setIsVideoLoaded(true));
+      player.on('loadeddata', () => !hasSubtitles && removeSubtitleOption());
     } catch (error) {
       console.error('Error fetching stream:', error);
     }
+  }
+
+  function removeSubtitleOption() {
+    document.querySelector('[data-key="oplayer-plugin-dash-Language"]')?.remove();
   }
 
   function handleOpenChat() {
@@ -124,7 +135,7 @@ export default function VideoPlayerContent() {
           endContent={<IconMessages />}
           className="bg-app_orange-500 text-black font-medium"
         >
-          Abrir chat
+          Abrir chat em outra janela
         </Button>
       )}
     </div>
