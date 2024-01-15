@@ -73,9 +73,9 @@ export default function VideoPlayerContent() {
     try {
       Player.make('#oplayer', {
         isLive: stream.livestream,
-        autoplay: true,
-        muted: true,
-        lang: 'auto',
+        autoplay: stream.livestream,
+        muted: !stream.livestream,
+        lang: 'en',
         preload: 'metadata',
         source: {
           src: uri,
