@@ -4,14 +4,19 @@ import { Avatar, Chip, Image } from '@nextui-org/react';
 import type { ITrendingVideo } from '@/types';
 import { StreamUtils } from '@/utils';
 import { IconCircleCheckFilled, IconClock, IconEye } from '@tabler/icons-react';
+import { createRef } from 'react';
 
 type TrendingVideoProps = {
   data: ITrendingVideo;
 };
 
 export const TrendingVideo = ({ data }: TrendingVideoProps) => {
-  function onImageLoaderError() {
-    console.log('Image error');
+  const avatarRef = createRef<HTMLSpanElement>();
+
+  function onLoadAvatarError() {
+    const img = avatarRef?.current?.querySelector('img') as HTMLImageElement;
+    img.src = data.uploaderAvatar;
+    img.style.opacity = '1';
   }
 
   return (
@@ -22,7 +27,6 @@ export const TrendingVideo = ({ data }: TrendingVideoProps) => {
       >
         <div className="flex items-center overflow-hidden justify-center bg-neutral-950 w-full relative rounded-none sm:rounded-lg">
           <Image
-            onError={onImageLoaderError}
             src={`https://i.ytimg.com/vi/${data.url.split('v=')[1]}/mqdefault.jpg`}
             alt={data.title}
             width={720}
@@ -54,9 +58,10 @@ export const TrendingVideo = ({ data }: TrendingVideoProps) => {
         <footer className="flex flex-row gap-4 w-full relative px-6 sm:p-0">
           <div className="bg-default-200 relative min-w-[40px] min-h-[40px] w-10 h-10 rounded-full">
             <Avatar
+              ref={avatarRef}
               name={data.uploaderName}
-              // src={data.uploaderAvatar}
               src={StreamUtils.channelImagemUrlGenerator(data.uploaderAvatar)}
+              onError={onLoadAvatarError}
             />
             {data.uploaderVerified && (
               <IconCircleCheckFilled
