@@ -32,7 +32,7 @@ export const languages = {
     'Can be closed after %ss': 'Can be closed after %ss'
   },
   pt: {
-    Play: 'Testando',
+    Play: 'Play',
     Pause: 'Pausar',
     Loop: 'Repetir',
     Volume: 'Volume',

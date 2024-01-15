@@ -88,25 +88,31 @@ export default function VideoPlayerContent() {
           keyboard: { focused: true, global: true },
           theme: { primaryColor: '#F4AD2A' },
           slideToSeek: 'always',
-          settings: ['loop'],
-          miniProgressBar: false,
-          controlBar: {
-            back: 'always'
-          }
+          miniProgressBar: false
         }),
         type()
       ]);
 
       player.create();
       player.on('loadstart', () => setIsVideoLoaded(true));
-      player.on('loadeddata', () => !hasSubtitles && removeSubtitleOption());
+      player.on('canplay', () => initializePlayer(player));
     } catch (error) {
       console.error(error);
     }
-  }
 
-  function removeSubtitleOption() {
-    document.querySelector('[data-key="oplayer-plugin-dash-Language"]')?.remove();
+    function initializePlayer(player: Player) {
+      setIsVideoLoaded(true);
+      removeSubtitleOption();
+      const video = player.$video;
+      const ui = player.context.ui;
+      ui.$coverButton.onclick = () => {
+        video.paused ? video.play() : video.pause();
+      };
+    }
+
+    function removeSubtitleOption() {
+      if (!hasSubtitles) document.querySelector('[data-key="oplayer-plugin-dash-Language"]')?.remove();
+    }
   }
 
   function handleOpenChat() {
