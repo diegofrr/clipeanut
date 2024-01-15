@@ -1,0 +1,41 @@
+#oplayer {
+    .custom-tooltip {
+        border-radius: 6px !important;
+    }
+
+    .custom-tooltip::after {
+        background-color: #000 !important;
+        padding: 8px 10px !important;
+        border-radius: 1000px;
+    }
+
+    .custom-volume {
+        background-color: #000 !important;
+        border-radius: 6px !important;
+    }
+
+    div[aria-label="Setting"] {
+        background-color: #000 !important;
+        border-radius: 8px !important;
+        max-height: calc(100% - 2.5em) !important;
+        
+        * {
+            border: none !important;
+        }
+
+        div[role="menu"] {
+        }
+
+        div[role="menuitem"] {
+            height: 40px !important;
+        }
+
+        div[data-key="oplayer-plugin-dash-Quality"] {
+
+            div[role="menuitemradio"] {
+                padding: 0 20px;
+            }
+        }
+
+    }
+}

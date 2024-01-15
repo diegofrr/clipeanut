@@ -1,5 +1,6 @@
 'use client';
 
+import './styles/custom-oplayer-ui.css';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { StreamContext } from '../contexts/stream';
 
@@ -62,7 +63,7 @@ export default function VideoPlayerContent() {
 
   async function loadPlayer() {
     const { mimeType, uri, stream } = await getStreamData();
-    const hasSubtitles = stream.subtitles.length;
+    const hasMoreThanOneSubtitle = stream.subtitles.length > 1;
     const type = mimeType === 'dash' ? ODash : OHls;
 
     try {
@@ -94,23 +95,38 @@ export default function VideoPlayerContent() {
 
       player.create();
       player.on('loadstart', () => setIsVideoLoaded(true));
-      player.on('canplay', () => initializePlayer(player));
+      player.on('loadeddata', () => initializePlayer(player));
     } catch (error) {
       console.error(error);
     }
 
     function initializePlayer(player: Player) {
-      setIsVideoLoaded(true);
-      removeSubtitleOption();
       const video = player.$video;
       const ui = player.context.ui;
-      ui.$coverButton.onclick = () => {
-        video.paused ? video.play() : video.pause();
-      };
+
+      setIsVideoLoaded(true);
+      removeSubtitleOption();
+      customUiController(ui.$controllerBottom);
+
+      if (stream.livestream) {
+        ui.$coverButton.onclick = () => {
+          video.paused ? video.play() : video.pause();
+        };
+      }
     }
 
     function removeSubtitleOption() {
-      if (!hasSubtitles) document.querySelector('[data-key="oplayer-plugin-dash-Language"]')?.remove();
+      if (hasMoreThanOneSubtitle) return;
+      document.querySelector('[data-key="oplayer-plugin-dash-Language"]')?.remove();
+    }
+
+    function customUiController(controller: HTMLElement) {
+      controller.querySelectorAll('button').forEach((button) => {
+        button.classList.add('custom-tooltip');
+        if (button.getAttribute('aria-label') === 'Volume') {
+          button.parentElement?.children[1].classList.add('custom-volume');
+        }
+      });
     }
   }
 
