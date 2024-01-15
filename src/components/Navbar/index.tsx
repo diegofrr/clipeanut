@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 
 import { AppLogo, AppBanner } from '../../../public/assets';
@@ -18,7 +19,6 @@ import {
 } from '@nextui-org/react';
 import { useTheme } from 'next-themes';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
-import { usePathname } from 'next/navigation';
 
 export default function NavBar() {
   const { setTheme, resolvedTheme } = useTheme();
