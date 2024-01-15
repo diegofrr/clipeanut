@@ -74,7 +74,6 @@ export default function VideoPlayerContent() {
         source: {
           src: uri,
           format: mimeType,
-          title: stream.title,
           poster: stream.thumbnailUrl
         }
       });
