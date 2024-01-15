@@ -18,12 +18,14 @@ import {
 } from '@nextui-org/react';
 import { useTheme } from 'next-themes';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
+import { usePathname } from 'next/navigation';
 
 export default function NavBar() {
   const { setTheme, resolvedTheme } = useTheme();
   const { region, instance } = useContext(PipedInstanceContext);
 
   const [isClient, setIsClient] = useState(false);
+  const isSettings = usePathname() === '/settings';
 
   useEffect(() => setIsClient(true), []);
 
@@ -39,19 +41,21 @@ export default function NavBar() {
       </Link>
 
       <NavbarContent as="div" className="items-center" justify="end">
-        <Input
-          classNames={{
-            base: 'sm:max-w-[320px] w-full h-10',
-            mainWrapper: 'h-full',
-            input: 'text-small',
-            inputWrapper: 'h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20'
-          }}
-          placeholder="Pesquisar..."
-          size="sm"
-          radius="full"
-          startContent={<IconSearch size={18} />}
-          type="search"
-        />
+        {!isSettings && (
+          <Input
+            classNames={{
+              base: 'sm:max-w-[320px] w-full h-10',
+              mainWrapper: 'h-full',
+              input: 'text-small',
+              inputWrapper: 'h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20'
+            }}
+            placeholder="Pesquisar..."
+            size="sm"
+            radius="full"
+            startContent={<IconSearch size={18} />}
+            type="search"
+          />
+        )}
 
         {isClient && (
           <Button isIconOnly variant="light" aria-label="Alterar tema" onClick={handleToggleTheme}>
