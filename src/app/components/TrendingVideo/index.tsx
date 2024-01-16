@@ -27,7 +27,8 @@ export const TrendingVideo = ({ data }: TrendingVideoProps) => {
       >
         <div className="flex items-center overflow-hidden justify-center bg-neutral-950 w-full relative rounded-none sm:rounded-lg">
           <Image
-            src={`https://i.ytimg.com/vi/${data.url.split('v=')[1]}/mqdefault.jpg`}
+            // src={`https://i.ytimg.com/vi/${data.url.split('v=')[1]}/mqdefault.jpg`}
+            src={data.thumbnail}
             alt={data.title}
             width={720}
             height={480}
