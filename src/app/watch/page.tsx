@@ -13,7 +13,7 @@ export default function Watch() {
     <NotFound />
   ) : (
     <main className="w-full">
-      <div className="max-w-9xl m-auto p-6 flex flex-col justify-center">
+      <div className="max-w-9xl m-auto p-6 flex flex-col items-center justify-center">
         <VideoPlayer.Root streamId={streamId}>
           <VideoPlayer.Header />
           <VideoPlayer.Content />
