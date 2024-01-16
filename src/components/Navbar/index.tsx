@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 
 import { AppLogo, AppBanner } from '../../../public/assets';
@@ -26,6 +26,7 @@ export default function NavBar() {
 
   const [isClient, setIsClient] = useState(false);
   const isSettings = usePathname() === '/settings';
+  const router = useRouter();
 
   useEffect(() => setIsClient(true), []);
 
@@ -82,10 +83,15 @@ export default function NavBar() {
               <Chip size="sm">Região: {region}</Chip>
             </DropdownItem>
 
-            <DropdownItem textValue="Settings" key="settings" closeOnSelect={true} startContent={<IconSettings />}>
-              <Link href="/settings" className="font-semibold">
-                Configurações
-              </Link>
+            <DropdownItem
+              onClick={() => router.push('/settings')}
+              className="font-medium"
+              textValue="Settings"
+              key="settings"
+              closeOnSelect={true}
+              startContent={<IconSettings />}
+            >
+              Configurações
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
