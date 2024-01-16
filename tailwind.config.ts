@@ -26,7 +26,9 @@ const config: Config = {
       maxWidth: {
         'full-minus-2rem': 'calc(100% - 2rem)',
         'full-minus-3rem': 'calc(100% - 3rem)',
-        'full-minus-4rem': 'calc(100% - 4rem)'
+        'full-minus-4rem': 'calc(100% - 4rem)',
+        '8xl': '90rem',
+        '9xl': '96rem'
       },
       screens: {
         xxs: '420px',
