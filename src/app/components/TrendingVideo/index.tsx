@@ -6,11 +6,11 @@ import { StreamUtils } from '@/utils';
 import { IconCircleCheckFilled, IconClock, IconEye } from '@tabler/icons-react';
 import { createRef } from 'react';
 
-type TrendingVideoProps = {
+type TrendingVideoProps = React.HTMLAttributes<HTMLElement> & {
   data: ITrendingVideo;
 };
 
-export const TrendingVideo = ({ data }: TrendingVideoProps) => {
+export const TrendingVideo = ({ data, ...props }: TrendingVideoProps) => {
   const avatarRef = createRef<HTMLSpanElement>();
 
   function onLoadAvatarError() {
@@ -20,40 +20,42 @@ export const TrendingVideo = ({ data }: TrendingVideoProps) => {
   }
 
   return (
-    <Link href={data.url}>
+    <div {...props}>
       <div
         title={data.title}
-        className="group/container transition-colors cursor-pointer flex flex-col items-center justify-start gap-4 w-full"
+        className="group/container transition-colors flex flex-col items-center justify-start gap-4 w-full"
       >
         <div className="flex items-center overflow-hidden justify-center bg-neutral-950 w-full relative rounded-none sm:rounded-lg">
-          <Image
-            // src={`https://i.ytimg.com/vi/${data.url.split('v=')[1]}/mqdefault.jpg`}
-            src={data.thumbnail}
-            alt={data.title}
-            width={720}
-            height={480}
-            loading="lazy"
-            className="group-hover/container:scale-105 transition-transform rounded-none sm:rounded-lg"
-          />
-          <div className="absolute bottom-2 right-2 bg-dark flex flex-row rounded-full overflow-hidden">
-            <Chip
-              size="sm"
-              radius="none"
-              startContent={<IconEye size={16} className="mr-1" />}
-              className="text-white bg-black px-2 z-10 border-r-1 border-neutral-800"
-            >
-              {StreamUtils.formatStreamStats(data.views)}
-            </Chip>
+          <Link href={data.url}>
+            <Image
+              // src={`https://i.ytimg.com/vi/${data.url.split('v=')[1]}/mqdefault.jpg`}
+              src={data.thumbnail}
+              alt={data.title}
+              width={720}
+              height={480}
+              loading="lazy"
+              className="group-hover/container:scale-105 transition-transform rounded-none sm:rounded-lg"
+            />
+            <div className="absolute bottom-2 right-2 bg-dark flex flex-row rounded-full overflow-hidden">
+              <Chip
+                size="sm"
+                radius="none"
+                startContent={<IconEye size={16} className="mr-1" />}
+                className="text-white bg-black px-2 z-10 border-r-1 border-neutral-800"
+              >
+                {StreamUtils.formatStreamStats(data.views)}
+              </Chip>
 
-            <Chip
-              size="sm"
-              radius="none"
-              startContent={<IconClock size={16} className="mr-1" />}
-              className="text-white bg-black px-2 z-10"
-            >
-              {StreamUtils.formatStreamDuration(data.duration)}
-            </Chip>
-          </div>
+              <Chip
+                size="sm"
+                radius="none"
+                startContent={<IconClock size={16} className="mr-1" />}
+                className="text-white bg-black px-2 z-10"
+              >
+                {StreamUtils.formatStreamDuration(data.duration)}
+              </Chip>
+            </div>
+          </Link>
         </div>
 
         <footer className="flex flex-row gap-4 w-full relative px-6 sm:p-0">
@@ -76,12 +78,14 @@ export const TrendingVideo = ({ data }: TrendingVideoProps) => {
               {data.uploaderName} <span className="mx-2 leading-normal text-[9px]">•</span>
               {StreamUtils.translateUploadedDate(data.uploadedDate)}
             </span>
-            <p className="text-base text-black dark:text-white font-bold line-clamp-2 h-auto overflow-hidden">
-              {data.title}
-            </p>
+            <Link href={data.url}>
+              <p className="text-base text-black dark:text-white font-bold line-clamp-2 h-auto overflow-hidden">
+                {data.title}
+              </p>
+            </Link>
           </div>
         </footer>
       </div>
-    </Link>
+    </div>
   );
 };

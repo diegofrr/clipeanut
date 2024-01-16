@@ -44,7 +44,7 @@ export default function Settings() {
 
   return (
     <main className="w-full">
-      <div className="max-w-7xl m-auto p-6">
+      <div className="max-w-9xl m-auto p-6">
         <Header.Root>
           <Header.Content>
             <Header.Title>
@@ -76,7 +76,7 @@ export default function Settings() {
 
               <Select
                 onChange={(e) => handleChangeItem('region', e)}
-                className="w-full max-w-[100px]"
+                className="w-full max-w-[200px]"
                 label="Região"
                 defaultSelectedKeys={[region]}
               >

@@ -12,11 +12,13 @@ export default function Watch() {
   return !streamId ? (
     <NotFound />
   ) : (
-    <main className="w-full flex items-center justify-center min-h-screen-minus-navbar">
-      <VideoPlayer.Root streamId={streamId}>
-        <VideoPlayer.Header />
-        <VideoPlayer.Content />
-      </VideoPlayer.Root>
+    <main className="w-full">
+      <div className="max-w-9xl m-auto p-6 flex flex-col justify-center">
+        <VideoPlayer.Root streamId={streamId}>
+          <VideoPlayer.Header />
+          <VideoPlayer.Content />
+        </VideoPlayer.Root>
+      </div>
     </main>
   );
 }
