@@ -3,7 +3,9 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
+import { useTheme } from 'next-themes';
 
+import type { UserTheme } from './types';
 import { AppLogo, AppBanner } from '../../../public/assets';
 import { IconMenuDeep, IconMoon, IconSearch, IconSettings, IconSun } from '@tabler/icons-react';
 import {
@@ -17,13 +19,7 @@ import {
   Navbar,
   NavbarContent
 } from '@nextui-org/react';
-import { useTheme } from 'next-themes';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
-
-type UserTheme = {
-  name: string;
-  icon: JSX.Element;
-};
 
 export default function NavBar() {
   const { setTheme, resolvedTheme } = useTheme();
@@ -48,7 +44,7 @@ export default function NavBar() {
   }
 
   return (
-    <Navbar isBordered isBlurred={false} maxWidth="xl">
+    <Navbar isBordered isBlurred={false} maxWidth="xl" className="z-max">
       <Link href={'/'} className="cursor-pointer">
         <AppLogo className="inline sm:hidden fill-app_orange-600" />
         <AppBanner className="hidden sm:inline fill-app_orange-600" />
