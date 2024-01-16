@@ -47,5 +47,6 @@ export function formatStreamStats(num: number) {
 }
 
 export function formatStreamDuration(seconds: number) {
-  return new Date(seconds * 1000).toISOString().substring(seconds < 3600 ? 14 : 11, 19);
+  const time = String(new Date(seconds * 1000).toISOString().substring(seconds < 3600 ? 14 : 11, 19));
+  return time.slice(time.startsWith('0') ? 1 : 0);
 }

@@ -23,9 +23,6 @@
             border: none !important;
         }
 
-        div[role="menu"] {
-        }
-
         div[role="menuitem"] {
             height: 40px !important;
         }
