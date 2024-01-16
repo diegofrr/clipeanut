@@ -20,15 +20,28 @@ import {
 import { useTheme } from 'next-themes';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
 
+type UserTheme = {
+  name: string;
+  icon: JSX.Element;
+};
+
 export default function NavBar() {
   const { setTheme, resolvedTheme } = useTheme();
   const { region, instance } = useContext(PipedInstanceContext);
 
   const [isClient, setIsClient] = useState(false);
+  const [userTheme, setUserTheme] = useState<UserTheme>({ name: '', icon: <></> });
   const isSettings = usePathname() === '/settings';
   const router = useRouter();
 
   useEffect(() => setIsClient(true), []);
+
+  useEffect(() => {
+    setUserTheme({
+      name: resolvedTheme === 'light' ? 'claro' : 'escuro',
+      icon: resolvedTheme === 'light' ? <IconSun /> : <IconMoon />
+    });
+  }, [resolvedTheme]);
 
   function handleToggleTheme() {
     setTheme(resolvedTheme === 'light' ? 'dark' : 'light');
@@ -45,7 +58,7 @@ export default function NavBar() {
         {!isSettings && (
           <Input
             classNames={{
-              base: 'sm:max-w-[320px] w-full h-10',
+              base: 'sm:max-w-[420px] w-full h-10',
               mainWrapper: 'h-full',
               input: 'text-small',
               inputWrapper: 'h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20'
@@ -56,12 +69,6 @@ export default function NavBar() {
             startContent={<IconSearch size={18} />}
             type="search"
           />
-        )}
-
-        {isClient && (
-          <Button isIconOnly variant="light" aria-label="Alterar tema" onClick={handleToggleTheme}>
-            {resolvedTheme === 'dark' ? <IconMoon /> : <IconSun />}
-          </Button>
         )}
 
         <Dropdown backdrop="opaque" placement="bottom-end">
@@ -76,7 +83,7 @@ export default function NavBar() {
               isReadOnly
               showDivider
               key="profile"
-              className="gap-2 mb-4 cursor-default hover:bg-none ext-xl  pointer-events-none flex-shrink-0"
+              className="gap-2 mb-4 cursor-default hover:bg-none ext-xl pointer-events-none flex-shrink-0"
             >
               <span className="text-xs text-default-600">Instância</span>
               <p className="font-semibold mb-2">{instance.name}</p>
@@ -85,14 +92,26 @@ export default function NavBar() {
 
             <DropdownItem
               onClick={() => router.push('/settings')}
-              className="font-medium"
               textValue="Settings"
               key="settings"
               closeOnSelect={true}
               startContent={<IconSettings />}
             >
-              Configurações
+              <span className="font-medium">Configurações</span>
             </DropdownItem>
+
+            {isClient ? (
+              <DropdownItem
+                textValue="Toggle theme"
+                className="font-medium"
+                onClick={handleToggleTheme}
+                startContent={userTheme.icon}
+              >
+                <span className="font-medium">Modo {userTheme.name}</span>
+              </DropdownItem>
+            ) : (
+              <></>
+            )}
           </DropdownMenu>
         </Dropdown>
       </NavbarContent>
