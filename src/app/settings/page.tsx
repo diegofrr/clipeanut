@@ -47,9 +47,7 @@ export default function Settings() {
       <div className="max-w-9xl m-auto p-6">
         <Header.Root>
           <Header.Content>
-            <Header.Title>
-              <IconSettings size={24} /> <h1 className="text-2xl font-bold">Configurações</h1>
-            </Header.Title>
+            <Header.Title icon={<IconSettings size={24} />}>Configurações</Header.Title>
           </Header.Content>
         </Header.Root>
 

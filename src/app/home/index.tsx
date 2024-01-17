@@ -45,9 +45,7 @@ export default function Home() {
       <div className="max-w-9xl m-auto py-6 sm:p-6 flex flex-col justify-center">
         <Header.Root className="px-6 sm:px-0">
           <Header.Content>
-            <Header.Title>
-              <IconFlame size={24} /> <h1 className="text-2xl font-bold">Em alta</h1>
-            </Header.Title>
+            <Header.Title icon={<IconFlame size={24} />}>Em alta</Header.Title>
           </Header.Content>
         </Header.Root>
 
