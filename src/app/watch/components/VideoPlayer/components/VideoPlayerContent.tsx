@@ -121,9 +121,9 @@ export default function VideoPlayerContent() {
 
       document.addEventListener('keydown', ({ code }) => {
         if (code === 'Space') player.togglePlay();
-        else if (code === 'm') player.toggleMute();
         else if (code === 'ArrowRight') player.seek(player.currentTime + 5);
         else if (code === 'ArrowLeft') player.seek(player.currentTime - 5);
+        else if (code === 'KeyM') player.toggleMute();
         else if (code === 'Digit0' || code === 'Numpad0') player.seek(0);
         else if (code === 'Digit1' || code === 'Numpad1') player.seek(seekTime * 1);
         else if (code === 'Digit2' || code === 'Numpad2') player.seek(seekTime * 2);
