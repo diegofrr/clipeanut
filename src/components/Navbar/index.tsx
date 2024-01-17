@@ -9,6 +9,7 @@ import type { UserTheme } from './types';
 
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
 
+import { hasSearchInput } from './utils';
 import { AppLogo, AppBanner } from '../../../public/assets';
 import { IconMenuDeep, IconMoon, IconSearch, IconSettings, IconSun } from '@tabler/icons-react';
 import {
@@ -29,7 +30,8 @@ export default function NavBar() {
 
   const [isClient, setIsClient] = useState(false);
   const [userTheme, setUserTheme] = useState<UserTheme>({ name: '', icon: <></> });
-  const isSettings = usePathname() === '/settings';
+
+  const pathname = usePathname();
   const router = useRouter();
 
   useEffect(() => setIsClient(true), []);
@@ -57,7 +59,7 @@ export default function NavBar() {
       </Link>
 
       <NavbarContent as="div" className="items-center" justify="end">
-        {!isSettings && (
+        {hasSearchInput(pathname) && (
           <Input
             classNames={{
               base: 'sm:max-w-[420px] w-full h-10',
