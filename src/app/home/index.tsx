@@ -2,8 +2,8 @@
 
 import { useContext, useEffect, useState } from 'react';
 
+import Aside from './components/Aside/components';
 import TrendingVideos from './components/TrendingVideos';
-import TrendingMusics from './components/Aside/components/TrendingMusics';
 
 import type { ITrendingVideo } from '@/types';
 import { FetchTrendingVideosOptionsType, fetchTrendingVideos } from '@/services/actions/fetchTrendingVideosData';
@@ -53,7 +53,7 @@ export default function Home() {
 
         <div className="flex flex-col-reverse justify-center w-full md:flex-row gap-6">
           <TrendingVideos data={trendingVideos} isLoading={isLoading} />
-          <TrendingMusics />
+          <Aside />
         </div>
       </div>
     </main>
