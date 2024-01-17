@@ -1,4 +1,4 @@
-import Player from '@oplayer/core';
+import type Player from '@oplayer/core';
 
 export function addCustomKeyboardActions(player: Player) {
   const seekTime = player.duration / 9;

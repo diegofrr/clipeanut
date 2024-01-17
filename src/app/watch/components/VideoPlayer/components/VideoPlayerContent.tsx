@@ -1,26 +1,29 @@
 'use client';
 
-import './styles/custom-oplayer-ui.css';
+// Libs externas
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { StreamContext } from '../contexts/stream';
+
+import './styles/custom-oplayer-ui.css';
 
 import Player, { Lang } from '@oplayer/core';
-import ui from '@oplayer/ui';
 import ODash from '@oplayer/dash';
 import OHls from '@oplayer/hls';
+import ui from '@oplayer/ui';
 
 import { FetchStreamOptionsType, fetchStream } from '@/services/actions/fetchStreamData';
-import { StreamUtils } from '@/utils';
+
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
+import { StreamContext } from '../contexts/stream';
 
-import { isFakeDataFetch } from '@/environments';
-
-import { PlayerUtils } from './utils';
-import { PIPED_VALUES } from '@/constants';
-import { VideoPlayerLoading } from './VideoPlayerLoading';
 import { Button } from '@nextui-org/react';
 import { IconExternalLink } from '@tabler/icons-react';
+import { VideoPlayerLoading } from './VideoPlayerLoading';
+
+import { isFakeDataFetch } from '@/environments';
+import { PIPED_VALUES } from '@/constants';
 import { languages } from './languages';
+import { PlayerUtils } from './utils';
+import { StreamUtils } from '@/utils';
 
 export default function VideoPlayerContent() {
   const { stream, setStream, streamId } = useContext(StreamContext);
