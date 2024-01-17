@@ -3,23 +3,26 @@ import styles from './custom-spinner.module.css';
 
 import { Spinner } from '@nextui-org/react';
 
-type CustomSpinnerProps = {
+type CustomSpinnerProps = React.HTMLAttributes<HTMLElement> & {
   stroke?: 'lg' | 'sm' | 'md';
   size?: 'lg' | 'sm' | 'md';
   color?: 'current' | 'white' | 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
   label?: string;
 };
 
-export default function CustomSpinner(props: CustomSpinnerProps) {
+export default function CustomSpinner({ stroke, size, color, label, ...props }: CustomSpinnerProps) {
   return (
     <Spinner
-      label={props.label}
-      color={props.color}
-      size={props.size}
-      className={`
-      ${!props.color && styles['custom-color']} 
-      ${props.stroke && styles[`size-${props.stroke}`]}
-      `}
+      {...props}
+      label={label}
+      color={color}
+      size={size}
+      className={
+        `
+      ${!color && styles['custom-color']} 
+      ${stroke && styles[`size-${stroke}`]}
+    ` + props.className || ''
+      }
     />
   );
 }

@@ -52,8 +52,8 @@ export default function Home() {
           </Header.Content>
         </Header.Root>
 
-        <div className="flex flex-col-reverse md:flex-row gap-6">
-          {loading && <CustomSpinner size="lg" stroke="md" />}
+        <div className="flex flex-col-reverse justify-center w-full md:flex-row gap-6">
+          {loading && <CustomSpinner size="lg" stroke="md" className="absolute" />}
           <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-center">
             {!loading && trendingVideos.length > 0 && (
               <>
@@ -65,7 +65,7 @@ export default function Home() {
           </div>
 
           <aside className="md:sticky bg-purple-950 min-w-full md:min-w-[200px] rounded-lg p-6 lg:min-w-[280px] md:top-[calc(65px+1.5rem)] h-32 md:h-[400px]">
-            Text
+            <h2>Mais assistidos</h2>
           </aside>
         </div>
       </div>
