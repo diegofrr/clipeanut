@@ -5,18 +5,25 @@ import type { ITrendingVideo } from '@/types';
 import { StreamUtils } from '@/utils';
 import { IconCircleCheckFilled, IconClock, IconEye } from '@tabler/icons-react';
 import { createRef } from 'react';
+import { isFakeDataFetch } from '@/environments';
 
 type TrendingVideoProps = React.HTMLAttributes<HTMLElement> & {
   data: ITrendingVideo;
 };
 
 export const TrendingVideo = ({ data, ...props }: TrendingVideoProps) => {
-  const avatarRef = createRef<HTMLSpanElement>();
+  const thumbnailRef = createRef<HTMLImageElement>();
 
-  function onLoadAvatarError() {
-    const img = avatarRef?.current?.querySelector('img') as HTMLImageElement;
-    img.src = data.uploaderAvatar;
+  function onLoadThumbnailError() {
+    const img = thumbnailRef.current as HTMLImageElement;
+    img.src = data.thumbnail;
     img.style.opacity = '1';
+  }
+
+  function getStreamImage(type: 'thumbnail' | 'avatar') {
+    if (type === 'avatar') return data.uploaderAvatar;
+    else if (isFakeDataFetch) return data.thumbnail;
+    else return `https://i.ytimg.com/vi/${data.url.split('v=')[1]}/mqdefault.jpg`;
   }
 
   return (
@@ -28,8 +35,9 @@ export const TrendingVideo = ({ data, ...props }: TrendingVideoProps) => {
         <div className="flex items-center overflow-hidden justify-center bg-neutral-950 w-full relative rounded-none sm:rounded-lg">
           <Link href={data.url}>
             <Image
-              // src={`https://i.ytimg.com/vi/${data.url.split('v=')[1]}/mqdefault.jpg`}
-              src={data.thumbnail}
+              src={getStreamImage('thumbnail')}
+              ref={thumbnailRef}
+              onError={onLoadThumbnailError}
               alt={data.title}
               width={720}
               height={480}
@@ -60,12 +68,7 @@ export const TrendingVideo = ({ data, ...props }: TrendingVideoProps) => {
 
         <footer className="flex flex-row gap-4 w-full relative px-6 sm:p-0">
           <div className="bg-default-200 relative min-w-[40px] min-h-[40px] w-10 h-10 rounded-full">
-            <Avatar
-              ref={avatarRef}
-              name={data.uploaderName}
-              src={StreamUtils.channelImagemUrlGenerator(data.uploaderAvatar)}
-              onError={onLoadAvatarError}
-            />
+            <Avatar name={data.uploaderName} src={getStreamImage('avatar')} />
             {data.uploaderVerified && (
               <IconCircleCheckFilled
                 size={18}
