@@ -1,7 +1,7 @@
-import './custom-spinner.css';
 import styles from './custom-spinner.module.css';
 
 import { Spinner } from '@nextui-org/react';
+import './custom-spinner.css';
 
 type CustomSpinnerProps = React.HTMLAttributes<HTMLElement> & {
   stroke?: 'lg' | 'sm' | 'md';

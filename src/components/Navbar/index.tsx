@@ -6,6 +6,9 @@ import { useContext, useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 
 import type { UserTheme } from './types';
+
+import { PipedInstanceContext } from '@/contexts/pipedInstance';
+
 import { AppLogo, AppBanner } from '../../../public/assets';
 import { IconMenuDeep, IconMoon, IconSearch, IconSettings, IconSun } from '@tabler/icons-react';
 import {
@@ -19,7 +22,6 @@ import {
   Navbar,
   NavbarContent
 } from '@nextui-org/react';
-import { PipedInstanceContext } from '@/contexts/pipedInstance';
 
 export default function NavBar() {
   const { setTheme, resolvedTheme } = useTheme();

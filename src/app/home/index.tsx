@@ -7,7 +7,9 @@ import TrendingVideos from './components/TrendingVideos';
 
 import type { ITrendingVideo } from '@/types';
 import { FetchTrendingVideosOptionsType, fetchTrendingVideos } from '@/services/actions/fetchTrendingVideosData';
+
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
+
 import { isFakeDataFetch } from '@/environments';
 import { IconFlame } from '@tabler/icons-react';
 import { Header } from '@/components/Header';

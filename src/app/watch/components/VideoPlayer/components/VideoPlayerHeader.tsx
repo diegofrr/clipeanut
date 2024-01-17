@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import { useContext } from 'react';
-import { Avatar } from '@nextui-org/react';
 
 import { StreamContext } from '../contexts/stream';
+
+import { Avatar } from '@nextui-org/react';
 import { StreamUtils } from '@/utils';
 
 export function VideoPlayerHeader() {

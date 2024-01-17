@@ -1,6 +1,7 @@
 'use client';
 
 import PipedInstanceProvider from '@/contexts/pipedInstance';
+
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { NextUIProvider } from '@nextui-org/react';
 
