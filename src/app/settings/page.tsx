@@ -74,7 +74,7 @@ export default function Settings() {
 
               <Select
                 onChange={(e) => handleChangeItem('region', e)}
-                className="w-full max-w-[200px]"
+                className="w-full max-w-[100px] sm:max-w-[200px]"
                 label="Região"
                 defaultSelectedKeys={[region]}
               >
