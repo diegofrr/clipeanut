@@ -44,7 +44,7 @@ export default function NavBar() {
   }
 
   return (
-    <Navbar isBordered isBlurred={false} maxWidth="2xl" className="z-max">
+    <Navbar isBlurred={false} maxWidth="2xl" className="z-max border-1 border-foreground-50">
       <Link href={'/'} className="cursor-pointer">
         <AppLogo className="inline sm:hidden fill-app_orange-600" />
         <AppBanner className="hidden sm:inline fill-app_orange-600" />
