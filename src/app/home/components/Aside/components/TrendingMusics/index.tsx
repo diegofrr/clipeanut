@@ -11,7 +11,7 @@ export default function TrendingMusics() {
     >
       <header className="w-full flex flex-row items-center gap-2 text-base font-medium">
         <IconMusic size={16} />
-        <h2>Músicas agora</h2>
+        <h2>Músicas</h2>
       </header>
     </aside>
   );
