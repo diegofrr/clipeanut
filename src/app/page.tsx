@@ -52,16 +52,22 @@ export default function Home() {
           </Header.Content>
         </Header.Root>
 
-        {loading && <CustomSpinner size="lg" stroke="md" />}
-        {!loading && trendingVideos.length > 0 && (
-          <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 justify-center">
-              {trendingVideos.map((video, index) => (
-                <TrendingVideo key={index} data={video} />
-              ))}
-            </div>
-          </>
-        )}
+        <div className="flex flex-col-reverse md:flex-row gap-6">
+          {loading && <CustomSpinner size="lg" stroke="md" />}
+          <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-center">
+            {!loading && trendingVideos.length > 0 && (
+              <>
+                {trendingVideos.map((video, index) => (
+                  <TrendingVideo key={index} data={video} />
+                ))}
+              </>
+            )}
+          </div>
+
+          <aside className="md:sticky bg-purple-950 min-w-full md:min-w-[200px] rounded-lg p-6 lg:min-w-[280px] md:top-[calc(65px+1.5rem)] h-32 md:h-[400px]">
+            Text
+          </aside>
+        </div>
       </div>
     </main>
   );
