@@ -9,7 +9,7 @@ import type { UserTheme } from './types';
 
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
 
-import { hasSearchInput } from './utils';
+import { hasNavbar, hasSearchInput } from './utils';
 import { AppLogo, AppBanner } from '../../../public/assets';
 import { IconMenuDeep, IconMoon, IconSearch, IconSettings, IconSun } from '@tabler/icons-react';
 import {
@@ -58,7 +58,9 @@ export default function NavBar() {
     console.log(searchValue);
   }
 
-  return (
+  return !hasNavbar(pathname) ? (
+    <></>
+  ) : (
     <Navbar
       isBlurred={false}
       maxWidth="2xl"
