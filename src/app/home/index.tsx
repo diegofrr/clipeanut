@@ -25,16 +25,20 @@ export default function Home() {
   async function loadTrendingVideos() {
     setIsLoading(true);
 
-    const options = { instance, region, isFake: isFakeDataFetch, delay: 1 } as FetchTrendingVideosOptionsType;
+    const options = {
+      instance,
+      region,
+      isFake: isFakeDataFetch,
+      delay: 1
+    } as FetchTrendingVideosOptionsType;
 
-    await fetchTrendingVideos({ options })
-      .then((data) => {
-        setTrendingVideos(data);
-        setIsLoading(false);
-      })
-      .catch((error: Error) => {
-        console.error(error);
-      });
+    try {
+      const data = await fetchTrendingVideos({ options });
+      setTrendingVideos(data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   useEffect(() => {
