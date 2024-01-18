@@ -11,7 +11,7 @@ import { PipedInstanceContext } from '@/contexts/pipedInstance';
 
 import { hasNavbar, hasSearchInput } from './utils';
 import { AppLogo, AppBanner } from '../../../public/assets';
-import { IconMenuDeep, IconMoon, IconSearch, IconSettings, IconSun } from '@tabler/icons-react';
+import { IconHeart, IconMenuDeep, IconMoon, IconSearch, IconSettings, IconSun } from '@tabler/icons-react';
 import {
   Button,
   Chip,
@@ -111,6 +111,16 @@ export default function NavBar() {
             </DropdownItem>
 
             <DropdownItem
+              onClick={() => router.push('/me')}
+              textValue="My Page"
+              key="my_page"
+              closeOnSelect={true}
+              startContent={<IconHeart />}
+            >
+              <span className="font-medium">Minha página</span>
+            </DropdownItem>
+
+            <DropdownItem
               onClick={() => router.push('/settings')}
               textValue="Settings"
               key="settings"
@@ -119,6 +129,12 @@ export default function NavBar() {
             >
               <span className="font-medium">Configurações</span>
             </DropdownItem>
+
+            <DropdownItem
+              isReadOnly
+              showDivider
+              className="gap-2 mb-4 cursor-default hover:bg-none ext-xl pointer-events-none flex-shrink-0"
+            />
 
             {isClient ? (
               <DropdownItem
