@@ -1,11 +1,13 @@
 import Link from 'next/link';
-import { Avatar, Chip, Image } from '@nextui-org/react';
+import { createRef } from 'react';
 
 import type { ITrendingVideo } from '@/types';
+
 import { StreamUtils } from '@/utils';
-import { IconCircleCheckFilled, IconClock, IconEye } from '@tabler/icons-react';
-import { createRef } from 'react';
 import { isFakeDataFetch } from '@/environments';
+
+import { IconCircleCheckFilled, IconClock, IconEye, IconHeart } from '@tabler/icons-react';
+import { Avatar, Button, Chip, Image } from '@nextui-org/react';
 
 type TrendingVideoProps = React.HTMLAttributes<HTMLElement> & {
   data: ITrendingVideo;
@@ -28,11 +30,8 @@ export const TrendingVideo = ({ data, ...props }: TrendingVideoProps) => {
 
   return (
     <div {...props}>
-      <div
-        title={data.title}
-        className="group/container transition-colors flex flex-col items-center justify-start gap-4 w-full"
-      >
-        <div className="flex items-center overflow-hidden justify-center bg-neutral-950 w-full relative rounded-none sm:rounded-lg">
+      <div title={data.title} className="transition-colors flex flex-col items-center justify-start gap-4 w-full">
+        <div className="group/container flex items-center overflow-hidden justify-center bg-neutral-950 w-full relative rounded-none sm:rounded-lg">
           <Link href={data.url}>
             <Image
               src={getStreamImage('thumbnail')}
@@ -76,6 +75,7 @@ export const TrendingVideo = ({ data, ...props }: TrendingVideoProps) => {
               />
             )}
           </div>
+
           <div className="flex w-full flex-col">
             <span className="text-xs text-gray-800 dark:text-gray-300 mb-1 inline-flex">
               {data.uploaderName} <span className="mx-2 leading-normal text-[9px]">•</span>
@@ -86,6 +86,12 @@ export const TrendingVideo = ({ data, ...props }: TrendingVideoProps) => {
                 {data.title}
               </p>
             </Link>
+          </div>
+
+          <div className="cursorpo">
+            <Button isIconOnly variant="light">
+              <IconHeart stroke={1.5} size={20} className="opacity-50" />
+            </Button>
           </div>
         </footer>
       </div>
