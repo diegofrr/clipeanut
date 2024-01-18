@@ -30,7 +30,6 @@ export default function NavBar() {
 
   const [isClient, setIsClient] = useState(false);
   const [userTheme, setUserTheme] = useState<UserTheme>({ name: '', icon: <></> });
-  const [searchValue, setSearchValue] = useState<string>('');
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout>();
 
   const pathname = usePathname();
@@ -49,12 +48,12 @@ export default function NavBar() {
     setTheme(resolvedTheme === 'light' ? 'dark' : 'light');
   }
 
-  function fetchSuggestionsController() {
+  function fetchSuggestionsController({ target }: React.ChangeEvent<HTMLInputElement>) {
     if (searchTimeout) clearTimeout(searchTimeout);
-    setSearchTimeout(setTimeout(fetchSuggestions, 1000));
+    setSearchTimeout(setTimeout(() => fetchSuggestions(target.value), 500));
   }
 
-  function fetchSuggestions() {
+  function fetchSuggestions(searchValue: string) {
     console.log(searchValue);
   }
 
@@ -74,9 +73,7 @@ export default function NavBar() {
       <NavbarContent as="div" className="items-center" justify="end">
         {hasSearchInput(pathname) && (
           <Input
-            value={searchValue}
-            onValueChange={setSearchValue}
-            onChange={fetchSuggestionsController}
+            onChange={(e) => fetchSuggestionsController(e)}
             placeholder="Pesquisar..."
             size="sm"
             radius="full"
