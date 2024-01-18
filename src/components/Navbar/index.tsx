@@ -30,6 +30,8 @@ export default function NavBar() {
 
   const [isClient, setIsClient] = useState(false);
   const [userTheme, setUserTheme] = useState<UserTheme>({ name: '', icon: <></> });
+  const [searchValue, setSearchValue] = useState<string>('');
+  const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout>();
 
   const pathname = usePathname();
   const router = useRouter();
@@ -47,11 +49,20 @@ export default function NavBar() {
     setTheme(resolvedTheme === 'light' ? 'dark' : 'light');
   }
 
+  function fetchSuggestionsController() {
+    if (searchTimeout) clearTimeout(searchTimeout);
+    setSearchTimeout(setTimeout(fetchSuggestions, 1000));
+  }
+
+  function fetchSuggestions() {
+    console.log(searchValue);
+  }
+
   return (
     <Navbar
       isBlurred={false}
       maxWidth="2xl"
-      className="border-b-1 dark:border-neutral-900 max-h-[var(--navbar-height)]"
+      className="border-b-1 border-neutral-200 dark:border-neutral-800 max-h-[var(--navbar-height)]"
     >
       <Link href={'/'} className="cursor-pointer">
         <AppLogo className="inline sm:hidden fill-app_orange-600" />
@@ -61,17 +72,20 @@ export default function NavBar() {
       <NavbarContent as="div" className="items-center" justify="end">
         {hasSearchInput(pathname) && (
           <Input
+            value={searchValue}
+            onValueChange={setSearchValue}
+            onChange={fetchSuggestionsController}
+            placeholder="Pesquisar..."
+            size="sm"
+            radius="full"
+            startContent={<IconSearch size={18} />}
+            type="search"
             classNames={{
               base: 'sm:max-w-[420px] w-full h-10',
               mainWrapper: 'h-full',
               input: 'text-small',
               inputWrapper: 'h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20'
             }}
-            placeholder="Pesquisar..."
-            size="sm"
-            radius="full"
-            startContent={<IconSearch size={18} />}
-            type="search"
           />
         )}
 
