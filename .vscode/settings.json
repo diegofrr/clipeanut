@@ -4,5 +4,22 @@
         "source.fixAll.estlint": "explicit"
     },
     "typescript.tsdk": "node_modules/typescript/lib",
-    "typescript.enablePromptUseWorkspaceTsdk": true
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+ 
+    "eslint.format.enable": true,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "security.workspace.trust.untrustedFiles": "open",
+    "playwright.reuseBrowser": true,
+    "tabnine.experimentalAutoImports": true,
+    "terminal.integrated.env.windows": {},
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
 }
