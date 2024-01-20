@@ -89,8 +89,8 @@ export const TrendingVideo = ({ data, ...props }: TrendingVideoProps) => {
           </div>
 
           <div className="cursorpo">
-            <Button isIconOnly variant="light">
-              <IconHeart stroke={1.5} size={20} className="opacity-50" />
+            <Button isIconOnly variant="light" radius="full">
+              <IconHeart stroke={1.5} size={20} />
             </Button>
           </div>
         </footer>

@@ -2,7 +2,8 @@ export const HOME_PAGE_VALUES = {
   TRENDING_VIDEO: {
     INITIAL_STATE: {
       TRENDING_VIDEOS: [],
-      LOADING: false
+      LOADING: false,
+      TAB: 'videos'
     }
   }
 };
