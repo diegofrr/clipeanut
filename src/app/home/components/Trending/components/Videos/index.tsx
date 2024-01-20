@@ -14,7 +14,7 @@ type TrendingVideosProps = {
 export default function TrendingVideos({ data, isLoading, isHidden }: TrendingVideosProps) {
   return (
     <div
-      className={`grid w-full grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-10 gap-x-6 justify-items-center
+      className={`grid w-full grid-cols-1 sm:grid-cols-2 md:grid-col-3 xl:grid-cols-4 gap-y-10 gap-x-6 justify-items-center
       ${isHidden ? 'hidden' : ''}`}
     >
       {isLoading && <CustomSpinner stroke="md" className="absolute" />}

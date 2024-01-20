@@ -1,5 +1,5 @@
 type TrendingGamesProps = {
-  isHidden: boolean;
+  isHidden?: boolean;
 };
 
 export default function TrendingGames({ isHidden }: TrendingGamesProps) {

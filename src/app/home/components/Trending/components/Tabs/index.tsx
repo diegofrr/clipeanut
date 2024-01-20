@@ -3,12 +3,12 @@ import { Tabs, Tab } from '@nextui-org/react';
 import { useWindowSize } from 'usehooks-ts';
 import { IconDeviceGamepad2, IconMusic, IconVideo } from '@tabler/icons-react';
 
-type TypeTabsProps = {
+type TypeTabsProps = React.HTMLAttributes<HTMLElement> & {
   tab: string | number;
   setTab: React.Dispatch<React.SetStateAction<string | number>>;
 };
 
-export default function TrendingTabs({ tab, setTab }: TypeTabsProps) {
+export default function TrendingTabs({ tab, setTab, ...props }: TypeTabsProps) {
   const { width } = useWindowSize();
 
   const TABS = [
@@ -31,6 +31,7 @@ export default function TrendingTabs({ tab, setTab }: TypeTabsProps) {
 
   return (
     <Tabs
+      {...props}
       size="sm"
       selectedKey={tab}
       onSelectionChange={setTab}
@@ -38,6 +39,7 @@ export default function TrendingTabs({ tab, setTab }: TypeTabsProps) {
       variant="bordered"
       radius="full"
       color="warning"
+      className={`${props.className || ''}`}
     >
       {TABS.map((tab) => (
         <Tab

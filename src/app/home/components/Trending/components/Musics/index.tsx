@@ -1,5 +1,5 @@
 type TrendingMusicsProps = {
-  isHidden: boolean;
+  isHidden?: boolean;
 };
 
 export default function TrendingMusics({ isHidden }: TrendingMusicsProps) {

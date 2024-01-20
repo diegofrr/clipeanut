@@ -4,6 +4,7 @@ import { createRef } from 'react';
 import type { ITrendingVideo } from '@/types';
 
 import { StreamUtils } from '@/utils';
+import { useWindowSize } from 'usehooks-ts';
 import { isFakeDataFetch } from '@/environments';
 
 import { IconCircleCheckFilled, IconClock, IconEye, IconHeart } from '@tabler/icons-react';
@@ -15,6 +16,7 @@ type TrendingVideoProps = React.HTMLAttributes<HTMLElement> & {
 
 export const TrendingVideo = ({ data, ...props }: TrendingVideoProps) => {
   const thumbnailRef = createRef<HTMLImageElement>();
+  const { width } = useWindowSize();
 
   function onLoadThumbnailError() {
     const img = thumbnailRef.current as HTMLImageElement;
@@ -78,8 +80,13 @@ export const TrendingVideo = ({ data, ...props }: TrendingVideoProps) => {
 
           <div className="flex w-full flex-col">
             <span className="text-xs text-gray-800 dark:text-gray-300 mb-1 inline-flex">
-              {data.uploaderName} <span className="mx-2 leading-normal text-[9px]">•</span>
-              {StreamUtils.translateUploadedDate(data.uploadedDate)}
+              {data.uploaderName}
+              {(width > 900 || width < 768) && (
+                <>
+                  <span className="mx-2 leading-normal text-[9px]">•</span>
+                  {StreamUtils.translateUploadedDate(data.uploadedDate)}
+                </>
+              )}
             </span>
             <Link href={data.url}>
               <p className="text-base text-black dark:text-white font-bold line-clamp-2 h-auto overflow-hidden">
@@ -88,11 +95,9 @@ export const TrendingVideo = ({ data, ...props }: TrendingVideoProps) => {
             </Link>
           </div>
 
-          <div className="cursorpo">
-            <Button isIconOnly variant="light" radius="full">
-              <IconHeart stroke={1.5} size={20} />
-            </Button>
-          </div>
+          <Button isIconOnly variant="light" radius="full">
+            <IconHeart stroke={1.5} size={20} />
+          </Button>
         </footer>
       </div>
     </div>
