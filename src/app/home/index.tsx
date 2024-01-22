@@ -2,6 +2,9 @@
 
 import { useState } from 'react';
 
+import Main from '@/components/Main';
+import Content from '@/components/Content';
+
 import { IconFlame } from '@tabler/icons-react';
 import { Trending } from './components/Trending';
 import { Header } from '@/components/Header';
@@ -13,8 +16,8 @@ export default function Home() {
   const [tab, setTab] = useState<string | number>(INITIAL_STATE.TAB);
 
   return (
-    <main className="w-full min-h-screen-minus-navbar">
-      <div className="max-w-9xl m-auto py-6 sm:p-6 flex flex-col justify-center">
+    <Main>
+      <Content className="flex flex-col justify-center">
         <Header.Root className="px-6 sm:px-0">
           <Header.Content className="flex flex-row justify-between items-center">
             <Header.Title icon={<IconFlame size={24} />}>Em alta</Header.Title>
@@ -28,7 +31,7 @@ export default function Home() {
           <Trending.Musics isHidden={tab !== 'musics'} />
           <Trending.Games isHidden={tab !== 'games'} />
         </div>
-      </div>
-    </main>
+      </Content>
+    </Main>
   );
 }

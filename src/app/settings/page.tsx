@@ -2,7 +2,9 @@
 
 import { ChangeEvent, useContext, useEffect, useState } from 'react';
 
+import Main from '@/components/Main';
 import CustomSpinner from '@/components/CustomSpinner';
+
 import { Header } from '@/components/Header';
 
 import type { IPipedInstance } from '@/types';
@@ -45,8 +47,8 @@ export default function Settings() {
   };
 
   return (
-    <main className="w-full">
-      <div className="max-w-9xl m-auto p-6">
+    <Main>
+      <div className="py-6 pr-0 sm:pr-6">
         <Header.Root>
           <Header.Content>
             <Header.Title icon={<IconSettings size={24} />}>Configurações</Header.Title>
@@ -90,6 +92,6 @@ export default function Settings() {
           )}
         </div>
       </div>
-    </main>
+    </Main>
   );
 }
