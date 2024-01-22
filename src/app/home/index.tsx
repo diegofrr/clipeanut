@@ -1,43 +1,16 @@
 'use client';
 
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import type { ITrendingVideo } from '@/types';
-import { FetchTrendingVideosOptionsType, fetchTrendingVideos } from '@/services/actions/fetchTrendingVideosData';
-
-import { PipedInstanceContext } from '@/contexts/pipedInstance';
-
-import { isFakeDataFetch } from '@/environments';
 import { IconFlame } from '@tabler/icons-react';
 import { Trending } from './components/Trending';
 import { Header } from '@/components/Header';
+
 import { HOME_PAGE_VALUES } from '@/constants';
 const { INITIAL_STATE } = HOME_PAGE_VALUES.TRENDING_VIDEO;
 
 export default function Home() {
-  const { region, instance } = useContext(PipedInstanceContext);
-
   const [tab, setTab] = useState<string | number>(INITIAL_STATE.TAB);
-  const [isLoading, setIsLoading] = useState<boolean>(INITIAL_STATE.LOADING);
-  const [trendingVideos, setTrendingVideos] = useState<ITrendingVideo[]>(INITIAL_STATE.TRENDING_VIDEOS);
-
-  async function loadTrendingVideos() {
-    setIsLoading(true);
-    const options = { instance, region, delay: 1, isFake: isFakeDataFetch } as FetchTrendingVideosOptionsType;
-
-    try {
-      const data = await fetchTrendingVideos({ options });
-      setTrendingVideos(data);
-      setIsLoading(false);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  useEffect(() => {
-    if (window?.document) loadTrendingVideos();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <main className="w-full min-h-screen-minus-navbar">
@@ -51,7 +24,7 @@ export default function Home() {
         </Header.Root>
 
         <div className="flex flex-col-reverse w-full md:flex-row gap-6">
-          <Trending.Videos data={trendingVideos} isLoading={isLoading} isHidden={tab !== 'videos'} />
+          <Trending.Videos isHidden={tab !== 'videos'} />
           <Trending.Musics isHidden={tab !== 'musics'} />
           <Trending.Games isHidden={tab !== 'games'} />
         </div>
