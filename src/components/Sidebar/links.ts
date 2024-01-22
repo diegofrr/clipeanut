@@ -1,11 +1,11 @@
-import { Icons } from '@/icons';
+import Icons from '@/icons';
 
 export const links = [
   {
-    name: 'Início',
+    name: 'Em alta',
     path: '/',
-    icon: Icons.Home,
-    solidIcon: Icons.HomeSolid
+    icon: Icons.Flame,
+    solidIcon: Icons.FlameSolid
   },
   {
     name: 'Meus dados',

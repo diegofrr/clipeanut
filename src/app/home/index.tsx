@@ -17,7 +17,7 @@ export default function Home() {
 
   return (
     <Main>
-      <Content className="flex flex-col justify-center">
+      <Content className="flex flex-col justify-center pr-0 sm:pr-6 lg:pr-12">
         <Header.Root className="px-6 sm:px-0">
           <Header.Content className="flex flex-row justify-between items-center">
             <Header.Title icon={<IconFlame size={24} />}>Em alta</Header.Title>

@@ -3,6 +3,7 @@
 import { ChangeEvent, useContext, useEffect, useState } from 'react';
 
 import Main from '@/components/Main';
+import Content from '@/components/Content';
 import CustomSpinner from '@/components/CustomSpinner';
 
 import { Header } from '@/components/Header';
@@ -48,7 +49,7 @@ export default function Settings() {
 
   return (
     <Main>
-      <div className="py-6 pr-0 sm:pr-6">
+      <Content>
         <Header.Root>
           <Header.Content>
             <Header.Title icon={<IconSettings size={24} />}>Configurações</Header.Title>
@@ -91,7 +92,7 @@ export default function Settings() {
             </>
           )}
         </div>
-      </div>
+      </Content>
     </Main>
   );
 }
