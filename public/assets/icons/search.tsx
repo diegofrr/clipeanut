@@ -12,7 +12,7 @@ export function SearchIcon({ stroke, size, ...props }: SVGProps) {
     >
       <g fill="none" stroke="currentColor">
         <circle cx="11.5" cy="11.5" r="9.5" />
-        <path stroke-linecap="round" d="M18.5 18.5L22 22" />
+        <path strokeLinecap="round" d="M18.5 18.5L22 22" />
       </g>
     </svg>
   );
