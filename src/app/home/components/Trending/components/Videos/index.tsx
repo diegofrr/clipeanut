@@ -7,10 +7,12 @@ import { TrendingVideo } from './components/Video';
 
 import { ITrendingVideo } from '@/types';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
+import { HighlighStreamContext } from '@/app/home/contexts/highlightStream';
 
-import { HOME_PAGE_VALUES } from '@/constants';
 import { FetchTrendingVideosOptionsType, fetchTrendingVideos } from '@/services/actions/fetchTrendingVideosData';
 import { isFakeDataFetch } from '@/environments';
+
+import { HOME_PAGE_VALUES } from '@/constants';
 const { INITIAL_STATE } = HOME_PAGE_VALUES.TRENDING_VIDEO;
 
 type TrendingVideosProps = {
@@ -19,6 +21,7 @@ type TrendingVideosProps = {
 
 export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
   const { region, instance } = useContext(PipedInstanceContext);
+  const { setStreamId } = useContext(HighlighStreamContext);
 
   const [isLoading, setIsLoading] = useState<boolean>(INITIAL_STATE.LOADING);
   const [trendingVideos, setTrendingVideos] = useState<ITrendingVideo[]>(INITIAL_STATE.TRENDING_VIDEOS);
@@ -30,6 +33,7 @@ export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
     try {
       const data = await fetchTrendingVideos({ options });
       setTrendingVideos(data);
+      setStreamId(data[0].url.split('v=')[1]);
       setIsLoading(false);
     } catch (error) {
       console.error(error);
@@ -49,7 +53,7 @@ export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
       {isLoading && <CustomSpinner stroke="md" className="absolute" />}
       {!isLoading && trendingVideos.length > 0 && (
         <>
-          {trendingVideos.map((video, index) => (
+          {trendingVideos.slice(1).map((video, index) => (
             <TrendingVideo key={index} data={video} />
           ))}
         </>
