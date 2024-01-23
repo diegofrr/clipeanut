@@ -15,9 +15,9 @@ import { isFakeDataFetch } from '@/environments';
 import { getStreamMetadata } from '@/utils/Stream/StreamMetadata';
 import { loadPlayer } from '@/utils/Player';
 import { useLocalStorageWithExpiration } from '@/hooks';
+import { highlightStreamData } from '@/mocks/highlightStreamData';
 
 import { PIPED_VALUES } from '@/constants';
-import { fakeStream } from './fakeStream';
 const { LOCAL_STORAGE_KEYS } = PIPED_VALUES;
 
 export default function HomeHeader() {
@@ -47,7 +47,7 @@ export default function HomeHeader() {
       } else await boundFetchStream();
 
       if (isFakeDataFetch) {
-        stream = fakeStream as IStream;
+        stream = highlightStreamData as IStream;
         setStream(stream);
       }
 

@@ -1,4 +1,4 @@
-export const fakeStream = {
+export const highlightStreamData = {
   title: 'X2 / VICÊNCIA 2024 - KAKÁ/PAÇOCA X ETINHO/BRASIL',
   description: '',
   uploadDate: '2024-01-22T18:03:23-08:00',
