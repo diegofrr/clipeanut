@@ -2,7 +2,7 @@
 
 import { useCallback, useContext, useEffect, useState } from 'react';
 
-import './styles/custom-oplayer-ui.css';
+import '@/styles/custom-oplayer-ui.css';
 
 import type { IStream } from '@/types';
 import { FetchStreamOptionsType, fetchStream } from '@/services/actions/fetchStreamData';

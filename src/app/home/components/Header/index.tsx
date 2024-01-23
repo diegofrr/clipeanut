@@ -1,6 +1,9 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+'use client';
+
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 import './header.css';
+import '@/styles/custom-oplayer-ui.css';
 
 import type { IStream } from '@/types';
 import { fetchStream, type FetchStreamOptionsType } from '@/services/actions/fetchStreamData';
@@ -47,13 +50,13 @@ export default function HomeHeader() {
   }, [streamId]);
 
   return (
-    <header className="flex flex-row w-full bg-neutral-100 dark:bg-neutral-950 p-6 gap-6 rounded-xl">
-      <div className="relative h-full min-h-0 max-w-full min-w-[520px] rounded-lg overflow-hidden">
+    <header className="flex flex-row w-full bg-neutral-200 dark:bg-neutral-950 p-6 gap-6 rounded-xl">
+      <div className="relative h-full min-h-0 w-full max-w-[720px] rounded-lg overflow-hidden">
         <div id="hightlight-video" className="h-full"></div>
       </div>
 
       <div className="bg-netral-850 flex flex-col gap-4 w-full">
-        <p className="text-3xl font-bold">{stream.title}</p>
+        <p className="md:text-xl lg:text-2xl font-bold">{stream.title}</p>
       </div>
     </header>
   );
