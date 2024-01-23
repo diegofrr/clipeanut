@@ -21,7 +21,7 @@ type TrendingVideosProps = {
 
 export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
   const { region, instance } = useContext(PipedInstanceContext);
-  const { setStreamId } = useContext(HighlighStreamContext);
+  const { setHighlightStream } = useContext(HighlighStreamContext);
 
   const [isLoading, setIsLoading] = useState<boolean>(INITIAL_STATE.LOADING);
   const [trendingVideos, setTrendingVideos] = useState<ITrendingVideo[]>(INITIAL_STATE.TRENDING_VIDEOS);
@@ -33,7 +33,7 @@ export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
     try {
       const data = await fetchTrendingVideos({ options });
       setTrendingVideos(data);
-      setStreamId(data[0].url.split('v=')[1]);
+      setHighlightStream(data[0]);
       setIsLoading(false);
     } catch {
       /* empty */

@@ -56,7 +56,7 @@ export async function loadPlayer({ uri, mimeType, stream, onLoad, selector, useK
     ]);
 
     player.create();
-    player.on('loadstart', () => onLoad?.());
+    player.on('canplay', () => onLoad && onLoad());
     player.on('loadeddata', () => initializePlayer(player));
   } catch {
     /* empty */
@@ -66,7 +66,6 @@ export async function loadPlayer({ uri, mimeType, stream, onLoad, selector, useK
     const video = player.$video;
     const ui = player.context.ui;
 
-    onLoad?.();
     UIUtils.removeSubtitleOption(hasMoreThanOneSubtitle);
     UIUtils.addCustomUiController(ui.$controllerBottom);
     if (useKeyboard) UIUtils.addCustomKeyboardActions(player);

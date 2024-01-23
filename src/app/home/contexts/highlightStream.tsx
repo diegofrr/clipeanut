@@ -1,10 +1,12 @@
 'use client';
 
-import { createContext, useState } from 'react';
+import { ITrendingVideo } from '@/types';
+import { createContext, useEffect, useState } from 'react';
 
 interface IHighlighStreamContext {
-  streamId: string;
-  setStreamId: React.Dispatch<React.SetStateAction<string>>;
+  highlightStreamId: string;
+  highlightStream: ITrendingVideo;
+  setHighlightStream: React.Dispatch<React.SetStateAction<ITrendingVideo>>;
 }
 
 type StreamProviderProps = {
@@ -12,20 +14,28 @@ type StreamProviderProps = {
 };
 
 const INITIAL_STATE = {
-  streamId: '',
-  setStreamId: () => {}
+  highlightStreamId: '',
+  highlightStream: {} as ITrendingVideo,
+  setHighlightStreamId: () => {},
+  setHighlightStream: () => {}
 };
 
 export const HighlighStreamContext = createContext<IHighlighStreamContext>(INITIAL_STATE);
 
 export default function HighlighStreamProvider(props: StreamProviderProps) {
-  const [streamId, setStreamId] = useState<string>(INITIAL_STATE.streamId);
+  const [highlightStreamId, setHighlightStreamId] = useState<string>(INITIAL_STATE.highlightStreamId);
+  const [highlightStream, setHighlightStream] = useState<ITrendingVideo>(INITIAL_STATE.highlightStream);
+
+  useEffect(() => {
+    if (highlightStream.url) setHighlightStreamId(highlightStream.url.split('v=')[1]);
+  }, [highlightStream]);
 
   return (
     <HighlighStreamContext.Provider
       value={{
-        streamId,
-        setStreamId
+        highlightStreamId,
+        highlightStream,
+        setHighlightStream
       }}
     >
       {props.children}
