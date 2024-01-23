@@ -14,10 +14,16 @@ import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { isFakeDataFetch } from '@/environments';
 import { getStreamMetadata } from '@/utils/Stream/StreamMetadata';
 import { loadPlayer } from '@/utils/Player';
+import { useLocalStorageWithExpiration } from '@/hooks';
+
+import { PIPED_VALUES } from '@/constants';
+import { fakeStream } from './fakeStream';
+const { LOCAL_STORAGE_KEYS } = PIPED_VALUES;
 
 export default function HomeHeader() {
   const { streamId } = useContext(HighlighStreamContext);
   const { instance } = useContext(PipedInstanceContext);
+  const { isExistsItem, getStoragedItem, setStoragedItem } = useLocalStorageWithExpiration();
 
   const [stream, setStream] = useState<IStream>({} as IStream);
 
@@ -27,18 +33,36 @@ export default function HomeHeader() {
     let mimeType = '';
     let uri = '';
 
+    const boundFetchStream = async () => {
+      const data = await fetchStream({ options });
+      setStoragedItem(LOCAL_STORAGE_KEYS.HIGHLIGTH_STREAM, data, { minutes: 15 });
+      stream = data;
+    };
+
     try {
-      stream = await fetchStream({ options });
-      setStream(stream);
+      if (isExistsItem(LOCAL_STORAGE_KEYS.HIGHLIGTH_STREAM)) {
+        const storagedHighlightStream = getStoragedItem<IStream>(LOCAL_STORAGE_KEYS.HIGHLIGTH_STREAM);
+        if (storagedHighlightStream?.value) stream = storagedHighlightStream.value;
+        else await boundFetchStream();
+      } else await boundFetchStream();
+
+      if (isFakeDataFetch) {
+        stream = fakeStream as IStream;
+        setStream(stream);
+      }
 
       const metadata = await getStreamMetadata(stream);
+
       mimeType = metadata.mimeType;
       uri = metadata.uri;
     } catch {
       /* empty */
+    } finally {
+      setStream(stream);
     }
 
     return { mimeType, uri, stream };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [instance, streamId]);
 
   useEffect(() => {
