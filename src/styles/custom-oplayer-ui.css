@@ -45,7 +45,7 @@
     }
 
     video {
-        max-height: 20vw !important;
+        max-height: 480px !important;
         
         &.is-fullscreen {
             max-height: 100% !important;
