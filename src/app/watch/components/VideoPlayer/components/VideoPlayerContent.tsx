@@ -17,6 +17,7 @@ import { isFakeDataFetch } from '@/environments';
 import { PIPED_VALUES } from '@/constants';
 import { loadPlayer } from '@/utils/Player';
 import { StreamUtils } from '@/utils';
+import { getStreamMetadata } from '@/utils/Stream/StreamMetadata';
 
 export default function VideoPlayerContent() {
   const { stream, setStream, streamId } = useContext(StreamContext);
@@ -25,35 +26,12 @@ export default function VideoPlayerContent() {
   const [isVideoLoaded, setIsVideoLoaded] = useState<boolean>(false);
 
   const getStreamData = useCallback(async () => {
-    const streamFormats = [];
-    let mimeType = '';
-    let uri = '';
-
     const options = { streamId, instance, isFake: isFakeDataFetch, delay: 1 } as FetchStreamOptionsType;
 
     const stream = await fetchStream({ options });
     setStream(stream);
 
-    try {
-      streamFormats.push(...stream.videoStreams);
-      streamFormats.push(...stream.audioStreams);
-    } catch {
-      /* empty */
-    }
-
-    if (stream.livestream) {
-      uri = stream.hls;
-      mimeType = 'hls';
-    } else if (stream.dash) {
-      const url = new URL(stream.dash);
-      url.searchParams.set('rewrite', 'false');
-      uri = url.toString();
-      mimeType = 'dash';
-    } else {
-      const dash = await StreamUtils.generateDashFileFromFormats(streamFormats, stream.duration);
-      uri = PIPED_VALUES.VIDEO_TYPES.DASH_XML_DATA_URI + btoa(dash);
-      mimeType = 'dash';
-    }
+    const { uri, mimeType } = await getStreamMetadata(stream);
 
     return { mimeType, uri, stream };
   }, [instance, setStream, streamId]);
