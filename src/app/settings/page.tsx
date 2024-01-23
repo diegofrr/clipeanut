@@ -3,11 +3,10 @@
 import { ChangeEvent, useContext, useEffect, useState } from 'react';
 
 import Main from '@/components/Main';
+import Header from '@/components/Header';
 import Content from '@/components/Content';
 import CustomSpinner from '@/components/CustomSpinner';
 import Icons from '@/icons';
-
-import { Header } from '@/components/Header';
 
 import type { IPipedInstance } from '@/types';
 import { fetchPipedInstancesData } from '@/services/actions/fetchPipedInstancesData';

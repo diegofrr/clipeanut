@@ -1,10 +1,9 @@
 'use client';
 
 import Main from '@/components/Main';
+import Header from '@/components/Header';
 import Content from '@/components/Content';
 import Icons from '@/icons';
-
-import { Header } from '@/components/Header';
 
 export default function Me() {
   return (
