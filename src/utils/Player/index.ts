@@ -8,6 +8,7 @@ import ui from '@oplayer/ui';
 import * as UIUtils from './custom-ui';
 
 import { languages } from './languages';
+import { PlaybackRateIcon, SettingsIcon, VolumeOffIcon, VolumeOnIcon } from './custom-icons';
 
 type LoadPlayerProps = {
   uri: string;
@@ -19,7 +20,7 @@ type LoadPlayerProps = {
 };
 
 export async function loadPlayer({ uri, mimeType, stream, onLoad, selector, useKeyboard = true }: LoadPlayerProps) {
-  const hasMoreThanOneSubtitle = stream.subtitles.length > 1;
+  const hasMoreThanOneSubtitle = stream?.subtitles?.length > 1;
   const type = mimeType === 'dash' ? ODash : OHls;
 
   try {
@@ -40,6 +41,11 @@ export async function loadPlayer({ uri, mimeType, stream, onLoad, selector, useK
 
     player.use([
       ui({
+        icons: {
+          setting: SettingsIcon,
+          playbackRate: PlaybackRateIcon,
+          volume: [VolumeOnIcon, VolumeOffIcon]
+        },
         pictureInPicture: true,
         keyboard: { focused: useKeyboard, global: useKeyboard },
         theme: { primaryColor: '#F4AD2A' },

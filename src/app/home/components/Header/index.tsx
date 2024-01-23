@@ -47,7 +47,7 @@ export default function HomeHeader() {
         loadPlayer({ ...(await getStreamData()), selector: '#oplayer', useKeyboard: false });
       })();
     }
-  }, [streamId]);
+  }, [streamId, getStreamData]);
 
   return (
     <header className="flex flex-row w-full bg-neutral-200 dark:bg-neutral-950 p-6 gap-6 rounded-xl">

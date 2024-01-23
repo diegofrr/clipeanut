@@ -1,6 +1,6 @@
 'use client';
 
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 
 import Main from '@/components/Main';
 import Content from '@/components/Content';
