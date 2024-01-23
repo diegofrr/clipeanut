@@ -1,13 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import Main from '@/components/Main';
 import Content from '@/components/Content';
-import Icons from '@/icons';
+import HomeHeader from './components/Header';
+import Trending from './components/Trending';
 
-import { Trending } from './components/Trending';
-import { Header } from '@/components/Header';
+import HighlighStreamProvider from './contexts/highlightStream';
 
 import { HOME_PAGE_VALUES } from '@/constants';
 const { INITIAL_STATE } = HOME_PAGE_VALUES.TRENDING_VIDEO;
@@ -17,21 +17,18 @@ export default function Home() {
 
   return (
     <Main>
-      <Content className="flex flex-col justify-center pr-0 sm:pr-6 lg:pr-12">
-        <Header.Root className="px-6 sm:px-0">
-          <Header.Content className="flex flex-row justify-between items-center">
-            <Header.Title icon={<Icons.Flame />}>Em alta</Header.Title>
+      <HighlighStreamProvider>
+        <Content className="flex flex-col justify-center pr-0 sm:pr-6 lg:pr-12">
+          <HomeHeader />
+          <Trending.Tabs className="mb-6 ml-auto" tab={tab} setTab={setTab} />
 
-            <Trending.Tabs tab={tab} setTab={setTab} />
-          </Header.Content>
-        </Header.Root>
-
-        <div className="flex flex-col-reverse w-full md:flex-row gap-6">
-          <Trending.Videos isHidden={tab !== 'videos'} />
-          <Trending.Musics isHidden={tab !== 'musics'} />
-          <Trending.Games isHidden={tab !== 'games'} />
-        </div>
-      </Content>
+          <div className="flex flex-col-reverse w-full md:flex-row gap-6">
+            <Trending.Videos isHidden={tab !== 'videos'} />
+            <Trending.Musics isHidden={tab !== 'musics'} />
+            <Trending.Games isHidden={tab !== 'games'} />
+          </div>
+        </Content>
+      </HighlighStreamProvider>
     </Main>
   );
 }
