@@ -10,7 +10,8 @@ import type { UserTheme } from './types';
 import { useTheme } from 'next-themes';
 import { hasTopbar } from './utils';
 import { AppBanner, AppLogo } from '../../../public/assets';
-import { Button, Input } from '@nextui-org/react';
+import { Button } from '@nextui-org/react';
+import Search from './components/Search';
 
 export default function Topbar() {
   const pathname = usePathname();
@@ -18,7 +19,6 @@ export default function Topbar() {
 
   const [isClient, setIsClient] = useState(false);
   const [userTheme, setUserTheme] = useState<UserTheme>({ name: '', icon: <></> });
-  const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout>();
 
   useEffect(() => setIsClient(true), []);
 
@@ -28,15 +28,6 @@ export default function Topbar() {
       icon: resolvedTheme === 'light' ? <Icons.Sun /> : <Icons.Moon />
     });
   }, [resolvedTheme]);
-
-  function fetchSuggestionsController({ target }: React.ChangeEvent<HTMLInputElement>) {
-    if (searchTimeout) clearTimeout(searchTimeout);
-    setSearchTimeout(setTimeout(() => fetchSuggestions(target.value), 500));
-  }
-
-  function fetchSuggestions(searchValue: string) {
-    console.log(searchValue);
-  }
 
   function handleToggleTheme() {
     setTheme(resolvedTheme === 'light' ? 'dark' : 'light');
@@ -53,21 +44,7 @@ export default function Topbar() {
           <AppBanner className="hidden sm:inline fill-app_orange-600" />
         </Link>
 
-        <Input
-          onChange={(e) => fetchSuggestionsController(e)}
-          placeholder="Pesquisar..."
-          isClearable
-          startContent={<Icons.Search size={14} />}
-          classNames={{
-            base: 'sm:max-w-md lg:max-w-lg w-full h-10',
-            mainWrapper: 'h-full',
-            input: 'text-small',
-            inputWrapper: 'h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20'
-          }}
-          radius="full"
-          type="search"
-          size="sm"
-        />
+        <Search />
 
         {isClient ? (
           <Button onClick={handleToggleTheme} startContent={userTheme.icon} isIconOnly variant="light" />
