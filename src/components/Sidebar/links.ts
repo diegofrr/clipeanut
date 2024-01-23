@@ -16,7 +16,7 @@ export const links = [
   {
     name: 'Configurações',
     path: '/settings',
-    icon: Icons.Settings,
-    solidIcon: Icons.SettingsSolid
+    icon: Icons.Settings2,
+    solidIcon: Icons.SettingsSolid2
   }
 ];
