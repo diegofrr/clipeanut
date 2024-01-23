@@ -77,10 +77,12 @@ export const TrendingVideo = ({ data, ...props }: TrendingVideoProps) => {
           </div>
 
           <div className="flex w-full flex-col">
-            <div className="text-xs text-gray-800 dark:text-gray-300 mb-1 inline-flex whitespace-nowrap">
-              <p>{data.uploaderName}</p>
-              <span className="mx-2 leading-normal text-[9px]">•</span>
-              <span>{StreamUtils.translateUploadedDate(data.uploadedDate)}</span>
+            <div className="text-xs text-gray-800 dark:text-gray-300 mb-1 inline-flexowrap">
+              <p className="break-all">
+                {data.uploaderName}
+                <span className="mx-2 leading-normal text-[9px]">•</span>
+                <span>{StreamUtils.translateUploadedDate(data.uploadedDate)}</span>
+              </p>
             </div>
 
             <Link href={data.url}>
