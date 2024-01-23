@@ -32,7 +32,6 @@ export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
 
     try {
       const data = await fetchTrendingVideos({ options });
-      console.log(data);
       setTrendingVideos(data);
       setStreamId(data[0].url.split('v=')[1]);
       setIsLoading(false);

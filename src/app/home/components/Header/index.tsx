@@ -44,7 +44,7 @@ export default function HomeHeader() {
   useEffect(() => {
     if (window?.document && streamId) {
       (async () => {
-        loadPlayer({ ...(await getStreamData()), selector: '#hightlight-video' });
+        loadPlayer({ ...(await getStreamData()), selector: '#oplayer', useKeyboard: false });
       })();
     }
   }, [streamId]);
@@ -52,7 +52,7 @@ export default function HomeHeader() {
   return (
     <header className="flex flex-row w-full bg-neutral-200 dark:bg-neutral-950 p-6 gap-6 rounded-xl">
       <div className="relative h-full min-h-0 w-full max-w-[720px] rounded-lg overflow-hidden">
-        <div id="hightlight-video" className="h-full"></div>
+        <div id="oplayer" className="h-full"></div>
       </div>
 
       <div className="bg-netral-850 flex flex-col gap-4 w-full">

@@ -14,10 +14,11 @@ type LoadPlayerProps = {
   mimeType: string;
   stream: IStream;
   selector: string;
+  useKeyboard?: boolean;
   onLoad?: () => void;
 };
 
-export async function loadPlayer({ uri, mimeType, stream, onLoad, selector }: LoadPlayerProps) {
+export async function loadPlayer({ uri, mimeType, stream, onLoad, selector, useKeyboard = true }: LoadPlayerProps) {
   const hasMoreThanOneSubtitle = stream.subtitles.length > 1;
   const type = mimeType === 'dash' ? ODash : OHls;
 
@@ -40,7 +41,7 @@ export async function loadPlayer({ uri, mimeType, stream, onLoad, selector }: Lo
     player.use([
       ui({
         pictureInPicture: true,
-        keyboard: { focused: true, global: true },
+        keyboard: { focused: useKeyboard, global: useKeyboard },
         theme: { primaryColor: '#F4AD2A' },
         slideToSeek: 'always',
         miniProgressBar: false
@@ -62,7 +63,7 @@ export async function loadPlayer({ uri, mimeType, stream, onLoad, selector }: Lo
     onLoad?.();
     UIUtils.removeSubtitleOption(hasMoreThanOneSubtitle);
     UIUtils.addCustomUiController(ui.$controllerBottom);
-    UIUtils.addCustomKeyboardActions(player);
+    if (useKeyboard) UIUtils.addCustomKeyboardActions(player);
 
     if (stream.livestream) {
       ui.$coverButton.onclick = () => {
