@@ -1,4 +1,4 @@
-import type { SVGProps } from './@types';
+import type { SVGProps } from '../@types';
 
 export function HomeIconSolid({ stroke, size, ...props }: SVGProps) {
   return (
