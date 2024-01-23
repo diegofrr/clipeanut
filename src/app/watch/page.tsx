@@ -3,6 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 
 import Main from '@/components/Main';
+import Content from '@/components/Content';
 import NotFound from '../not-found';
 
 import { VideoPlayer } from './components/VideoPlayer';
@@ -14,12 +15,12 @@ export default function Watch() {
     <NotFound />
   ) : (
     <Main>
-      <div className="py-6 pr-0 sm:pr-6 flex flex-col items-center justify-center">
+      <Content className="flex justify-center">
         <VideoPlayer.Root streamId={streamId}>
           <VideoPlayer.Header />
           <VideoPlayer.Content />
         </VideoPlayer.Root>
-      </div>
+      </Content>
     </Main>
   );
 }

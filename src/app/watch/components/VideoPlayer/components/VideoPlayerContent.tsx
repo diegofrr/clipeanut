@@ -22,8 +22,10 @@ import { VideoPlayerLoading } from './VideoPlayerLoading';
 import { isFakeDataFetch } from '@/environments';
 import { PIPED_VALUES } from '@/constants';
 import { languages } from './languages';
+import { loadPlayer } from '@/utils/Player';
 import { PlayerUtils } from './utils';
 import { StreamUtils } from '@/utils';
+import { IStream } from '@/types';
 
 export default function VideoPlayerContent() {
   const { stream, setStream, streamId } = useContext(StreamContext);
@@ -65,68 +67,17 @@ export default function VideoPlayerContent() {
     return { mimeType, uri, stream };
   }, [instance, setStream, streamId]);
 
-  async function loadPlayer() {
-    const { mimeType, uri, stream } = await getStreamData();
-    const hasMoreThanOneSubtitle = stream.subtitles.length > 1;
-    const type = mimeType === 'dash' ? ODash : OHls;
-
-    try {
-      const player = Player.make('#oplayer', {
-        isLive: stream.livestream,
-        autoplay: stream.livestream,
-        muted: stream.livestream,
-        preload: 'metadata',
-        source: {
-          src: uri,
-          format: mimeType,
-          poster: stream.thumbnailUrl
-        }
-      });
-
-      player.locales.update(languages);
-      player.locales.lang = 'pt' as Lang;
-
-      player.use([
-        ui({
-          pictureInPicture: true,
-          keyboard: { focused: true, global: true },
-          theme: { primaryColor: '#F4AD2A' },
-          slideToSeek: 'always',
-          miniProgressBar: false
-        }),
-        type()
-      ]);
-
-      player.create();
-      player.on('loadstart', () => setIsVideoLoaded(true));
-      player.on('loadeddata', () => initializePlayer(player));
-    } catch (error) {
-      console.error(error);
-    }
-
-    function initializePlayer(player: Player) {
-      const video = player.$video;
-      const ui = player.context.ui;
-
-      setIsVideoLoaded(true);
-      PlayerUtils.removeSubtitleOption(hasMoreThanOneSubtitle);
-      PlayerUtils.addCustomUiController(ui.$controllerBottom);
-      PlayerUtils.addCustomKeyboardActions(player);
-
-      if (stream.livestream) {
-        ui.$coverButton.onclick = () => {
-          video.paused ? video.play() : video.pause();
-        };
-      }
-    }
-  }
-
   function handleOpenChat() {
     window.open(`https://www.youtube.com/live_chat?v=${streamId}`, '_blank', 'width=400,height=600');
   }
 
   useEffect(() => {
-    if (window?.document) loadPlayer();
+    if (window?.document) {
+      (async () => {
+        const data = await getStreamData();
+        loadPlayer({ ...data, onLoad: () => setIsVideoLoaded(true) });
+      })();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
