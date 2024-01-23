@@ -12,7 +12,7 @@ export function ClockIcon({ stroke, size, ...props }: SVGProps) {
     >
       <g fill="none" stroke="currentColor">
         <circle cx="12" cy="12" r="10" />
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l2.5 2.5" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l2.5 2.5" />
       </g>
     </svg>
   );

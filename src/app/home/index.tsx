@@ -18,9 +18,9 @@ export default function Home() {
   return (
     <Main>
       <HighlighStreamProvider>
-        <Content className="flex flex-col justify-center pr-0 sm:pr-6 lg:pr-12">
+        <Content className="flex flex-col gap-6 justify-center pr-0 sm:pr-6 lg:pr-12">
           <HomeHeader />
-          <Trending.Tabs className="mb-6 ml-auto" tab={tab} setTab={setTab} />
+          <Trending.Tabs className="ml-auto" tab={tab} setTab={setTab} />
 
           <div className="flex flex-col-reverse w-full md:flex-row gap-6">
             <Trending.Videos isHidden={tab !== 'videos'} />

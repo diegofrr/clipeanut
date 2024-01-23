@@ -13,15 +13,16 @@ type LoadPlayerProps = {
   uri: string;
   mimeType: string;
   stream: IStream;
+  selector: string;
   onLoad?: () => void;
 };
 
-export async function loadPlayer({ uri, mimeType, stream, onLoad }: LoadPlayerProps) {
+export async function loadPlayer({ uri, mimeType, stream, onLoad, selector }: LoadPlayerProps) {
   const hasMoreThanOneSubtitle = stream.subtitles.length > 1;
   const type = mimeType === 'dash' ? ODash : OHls;
 
   try {
-    const player = Player.make('#oplayer', {
+    const player = Player.make(selector, {
       isLive: stream.livestream,
       autoplay: stream.livestream,
       muted: stream.livestream,
@@ -50,8 +51,8 @@ export async function loadPlayer({ uri, mimeType, stream, onLoad }: LoadPlayerPr
     player.create();
     player.on('loadstart', () => onLoad?.());
     player.on('loadeddata', () => initializePlayer(player));
-  } catch (error) {
-    console.error(error);
+  } catch {
+    /* empty */
   }
 
   function initializePlayer(player: Player) {

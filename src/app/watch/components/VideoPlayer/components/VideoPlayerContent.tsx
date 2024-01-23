@@ -4,6 +4,7 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 
 import './styles/custom-oplayer-ui.css';
 
+import type { IStream } from '@/types';
 import { FetchStreamOptionsType, fetchStream } from '@/services/actions/fetchStreamData';
 
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
@@ -14,9 +15,7 @@ import { IconExternalLink } from '@tabler/icons-react';
 import { VideoPlayerLoading } from './VideoPlayerLoading';
 
 import { isFakeDataFetch } from '@/environments';
-import { PIPED_VALUES } from '@/constants';
 import { loadPlayer } from '@/utils/Player';
-import { StreamUtils } from '@/utils';
 import { getStreamMetadata } from '@/utils/Stream/StreamMetadata';
 
 export default function VideoPlayerContent() {
@@ -27,11 +26,20 @@ export default function VideoPlayerContent() {
 
   const getStreamData = useCallback(async () => {
     const options = { streamId, instance, isFake: isFakeDataFetch, delay: 1 } as FetchStreamOptionsType;
+    let stream = {} as IStream;
+    let mimeType = '';
+    let uri = '';
 
-    const stream = await fetchStream({ options });
-    setStream(stream);
+    try {
+      stream = await fetchStream({ options });
+      setStream(stream);
 
-    const { uri, mimeType } = await getStreamMetadata(stream);
+      const metadata = await getStreamMetadata(stream);
+      mimeType = metadata.mimeType;
+      uri = metadata.uri;
+    } catch {
+      /* empty */
+    }
 
     return { mimeType, uri, stream };
   }, [instance, setStream, streamId]);
@@ -42,7 +50,9 @@ export default function VideoPlayerContent() {
 
   useEffect(() => {
     if (window?.document) {
-      (async () => loadPlayer({ ...(await getStreamData()), onLoad: () => setIsVideoLoaded(true) }))();
+      (async () => {
+        loadPlayer({ ...(await getStreamData()), selector: '#oplayer', onLoad: () => setIsVideoLoaded(true) });
+      })();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

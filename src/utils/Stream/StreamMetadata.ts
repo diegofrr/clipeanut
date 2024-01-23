@@ -8,10 +8,10 @@ export async function getStreamMetadata(stream: IStream) {
   let mimeType = '';
   let uri = '';
 
-  try {
-    streamFormats.push(...stream.videoStreams);
-    streamFormats.push(...stream.audioStreams);
+  streamFormats.push(...stream.videoStreams);
+  streamFormats.push(...stream.audioStreams);
 
+  try {
     if (stream.livestream) {
       uri = stream.hls;
       mimeType = 'hls';
