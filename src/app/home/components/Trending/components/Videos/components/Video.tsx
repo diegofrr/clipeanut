@@ -1,13 +1,12 @@
 import Link from 'next/link';
 import { createRef } from 'react';
 
+import Icons from '@/icons';
+
 import type { ITrendingVideo } from '@/types';
 
 import { StreamUtils } from '@/utils';
-import { useWindowSize } from 'usehooks-ts';
 import { isFakeDataFetch } from '@/environments';
-
-import { IconCircleCheckFilled, IconClock, IconEye, IconHeart } from '@tabler/icons-react';
 import { Avatar, Button, Chip, Image } from '@nextui-org/react';
 
 type TrendingVideoProps = React.HTMLAttributes<HTMLElement> & {
@@ -16,7 +15,6 @@ type TrendingVideoProps = React.HTMLAttributes<HTMLElement> & {
 
 export const TrendingVideo = ({ data, ...props }: TrendingVideoProps) => {
   const thumbnailRef = createRef<HTMLImageElement>();
-  const { width } = useWindowSize();
 
   function onLoadThumbnailError() {
     const img = thumbnailRef.current as HTMLImageElement;
@@ -45,12 +43,12 @@ export const TrendingVideo = ({ data, ...props }: TrendingVideoProps) => {
               loading="lazy"
               className="group-hover/container:scale-105 transition-transform rounded-none sm:rounded-lg"
             />
-            <div className="absolute bottom-2 right-2 bg-dark flex flex-row rounded-full overflow-hidden">
+            <div className="absolute bottom-2 right-2 bg-dark flex flex-row z-10 items-center">
               <Chip
                 size="sm"
                 radius="none"
-                startContent={<IconEye size={16} className="mr-1" />}
-                className="text-white bg-black px-2 z-10 border-r-1 border-neutral-800"
+                startContent={<Icons.Eye strokeWidth={2} size={14} className="mr-1" />}
+                className="text-white bg-black px-2 border-r-1 border-neutral-800 rounded-l-full"
               >
                 {StreamUtils.formatStreamStats(data.views)}
               </Chip>
@@ -58,8 +56,8 @@ export const TrendingVideo = ({ data, ...props }: TrendingVideoProps) => {
               <Chip
                 size="sm"
                 radius="none"
-                startContent={<IconClock size={16} className="mr-1" />}
-                className="text-white bg-black px-2 z-10"
+                startContent={<Icons.Clock strokeWidth={2} size={14} className="mr-1" />}
+                className="text-white bg-black px-2 rounded-r-full"
               >
                 {StreamUtils.formatStreamDuration(data.duration)}
               </Chip>
@@ -71,7 +69,7 @@ export const TrendingVideo = ({ data, ...props }: TrendingVideoProps) => {
           <div className="bg-default-200 relative min-w-[40px] min-h-[40px] w-10 h-10 rounded-full">
             <Avatar name={data.uploaderName} src={getStreamImage('avatar')} />
             {data.uploaderVerified && (
-              <IconCircleCheckFilled
+              <Icons.VerifiedSolid
                 size={18}
                 className="absolute rounded-full p-[1px] bottom-[-2px] right-[-2px] bg-background text-app_orange-600"
               />
@@ -79,24 +77,21 @@ export const TrendingVideo = ({ data, ...props }: TrendingVideoProps) => {
           </div>
 
           <div className="flex w-full flex-col">
-            <span className="text-xs text-gray-800 dark:text-gray-300 mb-1 inline-flex">
-              {data.uploaderName}
-              {(width > 900 || width < 768) && (
-                <>
-                  <span className="mx-2 leading-normal text-[9px]">•</span>
-                  {StreamUtils.translateUploadedDate(data.uploadedDate)}
-                </>
-              )}
-            </span>
+            <div className="text-xs text-gray-800 dark:text-gray-300 mb-1 inline-flex whitespace-nowrap">
+              <p>{data.uploaderName}</p>
+              <span className="mx-2 leading-normal text-[9px]">•</span>
+              <span>{StreamUtils.translateUploadedDate(data.uploadedDate)}</span>
+            </div>
+
             <Link href={data.url}>
-              <p className="text-base text-black dark:text-white font-bold line-clamp-2 h-auto overflow-hidden">
+              <p className="text-base break-all text-black dark:text-white font-bold line-clamp-2 h-auto overflow-hidden">
                 {data.title}
               </p>
             </Link>
           </div>
 
-          <Button isIconOnly variant="light" radius="full">
-            <IconHeart stroke={1.5} size={20} />
+          <Button isIconOnly variant="light" radius="full" size="sm">
+            <Icons.Heart opacity={0.7} size={18} />
           </Button>
         </footer>
       </div>
