@@ -4,7 +4,7 @@ type HeaderRootProps = React.HTMLAttributes<HTMLElement> & {
 
 export function HeaderRoot({ children, ...props }: HeaderRootProps) {
   return (
-    <header {...props} className={'w-full mb-6 ' + props.className || ''}>
+    <header {...props} className={'flex items-center w-full h-10 mb-6 ' + props.className || ''}>
       {children}
     </header>
   );

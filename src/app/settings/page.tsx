@@ -5,6 +5,7 @@ import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import Main from '@/components/Main';
 import Content from '@/components/Content';
 import CustomSpinner from '@/components/CustomSpinner';
+import Icons from '@/icons';
 
 import { Header } from '@/components/Header';
 
@@ -18,7 +19,6 @@ import { isFakeDataFetch } from '@/environments';
 import { PIPED_VALUES } from '@/constants';
 
 import { Select, SelectItem } from '@nextui-org/react';
-import { IconSettings } from '@tabler/icons-react';
 const { LOCAL_STORAGE_KEYS } = PIPED_VALUES;
 
 export default function Settings() {
@@ -51,8 +51,8 @@ export default function Settings() {
     <Main>
       <Content>
         <Header.Root>
-          <Header.Content>
-            <Header.Title icon={<IconSettings size={24} />}>Configurações</Header.Title>
+          <Header.Content className="flex flex-row justify-between items-center">
+            <Header.Title icon={<Icons.Settings2 />}>Configurações</Header.Title>
           </Header.Content>
         </Header.Root>
 

@@ -47,7 +47,7 @@ export default function Topbar() {
         <Search />
 
         {isClient ? (
-          <Button onClick={handleToggleTheme} startContent={userTheme.icon} isIconOnly variant="light" />
+          <Button radius="full" onClick={handleToggleTheme} startContent={userTheme.icon} isIconOnly variant="light" />
         ) : (
           <></>
         )}
