@@ -1,14 +1,8 @@
 'use client';
 
-// Libs externas
 import { useCallback, useContext, useEffect, useState } from 'react';
 
 import './styles/custom-oplayer-ui.css';
-
-import Player, { Lang } from '@oplayer/core';
-import ODash from '@oplayer/dash';
-import OHls from '@oplayer/hls';
-import ui from '@oplayer/ui';
 
 import { FetchStreamOptionsType, fetchStream } from '@/services/actions/fetchStreamData';
 
@@ -21,11 +15,8 @@ import { VideoPlayerLoading } from './VideoPlayerLoading';
 
 import { isFakeDataFetch } from '@/environments';
 import { PIPED_VALUES } from '@/constants';
-import { languages } from './languages';
 import { loadPlayer } from '@/utils/Player';
-import { PlayerUtils } from './utils';
 import { StreamUtils } from '@/utils';
-import { IStream } from '@/types';
 
 export default function VideoPlayerContent() {
   const { stream, setStream, streamId } = useContext(StreamContext);
@@ -73,10 +64,7 @@ export default function VideoPlayerContent() {
 
   useEffect(() => {
     if (window?.document) {
-      (async () => {
-        const data = await getStreamData();
-        loadPlayer({ ...data, onLoad: () => setIsVideoLoaded(true) });
-      })();
+      (async () => loadPlayer({ ...(await getStreamData()), onLoad: () => setIsVideoLoaded(true) }))();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

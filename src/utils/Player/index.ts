@@ -5,7 +5,7 @@ import ODash from '@oplayer/dash';
 import OHls from '@oplayer/hls';
 import ui from '@oplayer/ui';
 
-import * as UIUtils from './ui';
+import * as UIUtils from './custom-ui';
 
 import { languages } from './languages';
 
