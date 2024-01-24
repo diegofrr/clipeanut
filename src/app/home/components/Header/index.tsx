@@ -15,12 +15,11 @@ import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { isFakeDataFetch } from '@/environments';
 import { getStreamMetadata } from '@/utils/Stream/StreamMetadata';
 import { StreamUtils } from '@/utils';
-import { loadPlayer } from '@/utils/Player';
 import { useLocalStorageWithExpiration } from '@/hooks';
 import { highlightStreamData } from '@/mocks/highlightStreamData';
 
 import { PIPED_VALUES } from '@/constants';
-import { Avatar, Skeleton } from '@nextui-org/react';
+import { Avatar, Button, Image, Skeleton } from '@nextui-org/react';
 const { LOCAL_STORAGE_KEYS } = PIPED_VALUES;
 
 export default function HomeHeader() {
@@ -29,7 +28,7 @@ export default function HomeHeader() {
   const { isExistsItem, getStoragedItem, setStoragedItem } = useLocalStorageWithExpiration();
 
   const [stream, setStream] = useState<IStream>({} as IStream);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [poster, setPoster] = useState<string>('');
 
   const getStreamData = useCallback(async () => {
     const options = {
@@ -39,8 +38,6 @@ export default function HomeHeader() {
       delay: 1
     } as FetchStreamOptionsType;
     let stream = {} as IStream;
-    let mimeType = '';
-    let uri = '';
 
     const boundFetchStream = async () => {
       const data = await fetchStream({ options });
@@ -60,43 +57,26 @@ export default function HomeHeader() {
         } else await boundFetchStream();
       } else await boundFetchStream();
 
-      if (isFakeDataFetch) {
-        stream = highlightStreamData as IStream;
-        setStream(stream);
-      }
+      if (isFakeDataFetch) stream = highlightStreamData as IStream;
 
-      const metadata = await getStreamMetadata(stream);
-
-      mimeType = metadata.mimeType;
-      uri = metadata.uri;
+      setStream(stream);
+      setPoster(stream.thumbnailUrl);
     } catch {
       /* empty */
     } finally {
       setStream(stream);
     }
-
-    return { mimeType, uri, stream };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [instance, highlightStreamId]);
 
   useEffect(() => {
-    if (window?.document && highlightStreamId) {
-      (async () => {
-        loadPlayer({
-          ...(await getStreamData()),
-          selector: '#oplayer',
-          useKeyboard: false,
-          onLoad: () => setIsLoaded(true)
-        });
-      })();
-    }
+    if (window?.document && highlightStreamId) getStreamData();
   }, [highlightStreamId, getStreamData]);
 
   return (
     <header className="hidden sm:flex flex-row w-full bg-neutral-200 dark:bg-neutral-950 p-6 gap-6 rounded-xl">
-      <div className="flex relative min-h-0 h-full w-full max-w-[720px] max-h-[480px] rounded-lg overflow-hidden bg-neutral-800">
-        <div id="home-player" className={`${isLoaded ? '' : 'hidden'} w-full max-w-[720px] h-full max-h-[480px]`}></div>
-        {!isLoaded && <Skeleton className="w-full h-[20vw]" />}
+      <div className="rounded-lg relative overflow-hidden bg-neutral-800">
+        <Image width={1024} height={576} loading="lazy" src={poster} alt="Thumbnail" />
+        <div className="absolute left-4 right-4 bottom-4 z-10">{stream.description}</div>
       </div>
 
       <div className="bg-netral-850 flex flex-col gap-4 w-full">
