@@ -37,7 +37,6 @@ export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
       setTrendingVideos(data);
       setHighlightStream(data[0]);
       setIsLoading(false);
-      console.log(data);
     } catch {
       /* empty */
     }
