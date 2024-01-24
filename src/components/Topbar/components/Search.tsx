@@ -26,7 +26,7 @@ export default function Search() {
         base: 'sm:max-w-md lg:max-w-lg w-full h-10',
         mainWrapper: 'h-full',
         input: 'text-small',
-        inputWrapper: 'h-full font-normal text-default-500 '
+        inputWrapper: 'h-full font-normal text-default-500 bg-neutral-100 dark:bg-neutral-900'
       }}
       radius="full"
       type="search"

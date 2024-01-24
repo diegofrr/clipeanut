@@ -18,7 +18,7 @@ import { useLocalStorageWithExpiration } from '@/hooks';
 import { highlightStreamData } from '@/mocks/highlightStreamData';
 
 import { PIPED_VALUES } from '@/constants';
-import { Avatar, Image, Skeleton } from '@nextui-org/react';
+import { Avatar, Image } from '@nextui-org/react';
 const { LOCAL_STORAGE_KEYS } = PIPED_VALUES;
 
 export default function HomeHeader() {
@@ -64,6 +64,7 @@ export default function HomeHeader() {
     } finally {
       setStream(stream);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [instance, highlightStreamId]);
 
   useEffect(() => {
@@ -100,10 +101,11 @@ export default function HomeHeader() {
         <p className="lg:text-xl xl:text-2xl font-bold">{stream?.title}</p>
       </div>
 
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={stream?.thumbnailUrl}
         alt="Thumbnail background"
-        className="blur-3xl opacity-20 h-full absolute left-[10%] top-[20%] object-cover pointer-events-none"
+        className="blur-3xl opacity-20 absolute max-h-[50vh] w-full max-w-[80vw] top-[20%] right-0 object-cover pointer-events-none"
       />
     </header>
   );

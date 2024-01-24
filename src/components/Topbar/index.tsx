@@ -11,7 +11,7 @@ import Search from './components/Search';
 import type { UserTheme } from './types';
 
 import { useTheme } from 'next-themes';
-import { hasTopbar } from './utils';
+import { hasTopbar, hasSearchInput } from './utils';
 import { AppBanner, AppLogo } from '../../../public/assets';
 import { Button } from '@nextui-org/react';
 
@@ -36,14 +36,14 @@ export default function Topbar() {
   }
 
   return hasTopbar(pathname) ? (
-    <header className="fixed top-0 left-0 px-6 lg:px-12 right-0 max-h-16 h-16 bg-background z-max">
+    <header className="fixed top-0 left-0 px-6 lg:px-12 right-0 max-h-16 h-16 z-max bg-background">
       <div className="w-full h-full gap-6 flex flex-row justify-between items-center">
         <Link href="/">
           <AppLogo className="inline sm:hidden fill-app_orange-600" />
           <AppBanner className="hidden sm:inline fill-app_orange-600" />
         </Link>
 
-        <Search />
+        {hasSearchInput(pathname) && <Search />}
 
         {isClient ? (
           <Button radius="full" onClick={handleToggleTheme} startContent={userTheme.icon} isIconOnly variant="light" />
