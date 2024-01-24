@@ -1,4 +1,4 @@
-#oplayer {
+#home-player, #watch-player {
     .custom-tooltip {
         border-radius: 6px !important;
     }
@@ -44,6 +44,9 @@
 
     }
 
+}
+
+#home-player {
     video {
         max-height: 480px;
 

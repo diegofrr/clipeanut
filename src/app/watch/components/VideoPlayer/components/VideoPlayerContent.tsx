@@ -63,7 +63,7 @@ export default function VideoPlayerContent() {
       {!isVideoLoaded && <VideoPlayerLoading />}
 
       <div className="w-full relative">
-        <div id="oplayer" className="overflow-hidden rounded-lg w-full"></div>
+        <div id="watch-player" className="overflow-hidden rounded-lg w-full"></div>
       </div>
 
       {isVideoLoaded && stream.livestream && (

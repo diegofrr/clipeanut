@@ -95,7 +95,7 @@ export default function HomeHeader() {
   return (
     <header className="hidden sm:flex flex-row w-full bg-neutral-200 dark:bg-neutral-950 p-6 gap-6 rounded-xl">
       <div className="flex relative min-h-0 h-full w-full max-w-[720px] max-h-[480px] rounded-lg overflow-hidden bg-neutral-800">
-        <div id="oplayer" className={`${isLoaded ? '' : 'hidden'} w-full max-w-[720px] h-full max-h-[480px]`}></div>
+        <div id="home-player" className={`${isLoaded ? '' : 'hidden'} w-full max-w-[720px] h-full max-h-[480px]`}></div>
         {!isLoaded && <Skeleton className="w-full h-[20vw]" />}
       </div>
 
