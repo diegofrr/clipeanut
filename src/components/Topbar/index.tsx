@@ -6,12 +6,14 @@ import { usePathname } from 'next/navigation';
 
 import Icons from '@/icons';
 
+import Search from './components/Search';
+
 import type { UserTheme } from './types';
+
 import { useTheme } from 'next-themes';
 import { hasTopbar } from './utils';
 import { AppBanner, AppLogo } from '../../../public/assets';
 import { Button } from '@nextui-org/react';
-import Search from './components/Search';
 
 export default function Topbar() {
   const pathname = usePathname();
@@ -34,10 +36,7 @@ export default function Topbar() {
   }
 
   return hasTopbar(pathname) ? (
-    <header
-      className="fixed border-b-1 border-neutral-200 dark:border-neutral-900 
-      top-0 left-0 px-6 lg:px-12 right-0 max-h-16 h-16 bg-white dark:bg-black z-max"
-    >
+    <header className="fixed top-0 left-0 px-6 lg:px-12 right-0 max-h-16 h-16 bg-background z-max">
       <div className="w-full h-full gap-6 flex flex-row justify-between items-center">
         <Link href="/">
           <AppLogo className="inline sm:hidden fill-app_orange-600" />
