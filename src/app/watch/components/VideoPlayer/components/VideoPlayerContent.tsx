@@ -4,6 +4,8 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 
 import '@/styles/custom-oplayer-ui.css';
 
+import Icons from '@/icons';
+
 import type { IStream } from '@/types';
 import { FetchStreamOptionsType, fetchStream } from '@/services/actions/fetchStreamData';
 
@@ -11,7 +13,6 @@ import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { StreamContext } from '../contexts/stream';
 
 import { Button } from '@nextui-org/react';
-import { IconExternalLink } from '@tabler/icons-react';
 import { VideoPlayerLoading } from './VideoPlayerLoading';
 
 import { isFakeDataFetch } from '@/environments';
@@ -68,7 +69,7 @@ export default function VideoPlayerContent() {
       {isVideoLoaded && stream.livestream && (
         <Button
           onClick={handleOpenChat}
-          endContent={<IconExternalLink size={18} />}
+          endContent={<Icons.ExternalLink size={18} />}
           className="bg-app_orange-500 text-black font-medium"
         >
           Abrir chat em outra janela
