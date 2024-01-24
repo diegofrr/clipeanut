@@ -45,15 +45,20 @@ export default function HomeHeader() {
 
     const boundFetchStream = async () => {
       const data = await fetchStream({ options });
-      setStoragedItem(LOCAL_STORAGE_KEYS.HIGHLIGTH_STREAM, data, { minutes: 15 });
+      setStoragedItem(LOCAL_STORAGE_KEYS.HIGHLIGTH_STREAM, { data, highlightStreamId }, { minutes: 15 });
       stream = data;
     };
 
     try {
       if (isExistsItem(LOCAL_STORAGE_KEYS.HIGHLIGTH_STREAM)) {
-        const storagedHighlightStream = getStoragedItem<IStream>(LOCAL_STORAGE_KEYS.HIGHLIGTH_STREAM);
-        if (storagedHighlightStream?.value) stream = storagedHighlightStream.value;
-        else await boundFetchStream();
+        const storagedHighlightStream = getStoragedItem<{ data: IStream; highlightStreamId: string }>(
+          LOCAL_STORAGE_KEYS.HIGHLIGTH_STREAM
+        );
+        if (storagedHighlightStream?.value) {
+          if (storagedHighlightStream.value.highlightStreamId === highlightStreamId) {
+            stream = storagedHighlightStream.value.data;
+          } else await boundFetchStream();
+        } else await boundFetchStream();
       } else await boundFetchStream();
 
       if (isFakeDataFetch) {
@@ -91,7 +96,7 @@ export default function HomeHeader() {
   return (
     <header className="flex flex-row w-full bg-neutral-200 dark:bg-neutral-950 p-6 gap-6 rounded-xl">
       <div className="flex relative min-h-0 h-full w-full max-w-[720px] max-h-[480px] rounded-lg overflow-hidden bg-neutral-800">
-        <div id="oplayer" className={`${isLoaded ? '' : 'hidden'} h-full max-h-[480px]`}></div>
+        <div id="oplayer" className={`${isLoaded ? '' : 'hidden'} w-full max-w-[720px] h-full max-h-[480px]`}></div>
         {!isLoaded && <Skeleton className="w-full h-[20vw]" />}
       </div>
 
