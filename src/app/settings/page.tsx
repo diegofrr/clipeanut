@@ -6,7 +6,6 @@ import Main from '@/components/Main';
 import Header from '@/components/Header';
 import Content from '@/components/Content';
 import CustomSpinner from '@/components/CustomSpinner';
-import Icons from '@/icons';
 
 import type { IPipedInstance } from '@/types';
 import { fetchPipedInstancesData } from '@/services/actions/fetchPipedInstancesData';
@@ -26,17 +25,21 @@ export default function Settings() {
 
   const [instanceList, setInstanceList] = useState<IPipedInstance[] | null>(null);
 
+  const boundFetchPipedInstancesData = async () => {
+    const data = await fetchPipedInstancesData({ options: { isFake: isFakeDataFetch, delay: 1 } });
+    setInstanceList(data);
+    setStoragedItem(LOCAL_STORAGE_KEYS.STORAGED_INSTANCES, data, { minutes: 60 });
+  };
+
   useEffect(() => {
-    if (isExistsItem(LOCAL_STORAGE_KEYS.STORAGED_INSTANCES)) {
-      const storagedInstances = getStoragedItem<IPipedInstance[]>(LOCAL_STORAGE_KEYS.STORAGED_INSTANCES);
-      if (storagedInstances && storagedInstances.value) setInstanceList(storagedInstances.value);
-    } else {
-      fetchPipedInstancesData({ options: { isFake: isFakeDataFetch, delay: 1 } })
-        .then((data) => {
-          setInstanceList(data);
-          setStoragedItem(LOCAL_STORAGE_KEYS.STORAGED_INSTANCES, data, { minutes: 60 });
-        })
-        .catch(() => setInstanceList([PIPED_VALUES.DEFAULT_INSTANCE]));
+    try {
+      if (isExistsItem(LOCAL_STORAGE_KEYS.STORAGED_INSTANCES)) {
+        const storagedInstances = getStoragedItem<IPipedInstance[]>(LOCAL_STORAGE_KEYS.STORAGED_INSTANCES);
+        if (storagedInstances?.value) setInstanceList(storagedInstances.value);
+        else boundFetchPipedInstancesData();
+      } else boundFetchPipedInstancesData();
+    } catch {
+      setInstanceList([PIPED_VALUES.DEFAULT_INSTANCE]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -51,7 +54,7 @@ export default function Settings() {
       <Content>
         <Header.Root>
           <Header.Content className="flex flex-row justify-between items-center">
-            <Header.Title icon={<Icons.Settings2 />}>Configurações</Header.Title>
+            <Header.Title>Configurações</Header.Title>
           </Header.Content>
         </Header.Root>
 

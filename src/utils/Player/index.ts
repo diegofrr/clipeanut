@@ -56,7 +56,7 @@ export async function loadPlayer({ uri, mimeType, stream, onLoad, selector, useK
     ]);
 
     player.create();
-    player.on('loadedmetadata', () => onLoad && onLoad());
+    player.on('loadstart', () => onLoad && onLoad());
     player.on('loadeddata', () => initializePlayer(player));
     player.on('fullscreenchange', () => fixFullscreenVideoSize(player));
   } catch {
