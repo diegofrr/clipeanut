@@ -48,7 +48,7 @@
         max-height: 480px;
 
         @media (max-width: 1024px) {
-            max-height: 360px;
+            max-height: 320px;
         }
         
         &.is-fullscreen {
