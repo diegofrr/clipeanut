@@ -29,7 +29,7 @@ export default function Settings() {
   useEffect(() => {
     if (isExistsItem(LOCAL_STORAGE_KEYS.STORAGED_INSTANCES)) {
       const storagedInstances = getStoragedItem<IPipedInstance[]>(LOCAL_STORAGE_KEYS.STORAGED_INSTANCES);
-      if (storagedInstances) setInstanceList(storagedInstances.value);
+      if (storagedInstances?.value) setInstanceList(storagedInstances.value);
     } else {
       fetchPipedInstancesData({ options: { isFake: isFakeDataFetch, delay: 1 } })
         .then((data) => {

@@ -2,7 +2,6 @@
 
 import { useCallback, useContext, useEffect, useState } from 'react';
 
-import './header.css';
 import '@/styles/custom-oplayer-ui.css';
 
 import Icons from '@/icons';
@@ -103,7 +102,7 @@ export default function HomeHeader() {
       <div className="bg-netral-850 flex flex-col gap-4 w-full">
         <div className="flex flex-row gap-4 items-center">
           <div className="bg-default-200 relative min-w-[40px] min-h-[40px] w-10 h-10 rounded-full">
-            <Avatar name={stream.uploader} src={stream.uploaderAvatar} />
+            <Avatar name={stream.uploader} src={highlightStream.uploaderAvatar} />
             {stream.uploaderVerified && (
               <Icons.VerifiedSolid
                 size={18}
