@@ -43,4 +43,12 @@
         }
 
     }
+
+    video {
+        max-height: 20vw !important;
+        
+        &.is-fullscreen {
+            max-height: 100% !important;
+        }
+    }
 }
