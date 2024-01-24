@@ -1,7 +1,7 @@
 import { Tabs, Tab } from '@nextui-org/react';
 
+import Icons from '@/icons';
 import { useWindowSize } from 'usehooks-ts';
-import { IconDeviceGamepad2, IconMusic, IconVideo } from '@tabler/icons-react';
 
 type TypeTabsProps = React.HTMLAttributes<HTMLElement> & {
   tab: string | number;
@@ -15,17 +15,17 @@ export default function TrendingTabs({ tab, setTab, ...props }: TypeTabsProps) {
     {
       key: 'videos',
       title: 'Vídeos',
-      icon: <IconVideo size={18} />
+      icon: <Icons.Videos size={18} />
     },
     {
       key: 'musics',
       title: 'Músicas',
-      icon: <IconMusic size={18} />
+      icon: <Icons.Musics size={18} />
     },
     {
       key: 'games',
       title: 'Jogos',
-      icon: <IconDeviceGamepad2 size={18} />
+      icon: <Icons.Gamepad size={18} />
     }
   ];
 

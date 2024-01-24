@@ -8,6 +8,10 @@ import { MoonIcon } from './outline/moon';
 import { SunIcon } from './outline/sun';
 import { EyeIcon } from './outline/eye';
 import { ClockIcon } from './outline/clock';
+import { VideosIcon } from './outline/videos';
+import { MusicsIcon } from './outline/musics';
+import { GamepadIcon } from './outline/gamepad';
+import { ExternalLinkIcon } from './outline/external-link';
 
 import { HomeIconSolid } from './solid/home-solid';
 import { FlameIconSolid } from './solid/flame-solid';
@@ -27,6 +31,10 @@ const Icons = {
   Search: SearchIcon,
   Eye: EyeIcon,
   Clock: ClockIcon,
+  Videos: VideosIcon,
+  Musics: MusicsIcon,
+  Gamepad: GamepadIcon,
+  ExternalLink: ExternalLinkIcon,
 
   HomeSolid: HomeIconSolid,
   SettingsSolid: SettingsIconSolid,
