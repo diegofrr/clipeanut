@@ -8,6 +8,7 @@ import { TrendingVideo } from './components/Video';
 import { ITrendingVideo } from '@/types';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { HighlighStreamContext } from '@/app/home/contexts/highlightStream';
+import { useWindowSize } from 'usehooks-ts';
 
 import { FetchTrendingVideosOptionsType, fetchTrendingVideos } from '@/services/actions/fetchTrendingVideosData';
 import { isFakeDataFetch } from '@/environments';
@@ -23,6 +24,7 @@ export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
   const { region, instance } = useContext(PipedInstanceContext);
   const { setHighlightStream } = useContext(HighlighStreamContext);
 
+  const { width } = useWindowSize();
   const [isLoading, setIsLoading] = useState<boolean>(INITIAL_STATE.LOADING);
   const [trendingVideos, setTrendingVideos] = useState<ITrendingVideo[]>(INITIAL_STATE.TRENDING_VIDEOS);
 
@@ -35,6 +37,7 @@ export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
       setTrendingVideos(data);
       setHighlightStream(data[0]);
       setIsLoading(false);
+      console.log(data);
     } catch {
       /* empty */
     }
@@ -53,8 +56,8 @@ export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
       {isLoading && <CustomSpinner stroke="md" className="absolute" />}
       {!isLoading && trendingVideos.length > 0 && (
         <>
-          {trendingVideos.slice(1).map((video, index) => (
-            <TrendingVideo key={index} data={video} />
+          {trendingVideos.map((video, index) => (
+            <TrendingVideo className={`${index === 0 && width >= 640 ? 'hidden' : ''}`} key={index} data={video} />
           ))}
         </>
       )}
