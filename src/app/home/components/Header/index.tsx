@@ -102,11 +102,13 @@ export default function HomeHeader() {
       </div>
 
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={stream?.thumbnailUrl}
-        alt="Thumbnail background"
-        className="blur-3xl opacity-20 absolute max-h-[50vh] w-full max-w-[80vw] top-[20%] right-0 object-cover pointer-events-none"
-      />
+      {stream && (
+        <img
+          src={stream?.thumbnailUrl}
+          alt="Thumbnail background"
+          className="blur-3xl opacity-20 absolute max-h-[50vh] w-full max-w-[80vw] top-[20%] right-0 object-cover pointer-events-none"
+        />
+      )}
     </header>
   );
 }
