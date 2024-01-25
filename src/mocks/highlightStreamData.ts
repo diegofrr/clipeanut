@@ -5,9 +5,8 @@ export const highlightStreamData = {
   uploadDate: '2024-01-23T07:00:15-08:00',
   uploader: '이지금 [IU Official]',
   uploaderUrl: '/channel/UC3SyT4_WLHzN7JmHQwKQZww',
-  uploaderAvatar:
-    'https://pipedproxy-ams-2.kavin.rocks/ytc/AIf8zZTpgXEMZoYa0t8yeF3HPJ9lvRH6R5pZntEyBwqEPg=s176-c-k-c0x00ffffff-no-rw-mo?host=yt3.ggpht.com&qhash=c95e93d9',
-  thumbnailUrl: 'https://pipedproxy-ams-2.kavin.rocks/vi/JleoAppaxi0/maxresdefault.jpg?host=i.ytimg.com&qhash=789222ed',
+  uploaderAvatar: '/mocks/trending-videos/uploader_avatar_real.jpg',
+  thumbnailUrl: '/mocks/trending-videos/thumbnail_real.jpg',
   hls: 'https://pipedproxy-ams-2.kavin.rocks/api/manifest/hls_variant/expire/1706082434/ei/ImywZdXDBq2J6dsPuLyt6Ao/ip/89.46.223.182/id/2657a8029a5ac62d/source/youtube/requiressl/yes/xpc/EgVo2aDSNQ%3D%3D/playback_host/rr1---sn-5hnekn7z.googlevideo.com/mh/ig/mm/31%2C29/mn/sn-5hnekn7z%2Csn-5hne6nz6/ms/au%2Crdu/mv/m/mvi/1/pl/24/hfr/1/demuxed/1/tts_caps/1/maudio/1/initcwndbps/1850000/vprv/1/go/1/mt/1706060461/fvip/3/nvgoi/1/short_key/1/ncsapi/1/keepalive/yes/fexp/24007246/dover/13/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Cxpc%2Chfr%2Cdemuxed%2Ctts_caps%2Cmaudio%2Cvprv%2Cgo%2Citag%2Cplaylist_type/sig/AJfQdSswRQIhAJ9ODW95SSc8O2xfcpJ5HCFR2iDRPqxdiGIoesV783xQAiBxhSiRawuH7PJkq2DRtWgoJqv49YHLwvFy2G_Rk0Ejtg%3D%3D/lsparams/playback_host%2Cmh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps/lsig/AAO5W4owRAIgAVRQae0H-xiNNR8IUwsKQK7WTvAZ37LdkQd2Q-bui5cCIGa4c47lBoFw05jIShVzl1YyXO3CX_tGl0JkB5uQLRiG/file/index.m3u8?host=manifest.googlevideo.com&qhash=c8165b3f',
   dash: null,
   lbryId: null,

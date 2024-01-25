@@ -24,7 +24,7 @@ const { LOCAL_STORAGE_KEYS } = PIPED_VALUES;
 export default function HomeHeader() {
   const { isExistsItem, getStoragedItem, setStoragedItem } = useLocalStorageWithExpiration();
 
-  const { highlightStreamId, highlightStream } = useContext(HighlighStreamContext);
+  const { highlightStreamId } = useContext(HighlighStreamContext);
   const { instance } = useContext(PipedInstanceContext);
 
   const [stream, setStream] = useState<IStream>();
@@ -57,8 +57,6 @@ export default function HomeHeader() {
       } else await boundFetchStream();
 
       if (isFakeDataFetch) stream = highlightStreamData as IStream;
-
-      setStream(stream);
     } catch {
       /* empty */
     } finally {
@@ -80,11 +78,19 @@ export default function HomeHeader() {
       <div className="bg-netral-850 flex flex-col gap-4 w-full z-10 mb-auto">
         <div className="flex flex-row gap-4 items-center">
           <div className="bg-default-200 relative min-w-[40px] min-h-[40px] w-10 h-10 rounded-full">
-            <Avatar name={stream?.uploader} src={highlightStream.uploaderAvatar} />
+            <Image
+              isLoading={!stream}
+              alt={stream?.uploader}
+              src={stream?.uploaderAvatar}
+              height={40}
+              width={40}
+              radius="full"
+              className="z-[1]"
+            />
             {stream?.uploaderVerified && (
               <Icons.VerifiedSolid
                 size={18}
-                className="absolute rounded-full p-[1px] bottom-[-2px] right-[-2px] bg-neutral-200 dark:bg-neutral-950 text-app_orange-600"
+                className="absolute rounded-full p-[1px] bottom-[-2px] right-[-2px] bg-neutral-200 dark:bg-neutral-950 text-app_orange-600 z-[2]"
               />
             )}
           </div>
@@ -93,7 +99,7 @@ export default function HomeHeader() {
             <p className="text-lg font-bold">{stream?.uploader}</p>
 
             <p className="break-all text-xs text-gray-800 dark:text-gray-300  inline-flexowrap">
-              {StreamUtils.translateUploadedDate(highlightStream.uploadedDate || '')}
+              {StreamUtils.translateUploadedDate(stream?.uploadDate || '')}
             </p>
           </div>
         </div>
@@ -101,8 +107,8 @@ export default function HomeHeader() {
         <p className="lg:text-xl xl:text-2xl font-bold">{stream?.title}</p>
       </div>
 
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       {stream && (
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           src={stream?.thumbnailUrl}
           alt="Thumbnail background"
