@@ -18,7 +18,7 @@ import { useLocalStorageWithExpiration } from '@/hooks';
 import { highlightStreamData } from '@/mocks/highlightStreamData';
 
 import { PIPED_VALUES } from '@/constants';
-import { Avatar, Image } from '@nextui-org/react';
+import { Image } from '@nextui-org/react';
 const { LOCAL_STORAGE_KEYS } = PIPED_VALUES;
 
 export default function HomeHeader() {
