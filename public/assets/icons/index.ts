@@ -12,13 +12,17 @@ import { VideosIcon } from './outline/videos';
 import { MusicsIcon } from './outline/musics';
 import { GamepadIcon } from './outline/gamepad';
 import { ExternalLinkIcon } from './outline/external-link';
+import { ClapperboardIcon } from './outline/clapperboard';
+import { PlayIcon } from './outline/play';
 
+import { PlayIconSolid } from './solid/play-solid';
 import { HomeIconSolid } from './solid/home-solid';
 import { FlameIconSolid } from './solid/flame-solid';
 import { HeartIconSolid } from './solid/heart-solid';
 import { SettingsIconSolid } from './solid/settings-solid';
 import { SettingsIconSolid2 } from './solid/settings2-solid';
 import { VerifiedIconSolid } from './solid/verified-solid';
+import { ClapperboardIconSolid } from './solid/clapperboard-solid';
 
 const Icons = {
   Home: HomeIcon,
@@ -35,13 +39,17 @@ const Icons = {
   Musics: MusicsIcon,
   Gamepad: GamepadIcon,
   ExternalLink: ExternalLinkIcon,
+  Clapperboard: ClapperboardIcon,
+  Play: PlayIcon,
 
   HomeSolid: HomeIconSolid,
   SettingsSolid: SettingsIconSolid,
   SettingsSolid2: SettingsIconSolid2,
   HeartSolid: HeartIconSolid,
   FlameSolid: FlameIconSolid,
-  VerifiedSolid: VerifiedIconSolid
+  VerifiedSolid: VerifiedIconSolid,
+  PlaySolid: PlayIconSolid,
+  ClapperboardSolid: ClapperboardIconSolid
 };
 
 export default Icons;
