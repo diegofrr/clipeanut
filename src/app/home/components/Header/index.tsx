@@ -76,20 +76,25 @@ export default function HomeHeader() {
     <header className="hidden sm:flex flex-row items-center w-full bg-neutral-200 dark:bg-neutral-950 p-6 gap-6 rounded-xl relative">
       <div className="rounded-lg relative overflow-hidden w-full max-h-[400px] max-w-[720px]">
         <Image isLoading={!stream} width={720} height={400} loading="lazy" src={stream?.thumbnailUrl} alt="Thumbnail" />
-        <div className="absolute flex items-center justify-end left-0 right-0 bottom-0 p-4 z-20">
-          <Button
-            as={Link}
-            size={width > 1280 ? 'md' : 'sm'}
-            radius="full"
-            href={highlightStream.url || ''}
-            className="font-medium"
-            startContent={<Icons.ClapperboardSolid size={20} />}
-            color="warning"
-          >
-            Assistir
-          </Button>
-        </div>
-        <span className="absolute left-0 bottom-0 right-0 shadow-[0px_0px_6em_8em_#000000] z-[10]" />
+
+        {stream && (
+          <>
+            <div className="absolute flex items-center justify-end left-0 right-0 bottom-0 p-4 z-20">
+              <Button
+                as={Link}
+                size={width > 1280 ? 'md' : 'sm'}
+                radius="full"
+                href={highlightStream.url || ''}
+                className="font-medium"
+                startContent={<Icons.ClapperboardSolid size={20} />}
+                color="warning"
+              >
+                Assistir
+              </Button>
+            </div>
+            <span className="absolute left-0 bottom-0 right-0 shadow-[0px_0px_6em_8em_#000000] z-[10]" />
+          </>
+        )}
       </div>
 
       <div className="bg-netral-850 flex flex-col gap-4 w-full z-10 mb-auto">
