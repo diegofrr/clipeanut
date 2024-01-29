@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Icons from '@/icons';
 
 import { FetchSuggestionsOptionsType, fetchSuggestions } from '@/services/actions/fetchSuggestionsData';
+import { formatSuggestionToQuery } from '../utils';
 import { isFakeDataFetch } from '@/environments';
 import { Input } from '@nextui-org/react';
 
@@ -28,11 +29,15 @@ export default function Search() {
     setIsOpen(false);
   }
 
+  function handleClickSuggestion(suggestion: string) {
+    console.log(formatSuggestionToQuery(suggestion));
+  }
+
   async function getSuggestions(search: string) {
     const searchCheck = search.replace(/\s/g, '');
     if (!searchCheck || searchCheck.length < 3) return setIsOpen(false);
 
-    const query = search.split(' ').join('+');
+    const query = formatSuggestionToQuery(search);
 
     const options = { query, isFake: isFakeDataFetch, delay: 1 } as FetchSuggestionsOptionsType;
 
@@ -72,6 +77,7 @@ export default function Search() {
             <ul>
               {suggestions?.map((suggestion) => (
                 <li
+                  onClick={() => handleClickSuggestion(suggestion)}
                   className="cursor-pointer flex flex-row items-center justify-between p-1 rounded-lg px-4 hover:bg-neutral-200 dark:hover:bg-neutral-800"
                   key={suggestion}
                 >
