@@ -6,19 +6,22 @@ import { Input } from '@nextui-org/react';
 
 export default function Search() {
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout>();
+  const [searchValue, setSearchValue] = useState('');
 
   function fetchSuggestionsController({ target }: React.ChangeEvent<HTMLInputElement>) {
     if (searchTimeout) clearTimeout(searchTimeout);
     setSearchTimeout(setTimeout(() => fetchSuggestions(target.value), 500));
   }
 
-  function fetchSuggestions(searchValue: string) {
-    console.log(searchValue);
+  function fetchSuggestions(search: string) {
+    console.log(search);
   }
 
   return (
     <Input
-      onChange={(e) => fetchSuggestionsController(e)}
+      onChange={fetchSuggestionsController}
+      value={searchValue}
+      onValueChange={setSearchValue}
       placeholder="Pesquisar..."
       isClearable
       startContent={<Icons.Search size={14} />}
