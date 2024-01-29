@@ -1,7 +1,7 @@
 import type Player from '@oplayer/core';
 
 export function addCustomKeyboardActions(player: Player) {
-  const seekTime = player.duration / 9;
+  const seekTime = player.duration / 10;
 
   document.addEventListener('keydown', ({ code }) => {
     if (code === 'Space') player.togglePlay();
@@ -17,7 +17,7 @@ export function addCustomKeyboardActions(player: Player) {
     else if (code === 'Digit6' || code === 'Numpad6') player.seek(seekTime * 6);
     else if (code === 'Digit7' || code === 'Numpad7') player.seek(seekTime * 7);
     else if (code === 'Digit8' || code === 'Numpad8') player.seek(seekTime * 8);
-    else if (code === 'Digit9' || code === 'Numpad9') player.seek(seekTime * 8.8);
+    else if (code === 'Digit9' || code === 'Numpad9') player.seek(seekTime * 9);
   });
 }
 
