@@ -72,10 +72,11 @@ export default function Search() {
             <ul>
               {suggestions?.map((suggestion) => (
                 <li
-                  className="cursor-pointer p-1 rounded-lg px-4 hover:bg-neutral-200 dark:hover:bg-neutral-800"
+                  className="cursor-pointer flex flex-row items-center justify-between p-1 rounded-lg px-4 hover:bg-neutral-200 dark:hover:bg-neutral-800"
                   key={suggestion}
                 >
                   {suggestion}
+                  <Icons.ArrowRightUpIcon opacity={0.5} size={16} />
                 </li>
               ))}
             </ul>
