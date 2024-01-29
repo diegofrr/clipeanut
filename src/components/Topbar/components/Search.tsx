@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 import Icons from '@/icons';
 
@@ -10,6 +11,8 @@ import { isFakeDataFetch } from '@/environments';
 import { Input } from '@nextui-org/react';
 
 export default function Search() {
+  const router = useRouter();
+
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout>();
   const [suggestions, setSuggestions] = useState<string[]>();
   const [searchValue, setSearchValue] = useState('');
@@ -30,7 +33,9 @@ export default function Search() {
   }
 
   function handleClickSuggestion(suggestion: string) {
-    console.log(formatSuggestionToQuery(suggestion));
+    handleCloseSuggestions();
+    const query = formatSuggestionToQuery(suggestion);
+    router.push(`/results?query=${query}`);
   }
 
   async function getSuggestions(search: string) {
