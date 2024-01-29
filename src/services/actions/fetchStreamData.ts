@@ -20,7 +20,7 @@ export async function fetchStream({ options }: IFetchStreamProps): Promise<IStre
 }
 
 async function fetchData(options: FetchStreamOptionsType): Promise<IStream> {
-  return fetch(`${options.instance.api_url}/streams/${options.streamId}`, { cache: 'no-store' })
+  return fetch(`${options.instance.api_url}/streams/${options.streamId}`)
     .then((res) => res.json())
     .then((data) => data as IStream);
 }
