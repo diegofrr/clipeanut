@@ -14,6 +14,7 @@ import { GamepadIcon } from './outline/gamepad';
 import { ExternalLinkIcon } from './outline/external-link';
 import { ClapperboardIcon } from './outline/clapperboard';
 import { ArrowRightUpIcon } from './outline/arrow-right-up';
+import { ArrowRightIcon } from './outline/arrow-right';
 import { ArrowLeftIcon } from './outline/arrow-left';
 import { PlayIcon } from './outline/play';
 
@@ -42,8 +43,9 @@ const Icons = {
   Gamepad: GamepadIcon,
   ExternalLink: ExternalLinkIcon,
   Clapperboard: ClapperboardIcon,
-  ArrowLeftIcon,
-  ArrowRightUpIcon,
+  ArrowLeft: ArrowLeftIcon,
+  ArrowRight: ArrowRightIcon,
+  ArrowRightUp: ArrowRightUpIcon,
   Play: PlayIcon,
 
   HomeSolid: HomeIconSolid,
