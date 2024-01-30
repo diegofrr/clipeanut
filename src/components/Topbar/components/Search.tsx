@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { createRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import Icons from '@/icons';
@@ -8,33 +8,46 @@ import Icons from '@/icons';
 import { FetchSuggestionsOptionsType, fetchSuggestions } from '@/services/actions/fetchSuggestionsData';
 import { formatSuggestionToQuery } from '../utils';
 import { isFakeDataFetch } from '@/environments';
-import { Input } from '@nextui-org/react';
+import { useWindowSize } from 'usehooks-ts';
+import { Button, Input } from '@nextui-org/react';
 
 export default function Search() {
   const router = useRouter();
+  const inputRef = createRef<HTMLInputElement>();
+  const { width } = useWindowSize();
 
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout>();
-  const [suggestions, setSuggestions] = useState<string[]>();
+  const [suggestions, setSuggestions] = useState<string[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   function getSuggestionsController({ target }: React.ChangeEvent<HTMLInputElement>) {
-    if (!isValidSuggestion(target.value)) return setIsOpen(false);
+    if (!isValidSuggestion(target.value)) return setSuggestions([]);
     if (searchTimeout) clearTimeout(searchTimeout);
     setSearchTimeout(setTimeout(() => getSuggestions(target.value), 200));
   }
 
   function handleClearSuggestions() {
     setSuggestions([]);
+    if (!isExpandedSearch()) setIsOpen(false);
+  }
+
+  function resetState() {
     setIsOpen(false);
+    removeInputFocus();
+  }
+
+  function removeInputFocus() {
+    inputRef?.current?.blur();
   }
 
   function handleCloseSuggestions() {
-    setIsOpen(false);
+    if (!isExpandedSearch()) setIsOpen(false);
   }
 
   function handleClickSuggestion(suggestion: string) {
-    handleCloseSuggestions();
+    resetState();
+
     const query = formatSuggestionToQuery(suggestion);
     router.push(`/results?query=${query}`);
   }
@@ -42,6 +55,10 @@ export default function Search() {
   function isValidSuggestion(suggestion: string): boolean {
     suggestion = suggestion.replace(/\s/g, '');
     return !!suggestion && suggestion.length >= 3;
+  }
+
+  function isExpandedSearch() {
+    return isOpen && width < 768;
   }
 
   async function getSuggestions(search: string) {
@@ -63,8 +80,13 @@ export default function Search() {
 
   return (
     <>
-      <div className="w-full sm:max-w-md lg:max-w-lg h-10 relative z-30">
+      <div
+        onClick={() => setIsOpen(true)}
+        className={`w-full md:max-w-xl h-10 z-30
+      ${isExpandedSearch() ? 'fixed p-4 left-0 top-0 w-full' : 'relative'}`}
+      >
         <Input
+          ref={inputRef}
           onChange={getSuggestionsController}
           value={searchValue}
           onClear={handleClearSuggestions}
@@ -73,22 +95,39 @@ export default function Search() {
           isClearable
           startContent={<Icons.Search size={14} />}
           classNames={{
-            mainWrapper: 'h-full',
+            mainWrapper: `h-full ${isExpandedSearch() ? 'ml-[48px] w-[calc(100%-48px)]' : 'w-full'}`,
             input: 'text-small',
             inputWrapper:
-              'h-full font-normal text-default-500 border-1 bg-neutral-100 dark:bg-neutral-900 border-1 border-neutral-200 dark:border-none'
+              'h-full font-normal text-default-500 border-1 bg-neutral-100 dark:bg-neutral-900 border-neutral-200 dark:border-none'
           }}
           radius="full"
           type="search"
-          size="sm"
+          size="md"
         />
-        {!isOpen ? null : (
-          <div className="w-full p-2 overflow-hidden rounded-lg mt-2 border-1 dark:border-none bg-neutral-100 dark:bg-neutral-900">
+
+        {isExpandedSearch() && (
+          <Button
+            title="Voltar"
+            onClick={resetState}
+            radius="full"
+            className="bg-transparent hover:bg-neutral-200 hover:dark:bg-neutral-800 absolute top-0 left-0 m-4"
+            isIconOnly
+          >
+            <Icons.ArrowLeftIcon />
+          </Button>
+        )}
+
+        {isOpen && suggestions.length > 0 && (
+          <div
+            className={`w-full p-2 overflow-hidden rounded-lg mt-2 border-1 dark:border-none bg-neutral-100 dark:bg-neutral-900 
+          ${isExpandedSearch() ? 'bg-transparent dark:bg-transparent border-none px-0' : ''}`}
+          >
             <ul>
-              {suggestions?.map((suggestion) => (
+              {suggestions.map((suggestion) => (
                 <li
                   onClick={() => handleClickSuggestion(suggestion)}
-                  className="cursor-pointer flex flex-row items-center justify-between p-1 rounded-lg px-4 hover:bg-neutral-200 dark:hover:bg-neutral-800"
+                  className={`cursor-pointer flex flex-row items-center justify-between py-2 rounded-lg px-4 hover:bg-neutral-200 dark:hover:bg-neutral-800 
+                  ${isExpandedSearch() ? 'hover:bg-neutral-100' : ''}`}
                   key={suggestion}
                 >
                   {suggestion}
@@ -99,8 +138,13 @@ export default function Search() {
           </div>
         )}
       </div>
-      {!isOpen ? null : (
-        <span onClick={handleCloseSuggestions} className="fixed opacity-40 bg-black top-0 left-0 right-0 bottom-0" />
+      {isOpen && (suggestions.length > 0 || isExpandedSearch()) && (
+        <span
+          onClick={handleCloseSuggestions}
+          className={`fixed top-0 left-0 right-0 bottom-0 z-10 ${
+            isExpandedSearch() ? 'bg-white dark:bg-neutral-950' : 'opacity-40 bg-black'
+          }`}
+        />
       )}
     </>
   );
