@@ -102,14 +102,14 @@ export default function HomeHeader() {
           <div className="bg-default-200 relative min-w-[40px] min-h-[40px] w-10 h-10 rounded-full">
             <Image
               isLoading={!stream}
-              alt={stream?.uploader}
-              src={stream?.uploaderAvatar}
+              alt={highlightStream.uploaderName + ' avatar'}
+              src={highlightStream.uploaderAvatar}
               height={40}
               width={40}
               radius="full"
               className="z-[1]"
             />
-            {stream?.uploaderVerified && (
+            {highlightStream.uploaderVerified && (
               <Icons.VerifiedSolid
                 size={18}
                 className="absolute rounded-full p-[1px] bottom-[-2px] right-[-2px] bg-neutral-200 dark:bg-neutral-950 text-app_orange-600 z-[2]"
@@ -118,21 +118,21 @@ export default function HomeHeader() {
           </div>
 
           <div>
-            <p className="text-lg font-bold">{stream?.uploader}</p>
+            <p className="text-lg font-bold">{highlightStream.uploaderName}</p>
 
             <p className="break-all text-xs text-gray-800 dark:text-gray-300  inline-flexowrap">
-              {StreamUtils.translateUploadedDate(stream?.uploadDate || '')}
+              {StreamUtils.translateUploadedDate(highlightStream.uploadedDate || '')}
             </p>
           </div>
         </div>
 
-        <p className="lg:text-xl xl:text-2xl font-bold">{stream?.title}</p>
+        <p className="lg:text-xl xl:text-2xl font-bold">{highlightStream.title}</p>
       </div>
 
       {stream && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          src={stream?.thumbnailUrl}
+          src={highlightStream.thumbnail}
           alt="Thumbnail background"
           className="blur-3xl opacity-20 absolute max-h-[50vh] w-full max-w-[80vw] top-[20%] right-0 object-cover pointer-events-none"
         />
