@@ -1,6 +1,6 @@
 'use client';
 
-import { createRef, useContext, useState } from 'react';
+import { createRef, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import Icons from '@/icons';
@@ -23,6 +23,10 @@ export default function Search() {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    document.body.style.overflow = isExpandedSearch() ? 'hidden' : 'auto';
+  }, [isExpandedSearch]);
 
   async function getSuggestions(search: string) {
     if (!isValidSuggestion(search)) return setIsOpen(false);
@@ -79,9 +83,6 @@ export default function Search() {
 
   function handleClickSearch() {
     if (!isOpen) setIsOpen(true);
-
-    if (width < 768) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'auto';
   }
 
   function handleKeyUp(event: React.KeyboardEvent<HTMLInputElement>) {
