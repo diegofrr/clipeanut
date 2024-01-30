@@ -19,6 +19,7 @@ export default function Search() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   function getSuggestionsController({ target }: React.ChangeEvent<HTMLInputElement>) {
+    if (!isValidSuggestion(target.value)) return setIsOpen(false);
     if (searchTimeout) clearTimeout(searchTimeout);
     setSearchTimeout(setTimeout(() => getSuggestions(target.value), 200));
   }
@@ -38,16 +39,20 @@ export default function Search() {
     router.push(`/results?query=${query}`);
   }
 
+  function isValidSuggestion(suggestion: string): boolean {
+    suggestion = suggestion.replace(/\s/g, '');
+    return !!suggestion && suggestion.length >= 3;
+  }
+
   async function getSuggestions(search: string) {
-    const searchCheck = search.replace(/\s/g, '');
-    if (!searchCheck || searchCheck.length < 3) return setIsOpen(false);
+    if (!isValidSuggestion(search)) return setIsOpen(false);
 
     const query = formatSuggestionToQuery(search);
-
     const options = { query, isFake: isFakeDataFetch, delay: 1 } as FetchSuggestionsOptionsType;
 
     try {
       const data = await fetchSuggestions({ options });
+      if (!data || !isValidSuggestion(search)) return setIsOpen(false);
       setSuggestions(data[1]);
       setIsOpen(true);
     } catch (err) {
