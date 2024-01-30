@@ -39,8 +39,8 @@ export default function Topbar() {
     <header className="fixed top-0 left-0 px-6 lg:px-12 right-0 max-h-16 h-16 z-max bg-background">
       <div className="w-full h-full gap-6 flex flex-row justify-between items-center">
         <Link href="/">
-          <AppLogo className="inline sm:hidden fill-app_orange-600" />
-          <AppBanner className="hidden sm:inline fill-app_orange-600" />
+          <AppLogo className="inline md:hidden fill-app_orange-600" />
+          <AppBanner className="hidden md:inline fill-app_orange-600" />
         </Link>
 
         {hasSearchInput(pathname) && <Search />}
