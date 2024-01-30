@@ -1,6 +1,6 @@
 'use server';
 
-import type { Suggestions } from '@/types';
+import type { IPipedInstance, Suggestions } from '@/types';
 
 import { DEFAULT_VALUES } from '@/constants';
 import { suggestionsData } from '@/mocks';
@@ -10,6 +10,7 @@ interface IFetchSuggestionsProps {
 }
 
 export type FetchSuggestionsOptionsType = {
+  instance: IPipedInstance;
   query: string;
   isFake?: boolean;
   delay?: number;
@@ -20,9 +21,10 @@ export async function fetchSuggestions({ options }: IFetchSuggestionsProps): Pro
 }
 
 async function fetchData(options: FetchSuggestionsOptionsType): Promise<Suggestions> {
-  return fetch(`https://pipedapi.kavin.rocks/opensearch/suggestions?query=${options.query}`)
+  return fetch(`${options.instance.api_url}/opensearch/suggestions?query=${options.query}`)
     .then((res) => res.json())
-    .then((data) => data as Suggestions);
+    .then((data) => data as Suggestions)
+    .catch(() => ({}) as Suggestions);
 }
 
 async function fetchFakeData(delay?: number): Promise<Suggestions> {

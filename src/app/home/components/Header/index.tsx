@@ -107,7 +107,7 @@ export default function HomeHeader() {
               height={40}
               width={40}
               radius="full"
-              className="z-[1]"
+              className="z-[1] overflow-hidden"
             />
             {highlightStream.uploaderVerified && (
               <Icons.VerifiedSolid
