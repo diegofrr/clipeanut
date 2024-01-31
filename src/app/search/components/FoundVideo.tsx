@@ -31,7 +31,7 @@ export function FoundVideo({ data, ...props }: FoundVideoProps) {
   return (
     <div {...props}>
       <div className="group/container flex items-center overflow-hidden justify-center bg-neutral-950 w-full relative rounded-none sm:rounded-lg">
-        <Link href={data.url}>
+        <Link href={data?.url}>
           <Image
             src={getStreamImage('thumbnail')}
             ref={thumbnailRef}
