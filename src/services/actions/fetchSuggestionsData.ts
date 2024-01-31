@@ -1,6 +1,6 @@
 'use server';
 
-import type { IPipedInstance, Suggestions } from '@/types';
+import type { IPipedInstance, ISuggestions } from '@/types';
 
 import { DEFAULT_VALUES } from '@/constants';
 import { suggestionsData } from '@/mocks';
@@ -16,18 +16,18 @@ export type FetchSuggestionsOptionsType = {
   delay?: number;
 };
 
-export async function fetchSuggestions({ options }: IFetchSuggestionsProps): Promise<Suggestions> {
+export async function fetchSuggestions({ options }: IFetchSuggestionsProps): Promise<ISuggestions> {
   return options.isFake ? fetchFakeData(options.delay) : fetchData(options);
 }
 
-async function fetchData(options: FetchSuggestionsOptionsType): Promise<Suggestions> {
+async function fetchData(options: FetchSuggestionsOptionsType): Promise<ISuggestions> {
   return fetch(`${options.instance.api_url}/opensearch/suggestions?query=${options.query}`)
     .then((res) => res.json())
-    .then((data) => data as Suggestions)
-    .catch(() => ({}) as Suggestions);
+    .then((data) => data as ISuggestions)
+    .catch(() => ({}) as ISuggestions);
 }
 
-async function fetchFakeData(delay?: number): Promise<Suggestions> {
+async function fetchFakeData(delay?: number): Promise<ISuggestions> {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(suggestionsData as [string, string[]]);

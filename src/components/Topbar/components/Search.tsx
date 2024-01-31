@@ -65,7 +65,7 @@ export default function Search() {
     resetState();
 
     const query = formatSuggestionToQuery(suggestion);
-    router.push(`/results?query=${query}`);
+    router.push(`/search?q=${query}`);
   }
 
   function isValidSuggestion(suggestion: string): boolean {

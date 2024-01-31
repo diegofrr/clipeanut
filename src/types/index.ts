@@ -1,7 +1,16 @@
+import { ISearchResult, ISearchResultRoot } from './searchResult';
 import { IStreamUploader } from './StreamUploader';
 import { ITrendingVideo } from './TrendingVideo';
 import { IPipedInstance } from './PipedInstance';
-import { Suggestions } from './Suggestions';
+import { ISuggestions } from './Suggestions';
 import { IStream } from './Stream';
 
-export type { IPipedInstance, IStream, IStreamUploader, ITrendingVideo, Suggestions };
+export type {
+  IPipedInstance,
+  IStream,
+  IStreamUploader,
+  ITrendingVideo,
+  ISuggestions,
+  ISearchResult,
+  ISearchResultRoot
+};

@@ -13,7 +13,7 @@ type TrendingVideoProps = React.HTMLAttributes<HTMLElement> & {
   data: ITrendingVideo;
 };
 
-export const TrendingVideo = ({ data, ...props }: TrendingVideoProps) => {
+export function TrendingVideo({ data, ...props }: TrendingVideoProps) {
   const thumbnailRef = createRef<HTMLImageElement>();
 
   function onLoadThumbnailError() {
@@ -99,4 +99,4 @@ export const TrendingVideo = ({ data, ...props }: TrendingVideoProps) => {
       </div>
     </div>
   );
-};
+}
