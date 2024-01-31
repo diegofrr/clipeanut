@@ -46,7 +46,11 @@ export default function Results() {
           </Header.Content>
         </Header.Root>
 
-        <div>{results?.items[0] && <FoundVideo data={results?.items[0]} />}</div>
+        <div>
+          {results?.items.map((item, index) =>
+            item.type === 'channel' ? null : <FoundVideo key={index} data={item} />
+          )}
+        </div>
       </Content>
     </Main>
   );
