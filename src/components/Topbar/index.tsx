@@ -1,18 +1,16 @@
 'use client';
 
 import Link from 'next/link';
-import { ChangeEvent, useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { usePathname } from 'next/navigation';
 
-import Icons from '@/icons';
-
-import CountryFlag, { ReactCountryFlag } from 'react-country-flag';
+import ReactCountryFlag from 'react-country-flag';
 import ModalCountry from './components/ModalCountry';
 import Search from './components/Search';
 
-import type { UserTheme } from './types';
+// import type { UserTheme } from './types';
 
-import { useTheme } from 'next-themes';
+// import { useTheme } from 'next-themes';
 import { hasTopbar, hasSearchInput } from './utils';
 import { AppBanner, AppLogo } from '../../../public/assets';
 import { Button, Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from '@nextui-org/react';
@@ -25,24 +23,24 @@ export default function Topbar() {
   const countryList = PIPED_VALUES.REGIONS;
   const { region, setRegion } = useContext(PipedInstanceContext);
 
-  const { setTheme, resolvedTheme } = useTheme();
+  // const { setTheme, resolvedTheme } = useTheme();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  const [isClient, setIsClient] = useState(false);
-  const [userTheme, setUserTheme] = useState<UserTheme>({ name: '', icon: <></> });
+  // const [isClient, setIsClient] = useState(false);
+  // const [userTheme, setUserTheme] = useState<UserTheme>({ name: '', icon: <></> });
 
-  useEffect(() => setIsClient(true), []);
+  // useEffect(() => setIsClient(true), []);
 
-  useEffect(() => {
-    setUserTheme({
-      name: resolvedTheme === 'light' ? 'claro' : 'escuro',
-      icon: resolvedTheme === 'light' ? <Icons.Sun /> : <Icons.Moon />
-    });
-  }, [resolvedTheme]);
+  // useEffect(() => {
+  //   setUserTheme({
+  //     name: resolvedTheme === 'light' ? 'claro' : 'escuro',
+  //     icon: resolvedTheme === 'light' ? <Icons.Sun /> : <Icons.Moon />
+  //   });
+  // }, [resolvedTheme]);
 
-  function handleToggleTheme() {
-    setTheme(resolvedTheme === 'light' ? 'dark' : 'light');
-  }
+  // function handleToggleTheme() {
+  //   setTheme(resolvedTheme === 'light' ? 'dark' : 'light');
+  // }
 
   return hasTopbar(pathname) ? (
     <header className="fixed top-0 left-0 px-6 lg:px-12 right-0 max-h-16 h-16 z-max bg-background">
