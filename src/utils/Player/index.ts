@@ -19,14 +19,18 @@ type LoadPlayerProps = {
   onLoad?: () => void;
 };
 
+let player: Player;
+
 export async function loadPlayer({ uri, mimeType, stream, onLoad, selector, useKeyboard = true }: LoadPlayerProps) {
   destroyPlayerHTMLElement();
 
   const hasMoreThanOneSubtitle = stream?.subtitles?.length > 1;
   const type = mimeType === 'dash' ? ODash : OHls;
 
+  if (player) player.destroy();
+
   try {
-    const player = Player.make(selector, {
+    player = Player.make(selector, {
       isLive: stream.livestream,
       autoplay: stream.livestream,
       muted: stream.livestream,
