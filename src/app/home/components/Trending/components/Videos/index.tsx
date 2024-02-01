@@ -21,7 +21,7 @@ type TrendingVideosProps = {
 };
 
 export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
-  const { region, instanceList } = useContext(PipedInstanceContext);
+  const { region, instanceList, setInstance } = useContext(PipedInstanceContext);
   const { setHighlightStream } = useContext(HighlighStreamContext);
   const { width } = useWindowSize();
 
@@ -30,16 +30,20 @@ export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
 
   let oldInstanceList = instanceList;
 
-  function retryLoadTrendingVideo() {
+  const retryLoadTrendingVideo = useCallback(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     if (!oldInstanceList?.length) oldInstanceList = instanceList;
     oldInstanceList = oldInstanceList.slice(1);
+    setInstance(oldInstanceList[0]);
 
     loadTrendingVideos();
-  }
+  }, [instanceList]);
 
   const loadTrendingVideos = useCallback(async () => {
     setIsLoading(true);
+
     const instance = oldInstanceList[0];
+    setInstance(instance);
 
     const options = { instance, region, delay: 1, isFake: isFakeDataFetch } as FetchTrendingVideosOptionsType;
 
@@ -51,8 +55,7 @@ export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
     } catch {
       retryLoadTrendingVideo();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [oldInstanceList]);
+  }, [oldInstanceList, region, setHighlightStream, retryLoadTrendingVideo, setInstance]);
 
   useEffect(() => {
     if (window?.document) loadTrendingVideos();

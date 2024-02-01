@@ -20,6 +20,8 @@ type LoadPlayerProps = {
 };
 
 export async function loadPlayer({ uri, mimeType, stream, onLoad, selector, useKeyboard = true }: LoadPlayerProps) {
+  destroyPlayerHTMLElement();
+
   const hasMoreThanOneSubtitle = stream?.subtitles?.length > 1;
   const type = mimeType === 'dash' ? ODash : OHls;
 
@@ -61,6 +63,13 @@ export async function loadPlayer({ uri, mimeType, stream, onLoad, selector, useK
     player.on('fullscreenchange', () => fixFullscreenVideoSize(player));
   } catch {
     /* empty */
+  }
+
+  function destroyPlayerHTMLElement() {
+    if (window?.document) {
+      const player = window.document.querySelector('#oplayer');
+      if (player) player.innerHTML = '';
+    }
   }
 
   function fixFullscreenVideoSize(player: Player) {

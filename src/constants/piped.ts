@@ -28,7 +28,7 @@ export const PIPED_VALUES = {
     },
     {
       name: 'lunar.icu',
-      api_url: 'https://piped-api.lunar.icu',
+      api_url: 'https://piped-api.lunar.icus',
       locations: '🇩🇪',
       version: '2023-12-19-c746794',
       up_to_date: true,
@@ -110,6 +110,23 @@ export const PIPED_VALUES = {
       uptime_24h: 99.8366,
       uptime_7d: 95.20261,
       uptime_30d: 79.18222
+    },
+    {
+      name: 'projectsegfau.lt us',
+      api_url: 'https://pipedapi.us.projectsegfau.lt',
+      locations: '🇺🇸',
+      version: '2023-12-19-c746794',
+      up_to_date: true,
+      cdn: false,
+      registered: 808,
+      last_checked: 1706805126,
+      cache: true,
+      s3_enabled: false,
+      image_proxy_url: 'https://proxy.piped.projectsegfau.lt',
+      registration_disabled: false,
+      uptime_24h: 8.927109,
+      uptime_7d: 47.424366,
+      uptime_30d: 77.43466
     },
     {
       name: 'privacydev.net',
@@ -229,6 +246,23 @@ export const PIPED_VALUES = {
       uptime_24h: 99.755104,
       uptime_7d: 99.4762,
       uptime_30d: 91.57456
+    },
+    {
+      name: 'ngn.tf',
+      api_url: 'https://pipedapi.ngn.tf',
+      locations: '🇹🇷',
+      version: '2023-12-19-c746794',
+      up_to_date: true,
+      cdn: false,
+      registered: 1,
+      last_checked: 1706805126,
+      cache: true,
+      s3_enabled: false,
+      image_proxy_url: 'https://pipedproxy.ngn.tf',
+      registration_disabled: false,
+      uptime_24h: 25.898691,
+      uptime_7d: 85.24686,
+      uptime_30d: 81.33306
     }
   ],
 

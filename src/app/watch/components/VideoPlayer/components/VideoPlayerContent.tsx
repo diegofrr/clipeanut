@@ -32,13 +32,14 @@ export default function VideoPlayerContent() {
     if (!oldInstanceList?.length) oldInstanceList = instanceList;
     oldInstanceList = oldInstanceList.slice(1);
 
-    destroyPlayerHTMLElement();
     loadPlayer({ ...(await getStreamData()), selector: '#oplayer', onLoad: () => setIsVideoLoaded(true) });
   }, []);
 
   const getStreamData = useCallback(async () => {
     setIsVideoLoaded(false);
     const instance = oldInstanceList[0];
+
+    console.log(instance);
 
     const options = { streamId, instance, isFake: isFakeDataFetch, delay: 1 } as FetchStreamOptionsType;
     let stream = {} as IStream;
@@ -62,13 +63,6 @@ export default function VideoPlayerContent() {
 
   function handleOpenChat() {
     window.open(`https://www.youtube.com/live_chat?v=${streamId}`, '_blank', 'width=400,height=600');
-  }
-
-  function destroyPlayerHTMLElement() {
-    if (window?.document) {
-      const player = window.document.querySelector('#oplayer');
-      if (player) player.innerHTML = '';
-    }
   }
 
   useEffect(() => {
