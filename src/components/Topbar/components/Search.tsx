@@ -24,17 +24,19 @@ export default function Search() {
   const [searchValue, setSearchValue] = useState('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isSended, setIsSended] = useState<boolean>(false);
+  const [fetchingSuggestions, setFetchingSuggestions] = useState<boolean>(false);
 
   let oldInstanceList = instanceList;
 
   function retryGetSuggestions(search: string) {
-    if (!oldInstanceList?.length) oldInstanceList = instanceList;
+    if (oldInstanceList.length === 0) oldInstanceList = instanceList;
     oldInstanceList = oldInstanceList.slice(1);
 
     getSuggestions(search);
   }
 
   async function getSuggestions(search: string) {
+    if (fetchingSuggestions) return;
     if (!isValidSuggestion(search)) return setIsOpen(false);
 
     const instance = oldInstanceList[0];
@@ -42,14 +44,17 @@ export default function Search() {
     const options = { instance, query, isFake: isFakeDataFetch, delay: 1 } as FetchSuggestionsOptionsType;
 
     try {
+      setFetchingSuggestions(true);
       const data = await fetchSuggestions({ options });
-      if (!data || !isValidSuggestion(search)) return setIsOpen(false);
+      if (!data || !data[1] || !isValidSuggestion(search)) return retryGetSuggestions(search);
       setSuggestions(data[1]);
       setIsOpen(true);
     } catch (err) {
-      setIsOpen(false);
       console.error(err);
+      setIsOpen(false);
       retryGetSuggestions(search);
+    } finally {
+      setFetchingSuggestions(false);
     }
   }
 
