@@ -17,20 +17,25 @@ type LoadPlayerProps = {
   selector: string;
   useKeyboard?: boolean;
   onLoad?: () => void;
+  onError?: () => void;
 };
 
-let player: Player;
-
-export async function loadPlayer({ uri, mimeType, stream, onLoad, selector, useKeyboard = true }: LoadPlayerProps) {
+export async function loadPlayer({
+  uri,
+  mimeType,
+  stream,
+  onLoad,
+  onError,
+  selector,
+  useKeyboard = true
+}: LoadPlayerProps) {
   destroyPlayerHTMLElement();
 
   const hasMoreThanOneSubtitle = stream?.subtitles?.length > 1;
   const type = mimeType === 'dash' ? ODash : OHls;
 
-  if (player) player.destroy();
-
   try {
-    player = Player.make(selector, {
+    const player = Player.make(selector, {
       isLive: stream.livestream,
       autoplay: stream.livestream,
       muted: stream.livestream,
@@ -66,7 +71,7 @@ export async function loadPlayer({ uri, mimeType, stream, onLoad, selector, useK
     player.on('loadeddata', () => initializePlayer(player));
     player.on('fullscreenchange', () => fixFullscreenVideoSize(player));
   } catch {
-    /* empty */
+    onError && onError();
   }
 
   function destroyPlayerHTMLElement() {

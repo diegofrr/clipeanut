@@ -32,7 +32,12 @@ export default function VideoPlayerContent() {
     if (!oldInstanceList?.length) oldInstanceList = instanceList;
     oldInstanceList = oldInstanceList.slice(1);
 
-    loadPlayer({ ...(await getStreamData()), selector: '#oplayer', onLoad: () => setIsVideoLoaded(true) });
+    loadPlayer({
+      ...(await getStreamData()),
+      selector: '#oplayer',
+      onLoad: () => setIsVideoLoaded(true),
+      onError: retryGetStreamData
+    });
   }, []);
 
   const getStreamData = useCallback(async () => {
@@ -66,7 +71,12 @@ export default function VideoPlayerContent() {
   useEffect(() => {
     if (window?.document) {
       (async () => {
-        loadPlayer({ ...(await getStreamData()), selector: '#oplayer', onLoad: () => setIsVideoLoaded(true) });
+        loadPlayer({
+          ...(await getStreamData()),
+          selector: '#oplayer',
+          onLoad: () => setIsVideoLoaded(true),
+          onError: retryGetStreamData
+        });
       })();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -86,6 +96,7 @@ export default function VideoPlayerContent() {
         onClick={retryGetStreamData}
         startContent={<span>{isVideoLoaded ? 'Recarregar' : 'Recarregando...'}</span>}
       />
+
       {isVideoLoaded && stream.livestream && (
         <Button
           onClick={handleOpenChat}
