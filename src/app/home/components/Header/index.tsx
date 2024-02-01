@@ -28,11 +28,22 @@ export default function HomeHeader() {
   const { width } = useWindowSize();
 
   const { highlightStreamId, highlightStream } = useContext(HighlighStreamContext);
-  const { instance } = useContext(PipedInstanceContext);
+  const { instanceList } = useContext(PipedInstanceContext);
 
   const [stream, setStream] = useState<IStream>();
 
+  let oldInstanceList = instanceList;
+
+  function retryGetStreamData() {
+    if (!oldInstanceList?.length) oldInstanceList = instanceList;
+    oldInstanceList = oldInstanceList.slice(1);
+
+    getStreamData();
+  }
+
   const getStreamData = useCallback(async () => {
+    const instance = oldInstanceList[0];
+
     const options = {
       streamId: highlightStreamId,
       instance,
@@ -61,12 +72,12 @@ export default function HomeHeader() {
 
       if (isFakeDataFetch) stream = highlightStreamData as IStream;
     } catch {
-      /* empty */
+      retryGetStreamData();
     } finally {
       setStream(stream);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [instance, highlightStreamId]);
+  }, [oldInstanceList, highlightStreamId]);
 
   useEffect(() => {
     if (window?.document && highlightStreamId) getStreamData();

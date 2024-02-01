@@ -21,11 +21,25 @@ import { getStreamMetadata } from '@/utils/Stream/StreamMetadata';
 
 export default function VideoPlayerContent() {
   const { stream, setStream, streamId } = useContext(StreamContext);
-  const { instance } = useContext(PipedInstanceContext);
+  const { instanceList } = useContext(PipedInstanceContext);
 
   const [isVideoLoaded, setIsVideoLoaded] = useState<boolean>(false);
 
+  let oldInstanceList = instanceList;
+
+  const retryGetStreamData = useCallback(async () => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (!oldInstanceList?.length) oldInstanceList = instanceList;
+    oldInstanceList = oldInstanceList.slice(1);
+
+    destroyPlayerHTMLElement();
+    loadPlayer({ ...(await getStreamData()), selector: '#oplayer', onLoad: () => setIsVideoLoaded(true) });
+  }, []);
+
   const getStreamData = useCallback(async () => {
+    setIsVideoLoaded(false);
+    const instance = oldInstanceList[0];
+
     const options = { streamId, instance, isFake: isFakeDataFetch, delay: 1 } as FetchStreamOptionsType;
     let stream = {} as IStream;
     let mimeType = '';
@@ -39,14 +53,22 @@ export default function VideoPlayerContent() {
       mimeType = metadata.mimeType;
       uri = metadata.uri;
     } catch {
-      /* empty */
+      retryGetStreamData();
     }
 
     return { mimeType, uri, stream };
-  }, [instance, setStream, streamId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [oldInstanceList, retryGetStreamData, setStream, streamId]);
 
   function handleOpenChat() {
     window.open(`https://www.youtube.com/live_chat?v=${streamId}`, '_blank', 'width=400,height=600');
+  }
+
+  function destroyPlayerHTMLElement() {
+    if (window?.document) {
+      const player = window.document.querySelector('#oplayer');
+      if (player) player.innerHTML = '';
+    }
   }
 
   useEffect(() => {
@@ -66,6 +88,12 @@ export default function VideoPlayerContent() {
         <div id="oplayer" className="overflow-hidden rounded-lg w-full"></div>
       </div>
 
+      <Button
+        color="warning"
+        isLoading={!isVideoLoaded}
+        onClick={retryGetStreamData}
+        startContent={<span>{isVideoLoaded ? 'Recarregar' : 'Recarregando...'}</span>}
+      />
       {isVideoLoaded && stream.livestream && (
         <Button
           onClick={handleOpenChat}

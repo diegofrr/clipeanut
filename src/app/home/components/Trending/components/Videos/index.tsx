@@ -1,11 +1,11 @@
 'use client';
 
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 import CustomSpinner from '@/components/CustomSpinner';
 import { TrendingVideo } from './components/Video';
 
-import { ITrendingVideo } from '@/types';
+import type { ITrendingVideo } from '@/types';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { HighlighStreamContext } from '@/app/home/contexts/highlightStream';
 import { useWindowSize } from 'usehooks-ts';
@@ -21,15 +21,26 @@ type TrendingVideosProps = {
 };
 
 export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
-  const { region, instance } = useContext(PipedInstanceContext);
+  const { region, instanceList } = useContext(PipedInstanceContext);
   const { setHighlightStream } = useContext(HighlighStreamContext);
-
   const { width } = useWindowSize();
+
   const [isLoading, setIsLoading] = useState<boolean>(INITIAL_STATE.LOADING);
   const [trendingVideos, setTrendingVideos] = useState<ITrendingVideo[]>(INITIAL_STATE.TRENDING_VIDEOS);
 
-  async function loadTrendingVideos() {
+  let oldInstanceList = instanceList;
+
+  function retryLoadTrendingVideo() {
+    if (!oldInstanceList?.length) oldInstanceList = instanceList;
+    oldInstanceList = oldInstanceList.slice(1);
+
+    loadTrendingVideos();
+  }
+
+  const loadTrendingVideos = useCallback(async () => {
     setIsLoading(true);
+    const instance = oldInstanceList[0];
+
     const options = { instance, region, delay: 1, isFake: isFakeDataFetch } as FetchTrendingVideosOptionsType;
 
     try {
@@ -38,9 +49,10 @@ export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
       setHighlightStream(data[0]);
       setIsLoading(false);
     } catch {
-      /* empty */
+      retryLoadTrendingVideo();
     }
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [oldInstanceList]);
 
   useEffect(() => {
     if (window?.document) loadTrendingVideos();

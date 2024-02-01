@@ -16,17 +16,28 @@ export default function Search() {
   const router = useRouter();
   const inputRef = createRef<HTMLInputElement>();
 
-  const { instance } = useContext(PipedInstanceContext);
+  const { instanceList } = useContext(PipedInstanceContext);
   const { width } = useWindowSize();
 
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout>();
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isSended, setIsSended] = useState<boolean>(false);
+
+  let oldInstanceList = instanceList;
+
+  function retryGetSuggestions(search: string) {
+    if (!oldInstanceList?.length) oldInstanceList = instanceList;
+    oldInstanceList = oldInstanceList.slice(1);
+
+    getSuggestions(search);
+  }
 
   async function getSuggestions(search: string) {
     if (!isValidSuggestion(search)) return setIsOpen(false);
 
+    const instance = oldInstanceList[0];
     const query = formatSuggestionToQuery(search);
     const options = { instance, query, isFake: isFakeDataFetch, delay: 1 } as FetchSuggestionsOptionsType;
 
@@ -38,10 +49,12 @@ export default function Search() {
     } catch (err) {
       setIsOpen(false);
       console.error(err);
+      retryGetSuggestions(search);
     }
   }
 
   function getSuggestionsController({ target }: React.ChangeEvent<HTMLInputElement>) {
+    setIsSended(false);
     if (!isValidSuggestion(target.value)) return setSuggestions([]);
     if (searchTimeout) clearTimeout(searchTimeout);
     setSearchTimeout(setTimeout(() => getSuggestions(target.value), 200));
@@ -61,6 +74,7 @@ export default function Search() {
   }
 
   function handleClickSuggestion(suggestion: string) {
+    setIsSended(true);
     setSearchValue(suggestion);
     resetState();
 
@@ -141,7 +155,7 @@ export default function Search() {
           </Button>
         )}
 
-        {isOpen && (suggestions?.length > 0 || isExpandedSearch()) && (
+        {isOpen && !isSended && (suggestions?.length > 0 || isExpandedSearch()) && (
           <div
             className={`w-full overflow-auto rounded-lg border-1 dark:border-none bg-neutral-100 dark:bg-neutral-900 
           ${
@@ -166,7 +180,7 @@ export default function Search() {
           </div>
         )}
       </div>
-      {isOpen && (suggestions?.length > 0 || isExpandedSearch()) && (
+      {isOpen && !isSended && (suggestions?.length > 0 || isExpandedSearch()) && (
         <span
           onClick={handleCloseSuggestions}
           className={`fixed top-0 left-0 right-0 bottom-0 z-10 ${

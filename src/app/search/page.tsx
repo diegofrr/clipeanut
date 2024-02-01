@@ -16,19 +16,29 @@ import { FoundVideo } from './components/FoundVideo';
 
 export default function Results() {
   const query = useSearchParams().get('q');
-  const { instance } = useContext(PipedInstanceContext);
+  const { instanceList } = useContext(PipedInstanceContext);
 
   const [results, setResults] = useState<ISearchResultRoot>();
 
+  let oldInstanceList = instanceList;
+
+  function retryGetResults() {
+    if (!oldInstanceList?.length) oldInstanceList = instanceList;
+    oldInstanceList = oldInstanceList.slice(1);
+
+    getSearchResults();
+  }
+
   async function getSearchResults() {
+    const instance = oldInstanceList[0];
+
     const options = { instance, query, isFake: isFakeDataFetch, delay: 1 } as FetchSearchResultsOptionsType;
 
     try {
       const data = await fetchSearchResults({ options });
       setResults(data);
-      console.log(data.items);
     } catch {
-      /* empty */
+      retryGetResults();
     }
   }
 
