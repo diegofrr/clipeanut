@@ -39,8 +39,6 @@ export default function VideoPlayerContent() {
     setIsVideoLoaded(false);
     const instance = oldInstanceList[0];
 
-    console.log(instance);
-
     const options = { streamId, instance, isFake: isFakeDataFetch, delay: 1 } as FetchStreamOptionsType;
     let stream = {} as IStream;
     let mimeType = '';
