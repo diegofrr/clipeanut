@@ -60,7 +60,7 @@ export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
   useEffect(() => {
     if (window?.document) loadTrendingVideos();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [region]);
 
   return (
     <div
