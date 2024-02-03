@@ -54,7 +54,7 @@ export default function Topbar() {
                   onClick={() => setRegion(country)}
                   key={country}
                   variant="light"
-                  className="font-bold"
+                  className="font-bold rounded-full hover:bg-foreground-100"
                   startContent={<ReactCountryFlag countryCode={country} style={{ fontSize: 20 }} />}
                 >
                   {CommonUtils.getCountryName(country)}

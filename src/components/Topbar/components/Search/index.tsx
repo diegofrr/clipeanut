@@ -7,7 +7,7 @@ import Icons from '@/icons';
 
 import { FetchSuggestionsOptionsType, fetchSuggestions } from '@/services/actions/fetchSuggestionsData';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
-import { formatSuggestionToQuery } from '../utils';
+import { formatSuggestionToQuery } from '../../utils';
 import { isFakeDataFetch } from '@/environments';
 import { Button, Input } from '@nextui-org/react';
 
