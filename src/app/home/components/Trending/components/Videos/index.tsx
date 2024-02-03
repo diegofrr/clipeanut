@@ -1,20 +1,19 @@
 'use client';
 
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { Reducer, useCallback, useContext, useEffect, useReducer } from 'react';
 
 import CustomSpinner from '@/components/CustomSpinner';
 import { TrendingVideo } from './components/Video';
 
 import type { ITrendingVideo } from '@/types';
+import { ActionTypes, type TrendingVideosAction, type TrendingVideosState } from './reducer/types';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { HighlighStreamContext } from '@/app/home/contexts/highlightStream';
+import { initialTrendingVideosState, trendingVideoReducer } from './reducer';
 import { useWindowSize } from 'usehooks-ts';
 
 import { FetchTrendingVideosOptionsType, fetchTrendingVideos } from '@/services/actions/fetchTrendingVideosData';
 import { isFakeDataFetch } from '@/environments';
-
-import { HOME_PAGE_VALUES } from '@/constants';
-const { INITIAL_STATE } = HOME_PAGE_VALUES.TRENDING_VIDEO;
 
 type TrendingVideosProps = {
   isHidden?: boolean;
@@ -25,8 +24,19 @@ export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
   const { setHighlightStream } = useContext(HighlighStreamContext);
   const { width } = useWindowSize();
 
-  const [isLoading, setIsLoading] = useState<boolean>(INITIAL_STATE.LOADING);
-  const [trendingVideos, setTrendingVideos] = useState<ITrendingVideo[]>(INITIAL_STATE.TRENDING_VIDEOS);
+  const [state, dispatch] = useReducer<Reducer<TrendingVideosState, TrendingVideosAction>>(
+    trendingVideoReducer,
+    initialTrendingVideosState
+  );
+
+  const setIsLoading = (data: boolean) => dispatch({ type: ActionTypes.SET_IS_LOADING, payload: data });
+  const setTrendingVideos = useCallback(
+    (data: ITrendingVideo[]) => {
+      setHighlightStream(data[0]);
+      dispatch({ type: ActionTypes.SET_TRENDING_VIDEOS, payload: data });
+    },
+    [setHighlightStream]
+  );
 
   let oldInstanceList = instanceList;
 
@@ -50,12 +60,12 @@ export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
     try {
       const data = await fetchTrendingVideos({ options });
       setTrendingVideos(data);
-      setHighlightStream(data[0]);
-      setIsLoading(false);
     } catch {
       retryLoadTrendingVideo();
+    } finally {
+      setIsLoading(false);
     }
-  }, [oldInstanceList, region, setHighlightStream, retryLoadTrendingVideo, setInstance]);
+  }, [oldInstanceList, setTrendingVideos, region, retryLoadTrendingVideo, setInstance]);
 
   useEffect(() => {
     if (window?.document) loadTrendingVideos();
@@ -67,10 +77,10 @@ export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
       className={`grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-10 gap-x-6 justify-items-center
       ${isHidden ? 'hidden' : ''}`}
     >
-      {isLoading && <CustomSpinner stroke="md" className="absolute" />}
-      {!isLoading && trendingVideos.length > 0 && (
+      {state.isLoading && <CustomSpinner stroke="md" className="absolute" />}
+      {!state.isLoading && state.trendingVideos.length > 0 && (
         <>
-          {trendingVideos.map((video, index) => (
+          {state.trendingVideos.map((video, index) => (
             <TrendingVideo className={`${index === 0 && width >= 640 ? 'hidden' : ''}`} key={index} data={video} />
           ))}
         </>
