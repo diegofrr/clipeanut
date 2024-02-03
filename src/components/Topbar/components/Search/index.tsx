@@ -1,10 +1,13 @@
 'use client';
 
-import { createRef, useContext, useState } from 'react';
+import { createRef, useContext, useState, useReducer } from 'react';
 import { useRouter } from 'next/navigation';
+
+import { ActionTypes, type SearchAction, type SearchState } from './reducer/types';
 
 import Icons from '@/icons';
 
+import { initialSearchState, searchReducer } from './reducer';
 import { FetchSuggestionsOptionsType, fetchSuggestions } from '@/services/actions/fetchSuggestionsData';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { formatSuggestionToQuery } from '../../utils';
@@ -16,13 +19,8 @@ export default function Search() {
   const inputRef = createRef<HTMLInputElement>();
 
   const { instanceList } = useContext(PipedInstanceContext);
-
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout>();
-  const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [searchValue, setSearchValue] = useState('');
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isSended, setIsSended] = useState<boolean>(false);
-  const [fetchingSuggestions, setFetchingSuggestions] = useState<boolean>(false);
+  const [state, dispatch] = useReducer<React.Reducer<SearchState, SearchAction>>(searchReducer, initialSearchState);
 
   let oldInstanceList = instanceList;
 
@@ -33,8 +31,14 @@ export default function Search() {
     getSuggestions(search);
   }
 
+  const setSearchValue = (value: string) => dispatch({ type: ActionTypes.SET_SEARCH_VALUE, payload: value });
+  const setSuggestions = (value: string[]) => dispatch({ type: ActionTypes.SET_SUGGESTIONS, payload: value });
+  const setIsFetching = (value: boolean) => dispatch({ type: ActionTypes.SET_IS_FETCHING_SUGGESTIONS, payload: value });
+  const setIsOpen = (value: boolean) => dispatch({ type: ActionTypes.SET_IS_OPEN, payload: value });
+  const setIsSend = (value: boolean) => dispatch({ type: ActionTypes.SET_IS_SEND, payload: value });
+
   async function getSuggestions(search: string) {
-    if (fetchingSuggestions) return;
+    if (state.fetchingSuggestions) return;
     if (!isValidSuggestion(search)) return setIsOpen(false);
 
     const instance = oldInstanceList[0];
@@ -42,29 +46,31 @@ export default function Search() {
     const options = { instance, query, isFake: isFakeDataFetch, delay: 1 } as FetchSuggestionsOptionsType;
 
     try {
-      setFetchingSuggestions(true);
+      setIsFetching(true);
       const data = await fetchSuggestions({ options });
       if (!data || !data[1] || !isValidSuggestion(search)) return retryGetSuggestions(search);
+
       setSuggestions(data[1]);
       setIsOpen(true);
     } catch (err) {
       console.error(err);
-      setIsOpen(false);
+      setIsOpen(true);
       retryGetSuggestions(search);
     } finally {
-      setFetchingSuggestions(false);
+      setIsFetching(false);
     }
   }
 
   function getSuggestionsController({ target }: React.ChangeEvent<HTMLInputElement>) {
-    setIsSended(false);
+    setIsSend(false);
+
     if (!isValidSuggestion(target.value)) return setSuggestions([]);
     if (searchTimeout) clearTimeout(searchTimeout);
     setSearchTimeout(setTimeout(() => getSuggestions(target.value), 200));
   }
 
   function handleClickSuggestion(suggestion: string) {
-    setIsSended(true);
+    setIsSend(true);
     setSearchValue(suggestion);
     setIsOpen(false);
 
@@ -78,11 +84,11 @@ export default function Search() {
   }
 
   function handleClickSearch() {
-    if (!isOpen) setIsOpen(true);
+    if (!state.isOpen) setIsOpen(true);
   }
 
   function handleKeyUp(event: React.KeyboardEvent<HTMLInputElement>) {
-    if (event.key === 'Enter') handleClickSuggestion(searchValue);
+    if (event.key === 'Enter') handleClickSuggestion(state.searchValue);
   }
 
   return (
@@ -91,7 +97,7 @@ export default function Search() {
         <Input
           ref={inputRef}
           onChange={getSuggestionsController}
-          value={searchValue}
+          value={state.searchValue}
           onKeyUp={handleKeyUp}
           onValueChange={setSearchValue}
           placeholder="Pesquisar..."
@@ -102,9 +108,9 @@ export default function Search() {
               color="warning"
               radius="full"
               className={`h-8 w-8 absolute right-1 top-1/2 -translate-y-1/2 
-              ${!isValidSuggestion(searchValue) ? 'hidden' : ''}`}
+              ${!isValidSuggestion(state.searchValue) ? 'hidden' : ''}`}
               isIconOnly
-              onClick={() => handleClickSuggestion(searchValue)}
+              onClick={() => handleClickSuggestion(state.searchValue)}
             >
               <Icons.Search strokeWidth={2} size={16} />
             </Button>
@@ -120,11 +126,11 @@ export default function Search() {
           size="md"
         />
 
-        {isOpen && !isSended && suggestions?.length > 0 && (
+        {state.isOpen && !state.isSended && state.suggestions?.length > 0 && (
           <div className="rounded-lg overflow-hidden border-1 dark:border-none bg-neutral-100 dark:bg-neutral-900 h-auto mt-2">
             <div className="w-full overflow-auto max-h-[40vh] p-2">
               <ul>
-                {suggestions?.map((suggestion, index) => (
+                {state.suggestions?.map((suggestion, index) => (
                   <li
                     key={index}
                     onClick={() => handleClickSuggestion(suggestion)}
@@ -139,7 +145,7 @@ export default function Search() {
           </div>
         )}
       </div>
-      {isOpen && !isSended && suggestions?.length > 0 && (
+      {state.isOpen && !state.isSended && state.suggestions?.length > 0 && (
         <span
           onClick={() => setIsOpen(false)}
           className="fixed top-0 left-0 right-0 bottom-0 z-10 opacity-40 bg-black"
