@@ -42,7 +42,7 @@ export default function Topbar() {
             </Button>
           </DropdownTrigger>
 
-          <DropdownMenu className="max-h-[90vh] mt-3 overflow-auto overflow-x-hidden">
+          <DropdownMenu aria-label="Countries" className="max-h-[90vh] mt-3 overflow-auto overflow-x-hidden">
             <DropdownSection title="Região do conteúdo">
               {PIPED_VALUES.REGIONS.map((country) => (
                 <DropdownItem

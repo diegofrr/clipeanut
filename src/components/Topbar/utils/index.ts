@@ -7,5 +7,5 @@ export function hasSearchInput(pathname: string): boolean {
 }
 
 export function formatSuggestionToQuery(suggestion: string) {
-  return suggestion.split(' ').join('+');
+  return suggestion.split(' ').join('+').toLowerCase();
 }
