@@ -17,6 +17,7 @@ import { ArrowRightUpIcon } from './outline/arrow-right-up';
 import { ArrowRightIcon } from './outline/arrow-right';
 import { ArrowLeftIcon } from './outline/arrow-left';
 import { PlayIcon } from './outline/play';
+import { ArrowLeftUpIcon } from './outline/arrow-left-up';
 
 import { PlayIconSolid } from './solid/play-solid';
 import { HomeIconSolid } from './solid/home-solid';
@@ -46,6 +47,7 @@ const Icons = {
   ArrowLeft: ArrowLeftIcon,
   ArrowRight: ArrowRightIcon,
   ArrowRightUp: ArrowRightUpIcon,
+  ArrowLeftUp: ArrowLeftUpIcon,
   Play: PlayIcon,
 
   HomeSolid: HomeIconSolid,
