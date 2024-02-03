@@ -1,6 +1,6 @@
 'use client';
 
-import { createRef, useCallback, useContext, useEffect, useState } from 'react';
+import { createRef, useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import Icons from '@/icons';
@@ -9,7 +9,6 @@ import { FetchSuggestionsOptionsType, fetchSuggestions } from '@/services/action
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { formatSuggestionToQuery } from '../utils';
 import { isFakeDataFetch } from '@/environments';
-import { useWindowSize } from 'usehooks-ts';
 import { Button, Input } from '@nextui-org/react';
 
 export default function Search() {
@@ -17,7 +16,6 @@ export default function Search() {
   const inputRef = createRef<HTMLInputElement>();
 
   const { instanceList } = useContext(PipedInstanceContext);
-  const { width } = useWindowSize();
 
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout>();
   const [suggestions, setSuggestions] = useState<string[]>([]);
@@ -65,23 +63,10 @@ export default function Search() {
     setSearchTimeout(setTimeout(() => getSuggestions(target.value), 200));
   }
 
-  function resetState() {
-    setIsOpen(false);
-    removeInputFocus();
-  }
-
-  function removeInputFocus() {
-    inputRef?.current?.blur();
-  }
-
-  function handleCloseSuggestions() {
-    if (!isExpandedSearch()) setIsOpen(false);
-  }
-
   function handleClickSuggestion(suggestion: string) {
     setIsSended(true);
     setSearchValue(suggestion);
-    resetState();
+    setIsOpen(false);
 
     const query = formatSuggestionToQuery(suggestion);
     router.push(`/search?q=${query}`);
@@ -100,21 +85,9 @@ export default function Search() {
     if (event.key === 'Enter') handleClickSuggestion(searchValue);
   }
 
-  const isExpandedSearch = useCallback(() => {
-    return isOpen && width < 768;
-  }, [isOpen, width]);
-
-  useEffect(() => {
-    document.body.style.overflow = isExpandedSearch() ? 'hidden' : 'auto';
-  }, [isExpandedSearch]);
-
   return (
     <>
-      <div
-        onClick={handleClickSearch}
-        className={`w-full md:max-w-xl h-10 z-30
-      ${isExpandedSearch() ? 'fixed p-3 left-0 top-0' : 'relative'}`}
-      >
+      <div onClick={handleClickSearch} className="w-full md:max-w-xl h-10 z-30 relative">
         <Input
           ref={inputRef}
           onChange={getSuggestionsController}
@@ -137,7 +110,7 @@ export default function Search() {
             </Button>
           }
           classNames={{
-            mainWrapper: `h-10 flex ${isExpandedSearch() ? 'ml-[68px] w-[calc(100%-80px)]' : 'w-full'}`,
+            mainWrapper: 'h-10 flex  w-full',
             input: 'text-small h-10',
             inputWrapper:
               'h-10 font-normal text-default-500 border-1 bg-neutral-100 dark:bg-neutral-900 border-neutral-200 dark:border-none'
@@ -147,50 +120,29 @@ export default function Search() {
           size="md"
         />
 
-        {isExpandedSearch() && (
-          <Button
-            title="Voltar"
-            onClick={resetState}
-            radius="full"
-            variant="light"
-            className="absolute top-0 left-0 m-3 ml-6"
-            isIconOnly
-          >
-            <Icons.ArrowLeft />
-          </Button>
-        )}
-
-        {isOpen && !isSended && (suggestions?.length > 0 || isExpandedSearch()) && (
-          <div
-            className={`w-full overflow-auto rounded-lg border-1 dark:border-none bg-neutral-100 dark:bg-neutral-900 
-          ${
-            isExpandedSearch()
-              ? 'bg-transparent dark:bg-transparent border-none px-0 fixed top-0 left-0 flex flex-col h-full mt-16 pb-20 p-0'
-              : 'mt-2 p-2 h-auto max-h-[40vh]'
-          }`}
-          >
-            <ul className={`${isExpandedSearch() ? 'px-4' : 'px-0'}`}>
-              {suggestions?.map((suggestion, index) => (
-                <li
-                  key={index}
-                  onClick={() => handleClickSuggestion(suggestion)}
-                  className={`cursor-pointer flex flex-row items-center justify-between py-2 rounded-lg px-4 hover:bg-neutral-200 dark:hover:bg-neutral-800 
-                  ${isExpandedSearch() ? 'hover:bg-neutral-100' : ''}`}
-                >
-                  {suggestion}
-                  <Icons.ArrowRightUp opacity={0.5} size={16} />
-                </li>
-              ))}
-            </ul>
+        {isOpen && !isSended && suggestions?.length > 0 && (
+          <div className="rounded-lg overflow-hidden border-1 dark:border-none bg-neutral-100 dark:bg-neutral-900 h-auto mt-2">
+            <div className="w-full overflow-auto max-h-[40vh] p-2">
+              <ul>
+                {suggestions?.map((suggestion, index) => (
+                  <li
+                    key={index}
+                    onClick={() => handleClickSuggestion(suggestion)}
+                    className="cursor-pointer flex flex-row items-center gap-2 py-2 rounded-full px-4 hover:bg-neutral-200 dark:hover:bg-neutral-800"
+                  >
+                    <Icons.Search opacity={0.5} strokeWidth={2} size={14} />
+                    {suggestion}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         )}
       </div>
-      {isOpen && !isSended && (suggestions?.length > 0 || isExpandedSearch()) && (
+      {isOpen && !isSended && suggestions?.length > 0 && (
         <span
-          onClick={handleCloseSuggestions}
-          className={`fixed top-0 left-0 right-0 bottom-0 z-10 ${
-            isExpandedSearch() ? 'bg-white dark:bg-neutral-950' : 'opacity-40 bg-black'
-          }`}
+          onClick={() => setIsOpen(false)}
+          className="fixed top-0 left-0 right-0 bottom-0 z-10 opacity-40 bg-black"
         />
       )}
     </>
