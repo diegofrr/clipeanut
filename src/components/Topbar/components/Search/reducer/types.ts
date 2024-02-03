@@ -2,7 +2,7 @@ export enum ActionTypes {
   SET_SEARCH_VALUE,
   SET_SUGGESTIONS,
   SET_IS_OPEN,
-  SET_IS_SEND,
+  SET_IS_SENDED,
   SET_IS_FETCHING_SUGGESTIONS
 }
 
@@ -37,7 +37,7 @@ export interface SetIsOpenAction {
 }
 
 export interface SetIsSendAction {
-  type: ActionTypes.SET_IS_SEND;
+  type: ActionTypes.SET_IS_SENDED;
   payload: boolean;
 }
 

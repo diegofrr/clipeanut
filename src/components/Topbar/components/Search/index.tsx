@@ -24,18 +24,18 @@ export default function Search() {
 
   let oldInstanceList = instanceList;
 
+  const setSearchValue = (value: string) => dispatch({ type: ActionTypes.SET_SEARCH_VALUE, payload: value });
+  const setSuggestions = (value: string[]) => dispatch({ type: ActionTypes.SET_SUGGESTIONS, payload: value });
+  const setIsFetching = (value: boolean) => dispatch({ type: ActionTypes.SET_IS_FETCHING_SUGGESTIONS, payload: value });
+  const setIsOpen = (value: boolean) => dispatch({ type: ActionTypes.SET_IS_OPEN, payload: value });
+  const setIsSended = (value: boolean) => dispatch({ type: ActionTypes.SET_IS_SENDED, payload: value });
+
   function retryGetSuggestions(search: string) {
     if (oldInstanceList.length === 0) oldInstanceList = instanceList;
     oldInstanceList = oldInstanceList.slice(1);
 
     getSuggestions(search);
   }
-
-  const setSearchValue = (value: string) => dispatch({ type: ActionTypes.SET_SEARCH_VALUE, payload: value });
-  const setSuggestions = (value: string[]) => dispatch({ type: ActionTypes.SET_SUGGESTIONS, payload: value });
-  const setIsFetching = (value: boolean) => dispatch({ type: ActionTypes.SET_IS_FETCHING_SUGGESTIONS, payload: value });
-  const setIsOpen = (value: boolean) => dispatch({ type: ActionTypes.SET_IS_OPEN, payload: value });
-  const setIsSend = (value: boolean) => dispatch({ type: ActionTypes.SET_IS_SEND, payload: value });
 
   async function getSuggestions(search: string) {
     if (state.fetchingSuggestions) return;
@@ -51,10 +51,8 @@ export default function Search() {
       if (!data || !data[1] || !isValidSuggestion(search)) return retryGetSuggestions(search);
 
       setSuggestions(data[1]);
-      setIsOpen(true);
-    } catch (err) {
-      console.error(err);
-      setIsOpen(true);
+    } catch {
+      setIsOpen(false);
       retryGetSuggestions(search);
     } finally {
       setIsFetching(false);
@@ -62,17 +60,16 @@ export default function Search() {
   }
 
   function getSuggestionsController({ target }: React.ChangeEvent<HTMLInputElement>) {
-    setIsSend(false);
+    setIsSended(false);
 
     if (!isValidSuggestion(target.value)) return setSuggestions([]);
     if (searchTimeout) clearTimeout(searchTimeout);
     setSearchTimeout(setTimeout(() => getSuggestions(target.value), 200));
   }
 
-  function handleClickSuggestion(suggestion: string) {
-    setIsSend(true);
+  function handleFetchSuggestion(suggestion: string) {
+    setIsSended(true);
     setSearchValue(suggestion);
-    setIsOpen(false);
 
     const query = formatSuggestionToQuery(suggestion);
     router.push(`/search?q=${query}`);
@@ -88,7 +85,7 @@ export default function Search() {
   }
 
   function handleKeyUp(event: React.KeyboardEvent<HTMLInputElement>) {
-    if (event.key === 'Enter') handleClickSuggestion(state.searchValue);
+    if (event.key === 'Enter') handleFetchSuggestion(state.searchValue);
   }
 
   return (
@@ -110,7 +107,7 @@ export default function Search() {
               className={`h-8 w-8 absolute right-1 top-1/2 -translate-y-1/2 
               ${!isValidSuggestion(state.searchValue) ? 'hidden' : ''}`}
               isIconOnly
-              onClick={() => handleClickSuggestion(state.searchValue)}
+              onClick={() => handleFetchSuggestion(state.searchValue)}
             >
               <Icons.Search strokeWidth={2} size={16} />
             </Button>
@@ -133,7 +130,7 @@ export default function Search() {
                 {state.suggestions?.map((suggestion, index) => (
                   <li
                     key={index}
-                    onClick={() => handleClickSuggestion(suggestion)}
+                    onClick={() => handleFetchSuggestion(suggestion)}
                     className="cursor-pointer flex flex-row items-center gap-2 py-2 rounded-full px-4 hover:bg-neutral-200 dark:hover:bg-neutral-800"
                   >
                     <Icons.Search opacity={0.5} strokeWidth={2} size={14} />
