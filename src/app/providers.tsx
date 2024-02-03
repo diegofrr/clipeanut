@@ -1,15 +1,19 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import PipedInstanceProvider from '@/contexts/pipedInstance';
 
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { NextUIProvider } from '@nextui-org/react';
 
 export default function Providers({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
+
   return (
     <PipedInstanceProvider>
       <NextThemesProvider attribute="class" defaultTheme="system">
-        <NextUIProvider>{children}</NextUIProvider>
+        <NextUIProvider navigate={router.push}>{children}</NextUIProvider>
       </NextThemesProvider>
     </PipedInstanceProvider>
   );
