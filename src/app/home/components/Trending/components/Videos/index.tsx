@@ -15,12 +15,15 @@ import { useWindowSize } from 'usehooks-ts';
 import { FetchTrendingVideosOptionsType, fetchTrendingVideos } from '@/services/actions/fetchTrendingVideosData';
 import { isFakeDataFetch } from '@/environments';
 
+import { PIPED_VALUES } from '@/constants';
+const { DEFAULT_INSTANCE_LIST } = PIPED_VALUES;
+
 type TrendingVideosProps = {
   isHidden?: boolean;
 };
 
 export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
-  const { region, instanceList, setInstance } = useContext(PipedInstanceContext);
+  const { region } = useContext(PipedInstanceContext);
   const { setHighlightStream } = useContext(HighlighStreamContext);
   const { width } = useWindowSize();
 
@@ -38,22 +41,20 @@ export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
     [setHighlightStream]
   );
 
-  let oldInstanceList = instanceList;
+  let oldInstanceList = DEFAULT_INSTANCE_LIST;
 
   const retryLoadTrendingVideo = useCallback(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    if (!oldInstanceList?.length) oldInstanceList = instanceList;
+    if (!oldInstanceList?.length) oldInstanceList = DEFAULT_INSTANCE_LIST;
     oldInstanceList = oldInstanceList.slice(1);
-    setInstance(oldInstanceList[0]);
 
     loadTrendingVideos();
-  }, [instanceList]);
+  }, []);
 
   const loadTrendingVideos = useCallback(async () => {
     setIsLoading(true);
 
     const instance = oldInstanceList[0];
-    setInstance(instance);
 
     const options = { instance, region, delay: 1, isFake: isFakeDataFetch } as FetchTrendingVideosOptionsType;
 
@@ -65,7 +66,7 @@ export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
     } finally {
       setIsLoading(false);
     }
-  }, [oldInstanceList, setTrendingVideos, region, retryLoadTrendingVideo, setInstance]);
+  }, [oldInstanceList, setTrendingVideos, region, retryLoadTrendingVideo]);
 
   useEffect(() => {
     if (window?.document) loadTrendingVideos();

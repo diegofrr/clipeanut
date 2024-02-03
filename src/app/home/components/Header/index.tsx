@@ -13,7 +13,6 @@ import { Button, Image } from '@nextui-org/react';
 import { useWindowSize } from 'usehooks-ts';
 
 import { HighlighStreamContext } from '../../contexts/highlightStream';
-import { PipedInstanceContext } from '@/contexts/pipedInstance';
 
 import { isFakeDataFetch } from '@/environments';
 import { StreamUtils } from '@/utils';
@@ -21,21 +20,20 @@ import { useLocalStorageWithExpiration } from '@/hooks';
 import { highlightStreamData } from '@/mocks/highlightStreamData';
 
 import { PIPED_VALUES } from '@/constants';
-const { LOCAL_STORAGE_KEYS } = PIPED_VALUES;
+const { LOCAL_STORAGE_KEYS, DEFAULT_INSTANCE_LIST } = PIPED_VALUES;
 
 export default function HomeHeader() {
   const { isExistsItem, getStoragedItem, setStoragedItem } = useLocalStorageWithExpiration();
   const { width } = useWindowSize();
 
   const { highlightStreamId, highlightStream } = useContext(HighlighStreamContext);
-  const { instanceList } = useContext(PipedInstanceContext);
 
   const [stream, setStream] = useState<IStream>();
 
-  let oldInstanceList = instanceList;
+  let oldInstanceList = DEFAULT_INSTANCE_LIST;
 
   function retryGetStreamData() {
-    if (!oldInstanceList?.length) oldInstanceList = instanceList;
+    if (!oldInstanceList?.length) oldInstanceList = DEFAULT_INSTANCE_LIST;
     oldInstanceList = oldInstanceList.slice(1);
 
     getStreamData();

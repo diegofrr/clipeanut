@@ -9,7 +9,6 @@ import Icons from '@/icons';
 import type { IStream } from '@/types';
 import { FetchStreamOptionsType, fetchStream } from '@/services/actions/fetchStreamData';
 
-import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { StreamContext } from '../contexts/stream';
 
 import { Button } from '@nextui-org/react';
@@ -19,17 +18,19 @@ import { isFakeDataFetch } from '@/environments';
 import { loadPlayer } from '@/utils/Player';
 import { getStreamMetadata } from '@/utils/Stream/StreamMetadata';
 
+import { PIPED_VALUES } from '@/constants';
+const { DEFAULT_INSTANCE_LIST } = PIPED_VALUES;
+
 export default function VideoPlayerContent() {
   const { stream, setStream, streamId } = useContext(StreamContext);
-  const { instanceList } = useContext(PipedInstanceContext);
 
   const [isVideoLoaded, setIsVideoLoaded] = useState<boolean>(false);
 
-  let oldInstanceList = instanceList;
+  let oldInstanceList = DEFAULT_INSTANCE_LIST;
 
   const retryGetStreamData = useCallback(async () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    if (!oldInstanceList?.length) oldInstanceList = instanceList;
+    if (!oldInstanceList?.length) oldInstanceList = DEFAULT_INSTANCE_LIST;
     oldInstanceList = oldInstanceList.slice(1);
 
     loadPlayer({

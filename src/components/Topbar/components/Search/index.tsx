@@ -1,6 +1,6 @@
 'use client';
 
-import { createRef, useContext, useState, useReducer } from 'react';
+import { createRef, useState, useReducer } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { ActionTypes, type SearchAction, type SearchState } from './reducer/types';
@@ -9,20 +9,21 @@ import Icons from '@/icons';
 
 import { initialSearchState, searchReducer } from './reducer';
 import { FetchSuggestionsOptionsType, fetchSuggestions } from '@/services/actions/fetchSuggestionsData';
-import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { formatSuggestionToQuery } from '../../utils';
 import { isFakeDataFetch } from '@/environments';
 import { Button, Input } from '@nextui-org/react';
+
+import { PIPED_VALUES } from '@/constants';
+const { DEFAULT_INSTANCE_LIST } = PIPED_VALUES;
 
 export default function Search() {
   const router = useRouter();
   const inputRef = createRef<HTMLInputElement>();
 
-  const { instanceList } = useContext(PipedInstanceContext);
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout>();
   const [state, dispatch] = useReducer<React.Reducer<SearchState, SearchAction>>(searchReducer, initialSearchState);
 
-  let oldInstanceList = instanceList;
+  let oldInstanceList = DEFAULT_INSTANCE_LIST;
 
   const setSearchValue = (value: string) => dispatch({ type: ActionTypes.SET_SEARCH_VALUE, payload: value });
   const setSuggestions = (value: string[]) => dispatch({ type: ActionTypes.SET_SUGGESTIONS, payload: value });
@@ -31,7 +32,7 @@ export default function Search() {
   const setIsSended = (value: boolean) => dispatch({ type: ActionTypes.SET_IS_SENDED, payload: value });
 
   function retryGetSuggestions(search: string) {
-    if (oldInstanceList.length === 0) oldInstanceList = instanceList;
+    if (oldInstanceList.length === 0) oldInstanceList = DEFAULT_INSTANCE_LIST;
     oldInstanceList = oldInstanceList.slice(1);
 
     getSuggestions(search);
