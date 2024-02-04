@@ -2,9 +2,8 @@
 
 export function VideoPlayerError() {
   return (
-    <span className="text-red-500 text-center">
-      Falha no carregamento :( <br />
-      Recarregue a página.
-    </span>
+    <div className="flex flex-col items-center h-full">
+      <h1 className="text-center text-3xl font-bold text-red-600">Este vídeo não está mais disponível!</h1>
+    </div>
   );
 }

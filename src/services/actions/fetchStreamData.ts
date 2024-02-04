@@ -20,9 +20,14 @@ export async function fetchStream({ options }: IFetchStreamProps): Promise<IStre
 }
 
 async function fetchData(options: FetchStreamOptionsType): Promise<IStream> {
-  return fetch(`${options.instance.api_url}/streams/${options.streamId}`, { cache: 'no-store' })
+  const controller = new AbortController();
+  const signal = controller.signal;
+  const timeout = setTimeout(() => controller.abort(), 5000);
+
+  return fetch(`${options.instance.api_url}/streams/${options.streamId}`, { cache: 'no-store', signal })
     .then((res) => res.json())
-    .then((data) => data as IStream);
+    .then((data) => data as IStream)
+    .finally(() => clearTimeout(timeout));
 }
 
 async function fetchFakeData(delay?: number): Promise<IStream> {

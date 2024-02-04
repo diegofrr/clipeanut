@@ -13,6 +13,7 @@ import { StreamContext } from '../contexts/stream';
 
 import { Button } from '@nextui-org/react';
 import { VideoPlayerLoading } from './VideoPlayerLoading';
+import { VideoPlayerError } from './VideoPlayerError';
 
 import { isFakeDataFetch } from '@/environments';
 import { loadPlayer } from '@/utils/Player';
@@ -25,13 +26,13 @@ export default function VideoPlayerContent() {
   const { stream, setStream, streamId } = useContext(StreamContext);
 
   const [isVideoLoaded, setIsVideoLoaded] = useState<boolean>(false);
+  const [isLoadingFailed, setIsLoadingFailed] = useState<boolean>(false);
 
-  let oldInstanceList = DEFAULT_INSTANCE_LIST;
+  let instanceList = DEFAULT_INSTANCE_LIST;
 
   const retryGetStreamData = useCallback(async () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    if (!oldInstanceList?.length) oldInstanceList = DEFAULT_INSTANCE_LIST;
-    oldInstanceList = oldInstanceList.slice(1);
+    instanceList = instanceList.slice(1);
 
     loadPlayer({
       ...(await getStreamData()),
@@ -43,7 +44,7 @@ export default function VideoPlayerContent() {
 
   const getStreamData = useCallback(async () => {
     setIsVideoLoaded(false);
-    const instance = oldInstanceList[0];
+    const instance = instanceList[0];
 
     const options = { streamId, instance, isFake: isFakeDataFetch, delay: 1 } as FetchStreamOptionsType;
     let stream = {} as IStream;
@@ -58,12 +59,13 @@ export default function VideoPlayerContent() {
       mimeType = metadata.mimeType;
       uri = metadata.uri;
     } catch {
-      retryGetStreamData();
+      if (instanceList?.length) retryGetStreamData();
+      else setIsLoadingFailed(true);
     }
 
     return { mimeType, uri, stream };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [oldInstanceList, retryGetStreamData, setStream, streamId]);
+  }, [instanceList, retryGetStreamData, setStream, streamId]);
 
   function handleOpenChat() {
     window.open(`https://www.youtube.com/live_chat?v=${streamId}`, '_blank', 'width=400,height=600');
@@ -84,29 +86,35 @@ export default function VideoPlayerContent() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-2 items-start">
-      {!isVideoLoaded && <VideoPlayerLoading />}
+    <>
+      {isLoadingFailed ? (
+        <VideoPlayerError />
+      ) : (
+        <div className="flex flex-col gap-2 items-start">
+          {!isVideoLoaded && <VideoPlayerLoading />}
 
-      <div className="w-full relative">
-        <div id="oplayer" className="overflow-hidden rounded-lg w-full"></div>
-      </div>
+          <div className="w-full relative">
+            <div id="oplayer" className="overflow-hidden rounded-lg w-full"></div>
+          </div>
 
-      <Button
-        color="warning"
-        isLoading={!isVideoLoaded}
-        onClick={retryGetStreamData}
-        startContent={<span>{isVideoLoaded ? 'Recarregar' : 'Recarregando...'}</span>}
-      />
+          <Button
+            color="warning"
+            isLoading={!isVideoLoaded}
+            onClick={retryGetStreamData}
+            startContent={<span>{isVideoLoaded ? 'Recarregar' : 'Recarregando...'}</span>}
+          />
 
-      {isVideoLoaded && stream.livestream && (
-        <Button
-          onClick={handleOpenChat}
-          endContent={<Icons.ExternalLink size={18} />}
-          className="bg-app_orange-500 text-black font-medium"
-        >
-          Abrir chat em outra janela
-        </Button>
+          {isVideoLoaded && stream.livestream && (
+            <Button
+              onClick={handleOpenChat}
+              endContent={<Icons.ExternalLink size={18} />}
+              className="bg-app_orange-500 text-black font-medium"
+            >
+              Abrir chat em outra janela
+            </Button>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 }
