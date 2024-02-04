@@ -3,8 +3,6 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import Icons from '@/icons';
-
 import { Tooltip } from '@nextui-org/react';
 import { useWindowSize } from 'usehooks-ts';
 import { hasSidebar } from './utils';

@@ -2,7 +2,6 @@
 
 import { Reducer, useCallback, useContext, useEffect, useReducer } from 'react';
 
-import CustomSpinner from '@/components/CustomSpinner';
 import { TrendingVideo } from './components/Video';
 
 import type { ITrendingVideo } from '@/types';
@@ -16,6 +15,7 @@ import { FetchTrendingVideosOptionsType, fetchTrendingVideos } from '@/services/
 import { isFakeDataFetch } from '@/environments';
 
 import { PIPED_VALUES } from '@/constants';
+import TrendingVideosSkeleton from '../Skeletons/TrendingVideosSkeleton';
 const { DEFAULT_INSTANCE_LIST } = PIPED_VALUES;
 
 type TrendingVideosProps = {
@@ -78,8 +78,9 @@ export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
       className={`grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-10 gap-x-6 justify-items-center
       ${isHidden ? 'hidden' : ''}`}
     >
-      {state.isLoading && <CustomSpinner stroke="md" className="absolute" />}
-      {!state.isLoading && state.trendingVideos.length > 0 && (
+      {state.isLoading ? (
+        <TrendingVideosSkeleton />
+      ) : (
         <>
           {state.trendingVideos.map((video, index) => (
             <TrendingVideo className={`${index === 0 && width >= 640 ? 'hidden' : ''}`} key={index} data={video} />

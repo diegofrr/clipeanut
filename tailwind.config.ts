@@ -32,7 +32,9 @@ const config: Config = {
       },
       screens: {
         xxs: '420px',
-        xs: '480px'
+        xs: '480px',
+        mid: '680px',
+        'mid-lg': '820px'
       },
       colors: {
         app_orange: {
