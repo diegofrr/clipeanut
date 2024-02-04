@@ -34,7 +34,8 @@ const config: Config = {
         xxs: '420px',
         xs: '480px',
         mid: '680px',
-        'mid-lg': '820px'
+        'mid-lg': '820px',
+        'mid-2xl': '1300px'
       },
       colors: {
         app_orange: {

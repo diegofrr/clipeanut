@@ -99,6 +99,8 @@ export default function VideoPlayerContent() {
 
           <Button
             color="warning"
+            variant="ghost"
+            radius="full"
             isLoading={!isVideoLoaded}
             onClick={retryGetStreamData}
             startContent={<span>{isVideoLoaded ? 'Recarregar' : 'Recarregando...'}</span>}
