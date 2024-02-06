@@ -20,9 +20,16 @@ export async function fetchTrendingVideos({ options }: IFetchTrendingVideosProps
 }
 
 async function fetchData(options: FetchTrendingVideosOptionsType): Promise<ITrendingVideo[]> {
-  return await fetch(`${options.instance.api_url}/trending?region=${options?.region || PIPED_VALUES.DEFAULT_REGION}`)
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000);
+
+  return await fetch(`${options.instance.api_url}/trending?region=${options?.region || PIPED_VALUES.DEFAULT_REGION}`, {
+    cache: 'no-cache',
+    signal: controller.signal
+  })
     .then((res) => res.json())
-    .then((data) => data as ITrendingVideo[]);
+    .then((data) => data as ITrendingVideo[])
+    .finally(() => clearTimeout(timeout));
 }
 
 async function fetchFakeData(delay?: number): Promise<ITrendingVideo[]> {

@@ -22,10 +22,17 @@ export async function fetchSearchResults({ options }: IFetchSearchRestultsProps)
 }
 
 async function fetchData(options: FetchSearchResultsOptionsType): Promise<ISearchResultRoot> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000);
   const filter = options.filter || 'all';
-  return fetch(`${options.instance.api_url}/search?q=${options.query}&filter=${filter}`)
+
+  return fetch(`${options.instance.api_url}/search?q=${options.query}&filter=${filter}`, {
+    cache: 'no-cache',
+    signal: controller.signal
+  })
     .then((res) => res.json())
-    .then((data) => data as ISearchResultRoot);
+    .then((data) => data as ISearchResultRoot)
+    .finally(() => clearTimeout(timeout));
 }
 
 async function fetchFakeData(delay?: number): Promise<ISearchResultRoot> {

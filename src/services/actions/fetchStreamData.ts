@@ -21,10 +21,12 @@ export async function fetchStream({ options }: IFetchStreamProps): Promise<IStre
 
 async function fetchData(options: FetchStreamOptionsType): Promise<IStream> {
   const controller = new AbortController();
-  const signal = controller.signal;
   const timeout = setTimeout(() => controller.abort(), 5000);
 
-  return fetch(`${options.instance.api_url}/streams/${options.streamId}`, { cache: 'no-store', signal })
+  return fetch(`${options.instance.api_url}/streams/${options.streamId}`, {
+    cache: 'no-cache',
+    signal: controller.signal
+  })
     .then((res) => res.json())
     .then((data) => data as IStream)
     .finally(() => clearTimeout(timeout));
