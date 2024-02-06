@@ -48,12 +48,15 @@ export default function HomeHeader() {
       isFake: isFakeDataFetch,
       delay: 1
     } as FetchStreamOptionsType;
-    let stream = {} as IStream;
 
     const boundFetchStream = async () => {
-      const data = await fetchStream({ options });
-      setStoragedItem(LOCAL_STORAGE_KEYS.HIGHLIGTH_STREAM, { data, highlightStreamId }, { minutes: 15 });
-      stream = data;
+      try {
+        const data = await fetchStream({ options });
+        setStoragedItem(LOCAL_STORAGE_KEYS.HIGHLIGTH_STREAM, { data, highlightStreamId }, { minutes: 15 });
+        setStream(data);
+      } catch {
+        retryGetStreamData();
+      }
     };
 
     try {
@@ -63,16 +66,14 @@ export default function HomeHeader() {
         );
         if (storagedHighlightStream?.value) {
           if (storagedHighlightStream.value.highlightStreamId === highlightStreamId) {
-            stream = storagedHighlightStream.value.data;
+            setStream(storagedHighlightStream.value.data);
           } else await boundFetchStream();
         } else await boundFetchStream();
       } else await boundFetchStream();
 
-      if (isFakeDataFetch) stream = highlightStreamData as IStream;
+      if (isFakeDataFetch) setStream(highlightStreamData as IStream);
     } catch {
       retryGetStreamData();
-    } finally {
-      setStream(stream);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [oldInstanceList, highlightStreamId]);
@@ -84,33 +85,37 @@ export default function HomeHeader() {
   return (
     <header className="hidden sm:flex flex-row items-center w-full bg-neutral-200 dark:bg-neutral-950 p-6 gap-6 rounded-xl relative">
       <div className="rounded-lg relative overflow-hidden w-full max-h-[400px] max-w-[720px]">
-        <Image isLoading={!stream} width={720} height={400} loading="lazy" src={stream?.thumbnailUrl} alt="Thumbnail" />
+        <Image
+          isLoading={!highlightStream}
+          width={720}
+          height={400}
+          loading="lazy"
+          src={stream ? stream.thumbnailUrl : highlightStream.thumbnail}
+          alt="Thumbnail"
+        />
 
-        {stream && (
-          <>
-            <div className="absolute flex items-center justify-end left-0 right-0 bottom-0 p-4 z-20">
-              <Button
-                as={Link}
-                size={width > 1280 ? 'md' : 'sm'}
-                radius="full"
-                href={highlightStream.url || ''}
-                className="font-medium"
-                startContent={<Icons.ClapperboardSolid size={20} />}
-                color="warning"
-              >
-                Assistir
-              </Button>
-            </div>
-            <span className="absolute left-0 bottom-0 right-0 shadow-[0px_0px_6em_8em_#000000] z-[10]" />
-          </>
-        )}
+        <>
+          <div className="absolute flex items-center justify-end left-0 right-0 bottom-0 p-4 z-20">
+            <Button
+              as={Link}
+              size={width > 1280 ? 'md' : 'sm'}
+              radius="full"
+              href={highlightStream.url || ''}
+              className="font-medium"
+              startContent={<Icons.ClapperboardSolid size={20} />}
+              color="warning"
+            >
+              Assistir
+            </Button>
+          </div>
+          <span className="absolute left-0 bottom-0 right-0 shadow-[0px_0px_6em_8em_#000000] z-[10]" />
+        </>
       </div>
-
       <div className="bg-netral-850 flex flex-col gap-4 w-full z-10 mb-auto">
         <div className="flex flex-row gap-4 items-center">
           <div className="bg-default-200 relative min-w-[40px] min-h-[40px] w-10 h-10 rounded-full">
             <Image
-              isLoading={!stream}
+              isLoading={!highlightStream}
               alt={highlightStream.uploaderName + ' avatar'}
               src={highlightStream.uploaderAvatar}
               height={40}
@@ -137,15 +142,14 @@ export default function HomeHeader() {
 
         <p className="lg:text-xl xl:text-2xl font-bold">{highlightStream.title}</p>
       </div>
-
-      {stream && (
+      {
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={highlightStream.thumbnail}
           alt="Thumbnail background"
           className="blur-3xl opacity-20 absolute max-h-[50vh] w-full max-w-[80vw] top-[20%] right-0 object-cover pointer-events-none"
         />
-      )}
+      }
     </header>
   );
 }
