@@ -14,11 +14,13 @@ import { isFakeDataFetch } from '@/environments';
 import { Button, Input } from '@nextui-org/react';
 
 import { PIPED_VALUES } from '@/constants';
+import { useWindowSize } from 'usehooks-ts';
 const { DEFAULT_INSTANCE_LIST } = PIPED_VALUES;
 
 export default function Search() {
   const router = useRouter();
   const inputRef = createRef<HTMLInputElement>();
+  const { width } = useWindowSize();
 
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout>();
   const [state, dispatch] = useReducer<React.Reducer<SearchState, SearchAction>>(searchReducer, initialSearchState);
@@ -30,6 +32,7 @@ export default function Search() {
   const setIsFetching = (value: boolean) => dispatch({ type: ActionTypes.SET_IS_FETCHING_SUGGESTIONS, payload: value });
   const setIsOpen = (value: boolean) => dispatch({ type: ActionTypes.SET_IS_OPEN, payload: value });
   const setIsSended = (value: boolean) => dispatch({ type: ActionTypes.SET_IS_SENDED, payload: value });
+  const isMobile = () => width <= 640;
 
   function retryGetSuggestions(search: string) {
     if (oldInstanceList.length === 0) oldInstanceList = DEFAULT_INSTANCE_LIST;
@@ -91,8 +94,14 @@ export default function Search() {
 
   return (
     <>
-      <div onClick={handleClickSearch} className="w-full md:max-w-xl h-10 z-30 relative">
+      <div
+        onClick={handleClickSearch}
+        className={`w-full md:max-w-xl h-10 z-30 sm:relative transition-all ${
+          state.isOpen && isMobile() && 'fixed max-w-[calc(100vw-32px)] left-4'
+        }`}
+      >
         <Input
+          onClick={() => setIsOpen(true)}
           ref={inputRef}
           onChange={getSuggestionsController}
           value={state.searchValue}
@@ -114,8 +123,8 @@ export default function Search() {
             </Button>
           }
           classNames={{
-            mainWrapper: 'h-10 flex  w-full',
-            input: 'text-small h-10',
+            mainWrapper: 'h-10 flex w-full',
+            input: 'text-small h-10 mr-6',
             inputWrapper:
               'h-10 font-normal text-default-500 border-1 bg-neutral-100 dark:bg-neutral-900 border-neutral-200 dark:border-none'
           }}
@@ -126,7 +135,7 @@ export default function Search() {
 
         {state.isOpen && !state.isSended && state.suggestions?.length > 0 && (
           <div className="rounded-lg overflow-hidden border-1 dark:border-none bg-neutral-100 dark:bg-neutral-900 h-auto mt-2">
-            <div className="w-full overflow-auto max-h-[40vh] p-2">
+            <div className="w-full overflow-auto max-h-[80vh] sm:max-h-[40vh] p-2">
               <ul>
                 {state.suggestions?.map((suggestion, index) => (
                   <li
