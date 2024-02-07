@@ -41,15 +41,38 @@ export default function TrendingTabs({ tab, setTab, ...props }: TypeTabsProps) {
   ];
 
   return (
-    <div className="flex justify-between items-center w-full relative">
+    <div className="flex flex-row justify-between items-center w-full h-10 relative px-6 sm:px-0">
+      <Tabs
+        {...props}
+        isDisabled={isSelectOpen}
+        size="sm"
+        selectedKey={tab}
+        onSelectionChange={setTab}
+        aria-label="Options"
+        variant="bordered"
+        radius="full"
+        color="warning"
+        className={`z-10 ${props.className || ''}`}
+      >
+        {TABS.map((tab) => (
+          <Tab
+            key={tab.key}
+            title={
+              <div className="flex items-center space-x-2">
+                {tab.icon}
+                {width > 480 && <span>{tab.title}</span>}
+              </div>
+            }
+          />
+        ))}
+      </Tabs>
+
       <Select
         onOpenChange={(open) => setIsSelectOpen(open)}
         onChange={(e) => setRegion(e.target.value)}
         isOpen={isSelectOpen}
-        className={`absolute left-0 top-0 ${isMobile() ? 'max-w-[calc(100%-32px)]' : 'max-w-xs'}`}
-        classNames={{
-          trigger: 'invisible'
-        }}
+        className={`absolute right-16 top-0 ${isMobile() ? 'max-w-[calc(100%-32px)]' : 'max-w-xs'}`}
+        classNames={{ trigger: 'invisible' }}
       >
         {PIPED_VALUES.REGIONS.filter((country) => country !== region).map((country) => (
           <SelectItem
@@ -64,6 +87,7 @@ export default function TrendingTabs({ tab, setTab, ...props }: TypeTabsProps) {
       </Select>
 
       <Button
+        isDisabled={isSelectOpen}
         onClick={() => setIsSelectOpen(!isSelectOpen)}
         variant="light"
         radius="full"
@@ -73,30 +97,6 @@ export default function TrendingTabs({ tab, setTab, ...props }: TypeTabsProps) {
       >
         {isMobile() ? region : CommonUtils.getCountryName(region)}
       </Button>
-
-      <Tabs
-        {...props}
-        size="sm"
-        selectedKey={tab}
-        onSelectionChange={setTab}
-        aria-label="Options"
-        variant="bordered"
-        radius="full"
-        color="warning"
-        className={`${props.className || ''}`}
-      >
-        {TABS.map((tab) => (
-          <Tab
-            key={tab.key}
-            title={
-              <div className="flex items-center space-x-2">
-                {tab.icon}
-                {width > 480 && <span>{tab.title}</span>}
-              </div>
-            }
-          />
-        ))}
-      </Tabs>
     </div>
   );
 }
