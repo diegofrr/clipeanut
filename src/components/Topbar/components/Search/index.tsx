@@ -11,10 +11,10 @@ import { initialSearchState, searchReducer } from './reducer';
 import { FetchSuggestionsOptionsType, fetchSuggestions } from '@/services/actions/fetchSuggestionsData';
 import { formatSuggestionToQuery } from '../../utils';
 import { isFakeDataFetch } from '@/environments';
+import { useWindowSize } from 'usehooks-ts';
 import { Button, Input } from '@nextui-org/react';
 
 import { PIPED_VALUES } from '@/constants';
-import { useWindowSize } from 'usehooks-ts';
 const { DEFAULT_INSTANCE_LIST } = PIPED_VALUES;
 
 export default function Search() {
@@ -94,14 +94,8 @@ export default function Search() {
 
   return (
     <>
-      <div
-        onClick={handleClickSearch}
-        className={`w-full md:max-w-xl h-10 z-30 sm:relative transition-all ${
-          state.isOpen && isMobile() && 'fixed max-w-[calc(100vw-32px)] left-4'
-        }`}
-      >
+      <div onClick={handleClickSearch} className="w-full md:max-w-xl h-10 z-30 sm:relative transition-all">
         <Input
-          onClick={() => setIsOpen(true)}
           ref={inputRef}
           onChange={getSuggestionsController}
           value={state.searchValue}
@@ -114,13 +108,13 @@ export default function Search() {
               size="sm"
               color="warning"
               radius="full"
-              className={`h-8 w-8 absolute right-1 top-1/2 -translate-y-1/2 
+              className={`h-8 w-12 absolute right-1 top-1/2 -translate-y-1/2 
               ${!isValidSuggestion(state.searchValue) ? 'hidden' : ''}`}
               isIconOnly
               onClick={() => handleFetchSuggestion(state.searchValue)}
-            >
-              <Icons.Search strokeWidth={2} size={16} />
-            </Button>
+              isLoading={state.fetchingSuggestions}
+              startContent={!state.fetchingSuggestions && <Icons.Search strokeWidth={2} size={16} />}
+            />
           }
           classNames={{
             mainWrapper: 'h-10 flex w-full',
@@ -134,8 +128,11 @@ export default function Search() {
         />
 
         {state.isOpen && !state.isSended && state.suggestions?.length > 0 && (
-          <div className="rounded-lg overflow-hidden border-1 dark:border-none bg-neutral-100 dark:bg-neutral-900 h-auto mt-2">
-            <div className="w-full overflow-auto max-h-[80vh] sm:max-h-[40vh] p-2">
+          <div
+            className={`rounded-lg overflow-hidden border-1 dark:border-none bg-neutral-100 dark:bg-neutral-900 h-auto mt-2 
+            ${isMobile() && 'fixed left-4 w-[calc(100%-32px)]'}`}
+          >
+            <div className={`w-full overflow-auto sm:max-h-[40vh] p-2 ${isMobile() ? 'max-h-[60vh]' : 'max-h-[80vh]'}`}>
               <ul>
                 {state.suggestions?.map((suggestion, index) => (
                   <li

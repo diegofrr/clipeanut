@@ -1,7 +1,13 @@
-import { Tabs, Tab } from '@nextui-org/react';
-
 import Icons from '@/icons';
+import ReactCountryFlag from 'react-country-flag';
+
 import { useWindowSize } from 'usehooks-ts';
+import { CommonUtils } from '@/utils';
+import { Tabs, Tab, Button, Select, SelectItem } from '@nextui-org/react';
+
+import { PIPED_VALUES } from '@/constants';
+import { useContext, useState } from 'react';
+import { PipedInstanceContext } from '@/contexts/pipedInstance';
 
 type TypeTabsProps = React.HTMLAttributes<HTMLElement> & {
   tab: string | number;
@@ -10,6 +16,11 @@ type TypeTabsProps = React.HTMLAttributes<HTMLElement> & {
 
 export default function TrendingTabs({ tab, setTab, ...props }: TypeTabsProps) {
   const { width } = useWindowSize();
+  const { region, setRegion } = useContext(PipedInstanceContext);
+
+  const [isSelectOpen, setIsSelectOpen] = useState<boolean>(false);
+
+  const isMobile = () => width <= 640;
 
   const TABS = [
     {
@@ -30,28 +41,62 @@ export default function TrendingTabs({ tab, setTab, ...props }: TypeTabsProps) {
   ];
 
   return (
-    <Tabs
-      {...props}
-      size="sm"
-      selectedKey={tab}
-      onSelectionChange={setTab}
-      aria-label="Options"
-      variant="bordered"
-      radius="full"
-      color="warning"
-      className={`${props.className || ''}`}
-    >
-      {TABS.map((tab) => (
-        <Tab
-          key={tab.key}
-          title={
-            <div className="flex items-center space-x-2">
-              {tab.icon}
-              {width > 480 && <span>{tab.title}</span>}
-            </div>
-          }
-        />
-      ))}
-    </Tabs>
+    <div className="flex justify-between items-center w-full relative">
+      <Select
+        onOpenChange={(open) => setIsSelectOpen(open)}
+        onChange={(e) => setRegion(e.target.value)}
+        isOpen={isSelectOpen}
+        className={`absolute left-0 top-0 ${isMobile() ? 'max-w-[calc(100%-32px)]' : 'max-w-xs'}`}
+        classNames={{
+          trigger: 'invisible'
+        }}
+      >
+        {PIPED_VALUES.REGIONS.filter((country) => country !== region).map((country) => (
+          <SelectItem
+            key={country}
+            variant="light"
+            className="font-bold rounded-full hover:bg-foreground-100"
+            startContent={<ReactCountryFlag countryCode={country} style={{ fontSize: 20 }} />}
+          >
+            {CommonUtils.getCountryName(country)}
+          </SelectItem>
+        ))}
+      </Select>
+
+      <Button
+        onClick={() => setIsSelectOpen(!isSelectOpen)}
+        variant="light"
+        radius="full"
+        className="text-sm"
+        style={{ outline: 'none' }}
+        startContent={<ReactCountryFlag countryCode={region} style={{ fontSize: 20 }} />}
+      >
+        {isMobile() ? region : CommonUtils.getCountryName(region)}
+      </Button>
+
+      <Tabs
+        {...props}
+        size="sm"
+        selectedKey={tab}
+        onSelectionChange={setTab}
+        aria-label="Options"
+        variant="bordered"
+        radius="full"
+        color="warning"
+        className={`${props.className || ''}`}
+      >
+        {TABS.map((tab) => (
+          <Tab
+            key={tab.key}
+            title={
+              <div className="flex items-center space-x-2">
+                {tab.icon}
+                {width > 480 && <span>{tab.title}</span>}
+              </div>
+            }
+          />
+        ))}
+      </Tabs>
+    </div>
   );
 }
