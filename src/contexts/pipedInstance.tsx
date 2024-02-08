@@ -2,6 +2,7 @@
 
 import { createContext, useState } from 'react';
 import { PIPED_VALUES } from '@/constants';
+import { useLocalStorage } from 'usehooks-ts';
 
 import type { IPipedInstance } from '@/types';
 
@@ -23,7 +24,7 @@ export const PipedInstanceContext = createContext<IPipedInstanceContext>(INITIAL
 
 export default function PipedInstanceProvider({ children }: { children: React.ReactNode }) {
   const [instance, setInstance] = useState<IPipedInstance>(INITIAL_VALUE.instance);
-  const [region, setRegion] = useState<string>(INITIAL_VALUE.region);
+  const [region, setRegion] = useLocalStorage(PIPED_VALUES.LOCAL_STORAGE_KEYS.CURRENT_REGION, 'BR');
 
   return (
     <PipedInstanceContext.Provider

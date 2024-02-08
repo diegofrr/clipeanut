@@ -1,13 +1,14 @@
+import { useContext, useState } from 'react';
+
 import Icons from '@/icons';
 import ReactCountryFlag from 'react-country-flag';
 
-import { useWindowSize } from 'usehooks-ts';
 import { CommonUtils } from '@/utils';
+import { useWindowSize, useIsClient } from 'usehooks-ts';
 import { Tabs, Tab, Button, Select, SelectItem } from '@nextui-org/react';
+import { PipedInstanceContext } from '@/contexts/pipedInstance';
 
 import { PIPED_VALUES } from '@/constants';
-import { useContext, useState } from 'react';
-import { PipedInstanceContext } from '@/contexts/pipedInstance';
 
 type TypeTabsProps = React.HTMLAttributes<HTMLElement> & {
   tab: string | number;
@@ -17,6 +18,7 @@ type TypeTabsProps = React.HTMLAttributes<HTMLElement> & {
 export default function TrendingTabs({ tab, setTab, ...props }: TypeTabsProps) {
   const { width } = useWindowSize();
   const { region, setRegion } = useContext(PipedInstanceContext);
+  const isClient = useIsClient();
 
   const [isSelectOpen, setIsSelectOpen] = useState<boolean>(false);
 
@@ -67,36 +69,40 @@ export default function TrendingTabs({ tab, setTab, ...props }: TypeTabsProps) {
         ))}
       </Tabs>
 
-      <Select
-        onOpenChange={(open) => setIsSelectOpen(open)}
-        onChange={(e) => setRegion(e.target.value)}
-        isOpen={isSelectOpen}
-        className={`absolute right-16 top-0 ${isMobile() ? 'max-w-[calc(100%-32px)]' : 'max-w-xs'}`}
-        classNames={{ trigger: 'invisible' }}
-      >
-        {PIPED_VALUES.REGIONS.filter((country) => country !== region).map((country) => (
-          <SelectItem
-            key={country}
-            variant="light"
-            className="font-bold rounded-full hover:bg-foreground-100"
-            startContent={<ReactCountryFlag countryCode={country} style={{ fontSize: 20 }} />}
+      {isClient && (
+        <>
+          <Select
+            onOpenChange={(open) => setIsSelectOpen(open)}
+            onChange={(e) => setRegion(e.target.value)}
+            isOpen={isSelectOpen}
+            aria-label="Selecionar região"
+            className={`absolute right-16 top-0 ${isMobile() ? 'max-w-[calc(100%-32px)]' : 'max-w-xs'}`}
+            classNames={{ trigger: 'invisible' }}
           >
-            {CommonUtils.getCountryName(country)}
-          </SelectItem>
-        ))}
-      </Select>
-
-      <Button
-        isDisabled={isSelectOpen}
-        onClick={() => setIsSelectOpen(!isSelectOpen)}
-        variant="light"
-        radius="full"
-        className="text-sm"
-        style={{ outline: 'none' }}
-        startContent={<ReactCountryFlag countryCode={region} style={{ fontSize: 20 }} />}
-      >
-        {isMobile() ? region : CommonUtils.getCountryName(region)}
-      </Button>
+            {PIPED_VALUES.REGIONS.map((country) => (
+              <SelectItem
+                key={country}
+                variant="light"
+                className="font-bold rounded-full hover:bg-foreground-100"
+                startContent={<ReactCountryFlag countryCode={country} style={{ fontSize: 20 }} />}
+              >
+                {CommonUtils.getCountryName(country)}
+              </SelectItem>
+            ))}
+          </Select>
+          <Button
+            isDisabled={isSelectOpen}
+            onClick={() => setIsSelectOpen(!isSelectOpen)}
+            variant="light"
+            radius="full"
+            className="text-sm"
+            style={{ outline: 'none' }}
+            startContent={<ReactCountryFlag countryCode={region} style={{ fontSize: 20 }} />}
+          >
+            {isMobile() ? region : CommonUtils.getCountryName(region)}
+          </Button>
+        </>
+      )}
     </div>
   );
 }
