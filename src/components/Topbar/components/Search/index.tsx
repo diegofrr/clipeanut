@@ -15,6 +15,7 @@ import { useWindowSize } from 'usehooks-ts';
 import { Button, Input } from '@nextui-org/react';
 
 import { PIPED_VALUES } from '@/constants';
+import { LOCALSTORAGE_KEYS, PIPED_VALUES } from '@/constants';
 const { DEFAULT_INSTANCE_LIST } = PIPED_VALUES;
 
 export default function Search() {

@@ -14,6 +14,7 @@ import { isFakeDataFetch } from '@/environments';
 import { FoundVideo } from './components/FoundVideo';
 
 import { PIPED_VALUES } from '@/constants';
+import { LOCALSTORAGE_KEYS, PIPED_VALUES } from '@/constants';
 const { DEFAULT_INSTANCE_LIST } = PIPED_VALUES;
 
 export default function Results() {

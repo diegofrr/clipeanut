@@ -19,8 +19,8 @@ import { StreamUtils } from '@/utils';
 import { useLocalStorageWithExpiration } from '@/hooks';
 import { highlightStreamData } from '@/mocks/highlightStreamData';
 
-import { PIPED_VALUES } from '@/constants';
-const { LOCAL_STORAGE_KEYS, DEFAULT_INSTANCE_LIST } = PIPED_VALUES;
+import { PIPED_VALUES, LOCALSTORAGE_KEYS } from '@/constants';
+const { DEFAULT_INSTANCE_LIST } = PIPED_VALUES;
 
 export default function HomeHeader() {
   const { isExistsItem, getStoragedItem, setStoragedItem } = useLocalStorageWithExpiration();
@@ -52,7 +52,7 @@ export default function HomeHeader() {
     const boundFetchStream = async () => {
       try {
         const data = await fetchStream({ options });
-        setStoragedItem(LOCAL_STORAGE_KEYS.HIGHLIGTH_STREAM, { data, highlightStreamId }, { minutes: 15 });
+        setStoragedItem(LOCALSTORAGE_KEYS.HIGHLIGTH_STREAM, { data, highlightStreamId }, { minutes: 15 });
         setStream(data);
       } catch {
         retryGetStreamData();
@@ -60,9 +60,9 @@ export default function HomeHeader() {
     };
 
     try {
-      if (isExistsItem(LOCAL_STORAGE_KEYS.HIGHLIGTH_STREAM)) {
+      if (isExistsItem(LOCALSTORAGE_KEYS.HIGHLIGTH_STREAM)) {
         const storagedHighlightStream = getStoragedItem<{ data: IStream; highlightStreamId: string }>(
-          LOCAL_STORAGE_KEYS.HIGHLIGTH_STREAM
+          LOCALSTORAGE_KEYS.HIGHLIGTH_STREAM
         );
         if (storagedHighlightStream?.value) {
           if (storagedHighlightStream.value.highlightStreamId === highlightStreamId) {
