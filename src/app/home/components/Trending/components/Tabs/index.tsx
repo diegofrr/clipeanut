@@ -84,7 +84,7 @@ export default function TrendingTabs({ tab, setTab, ...props }: TypeTabsProps) {
                 isDisabled={country === region}
                 key={country}
                 variant="light"
-                className={`font-bold rounded-full hover:bg-foreground-100`}
+                className="font-bold rounded-full hover:bg-foreground-100"
                 startContent={<ReactCountryFlag countryCode={country} style={{ fontSize: 20 }} />}
               >
                 {CommonUtils.getCountryName(country)}
