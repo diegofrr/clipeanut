@@ -47,11 +47,11 @@ export default function TrendingTabs({ tab, setTab, ...props }: TypeTabsProps) {
       <Tabs
         {...props}
         isDisabled={isSelectOpen}
-        size="sm"
+        size={isMobile() ? 'sm' : 'md'}
         selectedKey={tab}
         onSelectionChange={setTab}
         aria-label="Options"
-        variant="bordered"
+        variant="light"
         radius="full"
         color="warning"
         className={`z-10 ${props.className || ''}`}
@@ -76,7 +76,7 @@ export default function TrendingTabs({ tab, setTab, ...props }: TypeTabsProps) {
             onChange={(e) => setRegion(e.target.value)}
             isOpen={isSelectOpen}
             aria-label="Selecionar região"
-            className={`absolute right-16 top-0 ${isMobile() ? 'max-w-[calc(100%-32px)]' : 'max-w-xs'}`}
+            className={`absolute right-0 top-0 ${isMobile() ? 'max-w-[calc(100%-32px)]' : 'max-w-xs'}`}
             classNames={{ trigger: 'invisible' }}
           >
             {PIPED_VALUES.REGIONS.map((country) => (
