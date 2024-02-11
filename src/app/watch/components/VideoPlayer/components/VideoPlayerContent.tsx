@@ -23,14 +23,15 @@ import { PIPED_VALUES } from '@/constants';
 const { DEFAULT_INSTANCE_LIST } = PIPED_VALUES;
 
 export default function VideoPlayerContent() {
+  let instanceList = DEFAULT_INSTANCE_LIST;
+
   const { stream, setStream, streamId } = useContext(StreamContext);
 
   const [isVideoLoaded, setIsVideoLoaded] = useState<boolean>(false);
   const [isLoadingFailed, setIsLoadingFailed] = useState<boolean>(false);
 
-  let instanceList = DEFAULT_INSTANCE_LIST;
-
   const retryGetStreamData = useCallback(async () => {
+    if (isFakeDataFetch) return;
     // eslint-disable-next-line react-hooks/exhaustive-deps
     instanceList = instanceList.slice(1);
 

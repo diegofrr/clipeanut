@@ -10,16 +10,18 @@ import Main from '@/components/Main';
 import Header from '@/components/Header';
 import Content from '@/components/Content';
 
+import { useLocalStorage } from 'usehooks-ts';
 import { isFakeDataFetch } from '@/environments';
 import { FoundVideo } from './components/FoundVideo';
 
-import { PIPED_VALUES } from '@/constants';
+import { LOCALSTORAGE_KEYS, PIPED_VALUES } from '@/constants';
 const { DEFAULT_INSTANCE_LIST } = PIPED_VALUES;
 
 export default function Results() {
   const query = useSearchParams().get('q');
 
   const [results, setResults] = useState<ISearchResultRoot>();
+  const [, setSearchHistory] = useLocalStorage<string[]>(LOCALSTORAGE_KEYS.SEARCH_HISTORY, []);
 
   let oldInstanceList = DEFAULT_INSTANCE_LIST;
 
@@ -44,6 +46,7 @@ export default function Results() {
   }
 
   useEffect(() => {
+    setSearchHistory((history) => [query as string, ...history.filter((h) => h !== query)]);
     getSearchResults();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);

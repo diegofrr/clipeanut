@@ -81,6 +81,7 @@ export default function TrendingTabs({ tab, setTab, ...props }: TypeTabsProps) {
           >
             {PIPED_VALUES.REGIONS.map((country) => (
               <SelectItem
+                isDisabled={country === region}
                 key={country}
                 variant="light"
                 className="font-bold rounded-full hover:bg-foreground-100"
@@ -88,7 +89,7 @@ export default function TrendingTabs({ tab, setTab, ...props }: TypeTabsProps) {
               >
                 {CommonUtils.getCountryName(country)}
               </SelectItem>
-            ))}
+            )).sort((a) => (a.props.startContent.props.countryCode === region ? -1 : 1))}
           </Select>
           <Button
             isDisabled={isSelectOpen}
