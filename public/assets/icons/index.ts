@@ -12,22 +12,26 @@ import { VideosIcon } from './outline/videos';
 import { MusicsIcon } from './outline/musics';
 import { GamepadIcon } from './outline/gamepad';
 import { ExternalLinkIcon } from './outline/external-link';
-import { ClapperboardIcon } from './outline/clapperboard';
 import { ArrowRightUpIcon } from './outline/arrow-right-up';
 import { ArrowRightIcon } from './outline/arrow-right';
 import { ArrowLeftIcon } from './outline/arrow-left';
 import { PlayIcon } from './outline/play';
 import { HistoryIcon } from './outline/history';
 import { ArrowLeftUpIcon } from './outline/arrow-left-up';
+import { ClapperboardIcon } from './outline/clapperboard';
+import { ClapperboardTextIcon } from './outline/clapperboard-text';
 
+import { TagIconSolid } from './solid/tag-solid';
 import { PlayIconSolid } from './solid/play-solid';
 import { HomeIconSolid } from './solid/home-solid';
 import { FlameIconSolid } from './solid/flame-solid';
 import { HeartIconSolid } from './solid/heart-solid';
+import { ClockIconSolid } from './solid/clock-solid';
 import { SettingsIconSolid } from './solid/settings-solid';
 import { SettingsIconSolid2 } from './solid/settings2-solid';
 import { VerifiedIconSolid } from './solid/verified-solid';
-import { ClapperboardIconSolid } from './solid/clapperboard-solid';
+import { ClapperboardIconSolid } from './solid/clapperboard-text-solid';
+import { ClapperboardTextIconSolid } from './solid/clapperboard-solid';
 
 const Icons = {
   Home: HomeIcon,
@@ -51,7 +55,10 @@ const Icons = {
   ArrowLeftUp: ArrowLeftUpIcon,
   History: HistoryIcon,
   Play: PlayIcon,
+  ClapperboardText: ClapperboardTextIcon,
 
+  ClockSolid: ClockIconSolid,
+  TagSolid: TagIconSolid,
   HomeSolid: HomeIconSolid,
   SettingsSolid: SettingsIconSolid,
   SettingsSolid2: SettingsIconSolid2,
@@ -59,7 +66,8 @@ const Icons = {
   FlameSolid: FlameIconSolid,
   VerifiedSolid: VerifiedIconSolid,
   PlaySolid: PlayIconSolid,
-  ClapperboardSolid: ClapperboardIconSolid
+  ClapperboardSolid: ClapperboardIconSolid,
+  ClapperboardTextSolid: ClapperboardTextIconSolid
 };
 
 export default Icons;

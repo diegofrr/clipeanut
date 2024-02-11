@@ -1,15 +1,16 @@
 'use client';
 
 import Link from 'next/link';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { createRef, useCallback, useContext, useEffect, useState } from 'react';
 
 import '@/styles/custom-oplayer-ui.css';
+import './styles/video-description.css';
 
 import Icons from '@/icons';
 
 import type { IStream } from '@/types';
 import { fetchStream, type FetchStreamOptionsType } from '@/services/actions/fetchStreamData';
-import { Button, Image } from '@nextui-org/react';
+import { Button, Image, Modal, ModalBody, ModalContent, ModalHeader, Tooltip, useDisclosure } from '@nextui-org/react';
 import { useWindowSize } from 'usehooks-ts';
 
 import { HighlighStreamContext } from '../../contexts/highlightStream';
@@ -23,14 +24,21 @@ import { PIPED_VALUES, LOCALSTORAGE_KEYS } from '@/constants';
 const { DEFAULT_INSTANCE_LIST } = PIPED_VALUES;
 
 export default function HomeHeader() {
-  const { isExistsItem, getStoragedItem, setStoragedItem } = useLocalStorageWithExpiration();
-  const { width } = useWindowSize();
+  let oldInstanceList = DEFAULT_INSTANCE_LIST;
+  const descriptionRef = createRef<HTMLDivElement>();
 
+  const { width } = useWindowSize();
+  const { isExistsItem, getStoragedItem, setStoragedItem } = useLocalStorageWithExpiration();
   const { highlightStreamId, highlightStream } = useContext(HighlighStreamContext);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const [stream, setStream] = useState<IStream>();
 
-  let oldInstanceList = DEFAULT_INSTANCE_LIST;
+  useEffect(() => {
+    if (descriptionRef.current && stream) {
+      descriptionRef.current.innerHTML = stream.description;
+    }
+  }, [stream, descriptionRef]);
 
   function retryGetStreamData() {
     if (!oldInstanceList?.length) oldInstanceList = DEFAULT_INSTANCE_LIST;
@@ -83,7 +91,7 @@ export default function HomeHeader() {
   }, [highlightStreamId, getStreamData]);
 
   return (
-    <header className="hidden sm:flex flex-row items-center w-full bg-neutral-200 dark:bg-neutral-950 p-6 gap-6 rounded-xl relative">
+    <header className="hidden sm:flex flex-row w-full bg-neutral-200 dark:bg-neutral-950 p-6 gap-6 rounded-xl relative">
       <div className="rounded-lg relative overflow-hidden w-full max-h-[400px] max-w-[720px]">
         <Image
           isLoading={!highlightStream}
@@ -95,19 +103,7 @@ export default function HomeHeader() {
         />
 
         <>
-          <div className="absolute flex items-center justify-end left-0 right-0 bottom-0 p-4 z-20">
-            <Button
-              as={Link}
-              size={width > 1280 ? 'md' : 'sm'}
-              radius="full"
-              href={highlightStream.url || ''}
-              className="font-medium"
-              startContent={<Icons.ClapperboardSolid size={20} />}
-              color="warning"
-            >
-              Assistir
-            </Button>
-          </div>
+          <div className="absolute flex gap-4 items-center justify-end left-0 right-0 bottom-0 p-4 z-20"></div>
           <span className="absolute left-0 bottom-0 right-0 shadow-[0px_0px_6em_8em_#000000] z-[10]" />
         </>
       </div>
@@ -132,7 +128,7 @@ export default function HomeHeader() {
           </div>
 
           <div>
-            <p className="text-lg font-bold">{highlightStream.uploaderName}</p>
+            <p className="sm:text-sm md:text-base text-lg font-bold">{highlightStream.uploaderName}</p>
 
             <p className="break-all text-xs text-gray-800 dark:text-gray-300  inline-flexowrap">
               {StreamUtils.translateUploadedDate(highlightStream.uploadedDate || '')}
@@ -140,8 +136,74 @@ export default function HomeHeader() {
           </div>
         </div>
 
-        <p className="lg:text-xl xl:text-2xl font-bold">{highlightStream.title}</p>
+        <p className="md:text-lg lg:text-3xl xl:text-5xl font-bold line-clamp-3 overflow-hidden leading-1">
+          {highlightStream.title}
+        </p>
+
+        <div className="flex flex-row gap-4">
+          <Button
+            as={Link}
+            size={width > 1280 ? 'md' : 'sm'}
+            radius="full"
+            href={highlightStream.url || ''}
+            className="font-medium"
+            startContent={<Icons.ClapperboardSolid size={20} />}
+            color="warning"
+          >
+            Assistir
+          </Button>
+
+          <Button
+            onPress={onOpen}
+            className="bg-transparent border-1 border-foreground dark:border-foreground-200"
+            size={width > 1280 ? 'md' : 'sm'}
+            radius="full"
+            startContent={<Icons.ClapperboardTextSolid size={18} />}
+          >
+            Ver descrição
+          </Button>
+
+          <Tooltip
+            className="bg-foreground text-background"
+            classNames={{
+              base: 'before:bg-foreground before:text-background'
+            }}
+            content="Assistir depois"
+            radius="full"
+            placement="bottom"
+            showArrow
+          >
+            <Button
+              isIconOnly
+              className="bg-transparent border-1 border-foreground dark:border-foreground-200"
+              size={width > 1280 ? 'md' : 'sm'}
+              radius="full"
+              startContent={<Icons.ClockSolid size={18} />}
+            ></Button>
+          </Tooltip>
+
+          <Modal
+            className="overflow-hidden"
+            scrollBehavior="inside"
+            size={width < 768 ? 'lg' : '4xl'}
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+          >
+            <ModalContent>
+              <ModalHeader>Descrição</ModalHeader>
+              <ModalBody>
+                <div
+                  className={`dark:bg-neutral-900 bg-white bg-opacity-10 rounded-md p-2 video-description-container ${
+                    width < 768 ? 'text-xs' : 'text-base'
+                  }`}
+                  ref={descriptionRef}
+                />
+              </ModalBody>
+            </ModalContent>
+          </Modal>
+        </div>
       </div>
+
       {
         // eslint-disable-next-line @next/next/no-img-element
         <img

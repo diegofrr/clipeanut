@@ -34,7 +34,7 @@ export default function Topbar() {
   const handleToggleTheme = () => setTheme(resolvedTheme === 'light' ? 'dark' : 'light');
 
   return hasTopbar(pathname) ? (
-    <header className="fixed top-0 left-0 px-6 lg:px-12 right-0 max-h-16 h-16 z-max bg-background">
+    <header className="fixed top-0 left-0 px-6 lg:px-12 right-0 max-h-16 h-16 z-40 bg-background">
       <div className="w-full h-full gap-2 sm:gap-6 flex flex-row justify-between items-center">
         <Link href="/">
           <AppLogo className="inline md:hidden fill-app_orange-600" />
