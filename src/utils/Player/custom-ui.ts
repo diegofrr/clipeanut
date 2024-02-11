@@ -1,9 +1,11 @@
 import type Player from '@oplayer/core';
 
 export function addCustomKeyboardActions(player: Player) {
-  const seekTime = player.duration / 10;
+  const seekTime = Number((player.duration / 10).toFixed(0));
 
   document.addEventListener('keydown', ({ code }) => {
+    if (document.activeElement instanceof HTMLInputElement) return;
+
     if (code === 'Space') player.togglePlay();
     else if (code === 'KeyM') player.toggleMute();
     else if (code === 'ArrowLeft') player.seek(player.currentTime - 5);
