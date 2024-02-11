@@ -9,11 +9,8 @@ import Trending from './components/Trending';
 
 import HighlighStreamProvider from './contexts/highlightStream';
 
-import { HOME_PAGE_VALUES } from '@/constants';
-const { INITIAL_STATE } = HOME_PAGE_VALUES.TRENDING_VIDEO;
-
 export default function Home() {
-  const [tab, setTab] = useState<string | number>(INITIAL_STATE.TAB);
+  const [tab, setTab] = useState<string | number>('videos');
 
   return (
     <Main>

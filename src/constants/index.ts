@@ -3,15 +3,5 @@ import { PIPED_VALUES } from './piped';
 import { COUNTRIES } from './countries';
 import { LOCALSTORAGE_KEYS } from './keys';
 import { DEFAULT_VALUES } from './defaultValues';
-import { WATCH_PAGE_VALUES, HOME_PAGE_VALUES, SETTINGS_PAGE_VALUES } from './pages';
 
-export {
-  APP_VALUES,
-  PIPED_VALUES,
-  DEFAULT_VALUES,
-  WATCH_PAGE_VALUES,
-  LOCALSTORAGE_KEYS,
-  HOME_PAGE_VALUES,
-  SETTINGS_PAGE_VALUES,
-  COUNTRIES
-};
+export { APP_VALUES, PIPED_VALUES, DEFAULT_VALUES, LOCALSTORAGE_KEYS, COUNTRIES };

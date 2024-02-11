@@ -1,9 +1,5 @@
 export const APP_VALUES = {
   NAME: 'Clipeanut',
   DESCRIPTION: 'An alternative front-end to YouTube',
-  PAGE_TITLES: {
-    HOME: 'Início',
-    WATCH: 'Assistir',
-    SETTINGS: 'Configurações'
-  }
+  VERSION: '1.0.0'
 };
