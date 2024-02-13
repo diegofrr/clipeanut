@@ -98,7 +98,7 @@ export default function HomeHeader() {
           width={720}
           height={400}
           loading="lazy"
-          src={stream ? stream.thumbnailUrl : highlightStream.thumbnail}
+          src={stream?.thumbnailUrl}
           alt="Thumbnail"
         />
 
@@ -112,14 +112,14 @@ export default function HomeHeader() {
           <div className="bg-default-200 relative min-w-[40px] min-h-[40px] w-10 h-10 rounded-full">
             <Image
               isLoading={!highlightStream}
-              alt={highlightStream.uploaderName + ' avatar'}
-              src={highlightStream.uploaderAvatar}
+              alt={stream?.uploader + ' avatar'}
+              src={stream?.uploaderAvatar}
               height={40}
               width={40}
               radius="full"
               className="z-[1] overflow-hidden"
             />
-            {highlightStream.uploaderVerified && (
+            {stream?.uploaderVerified && (
               <Icons.VerifiedSolid
                 size={18}
                 className="absolute rounded-full p-[1px] bottom-[-2px] right-[-2px] bg-neutral-200 dark:bg-neutral-950 text-app_orange-600 z-[2]"
@@ -128,16 +128,18 @@ export default function HomeHeader() {
           </div>
 
           <div>
-            <p className="sm:text-sm md:text-base text-lg font-bold">{highlightStream.uploaderName}</p>
+            <p className="sm:text-sm md:text-base text-lg font-bold">{stream?.uploader}</p>
 
-            <p className="break-all text-xs text-gray-800 dark:text-gray-300  inline-flexowrap">
-              {StreamUtils.translateUploadedDate(highlightStream.uploadedDate || '')}
-            </p>
+            {stream && (
+              <p className="break-all text-xs text-gray-800 dark:text-gray-300  inline-flexowrap">
+                {StreamUtils.translateUploadedDate(highlightStream.uploadedDate || '')}
+              </p>
+            )}
           </div>
         </div>
 
         <p className="md:text-lg lg:text-3xl xl:text-5xl font-bold line-clamp-3 overflow-hidden leading-1">
-          {highlightStream.title}
+          {stream?.title}
         </p>
 
         <div className="flex flex-row gap-4">
