@@ -1,8 +1,10 @@
 'use server';
 
 import type { IPipedInstance, ITrendingVideo } from '@/types';
-import { DEFAULT_VALUES, PIPED_VALUES } from '@/constants';
+
 import { trendingVideosData } from '@/mocks';
+import { getCacheControl } from '../utils';
+import { DEFAULT_VALUES, PIPED_VALUES } from '@/constants';
 
 interface IFetchTrendingVideosProps {
   options: FetchTrendingVideosOptionsType;
@@ -22,9 +24,10 @@ export async function fetchTrendingVideos({ options }: IFetchTrendingVideosProps
 async function fetchData(options: FetchTrendingVideosOptionsType): Promise<ITrendingVideo[]> {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 5000);
+  const cacheControl = await getCacheControl();
 
   return await fetch(`${options.instance.api_url}/trending?region=${options?.region || PIPED_VALUES.DEFAULT_REGION}`, {
-    cache: 'no-cache',
+    cache: cacheControl,
     signal: controller.signal
   })
     .then((res) => res.json())
@@ -33,6 +36,7 @@ async function fetchData(options: FetchTrendingVideosOptionsType): Promise<ITren
 }
 
 async function fetchFakeData(delay?: number): Promise<ITrendingVideo[]> {
+  await getCacheControl();
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(trendingVideosData as ITrendingVideo[]);
