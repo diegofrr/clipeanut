@@ -4,5 +4,9 @@ export const LOCALSTORAGE_KEYS = {
   HIGHLIGTH_STREAM: '@piped-hightlight-stream',
   CURRENT_REGION: '@piped-current-region',
 
-  SEARCH_HISTORY: '@search-history'
+  SEARCH_HISTORY: '@search-history',
+  WATCHED_STREAMS: '@watched-streams',
+  FAVORITE_STREAMS: '@favorite-streams',
+  WATCH_LATER_STREAMS: '@watch-later-streams',
+  STREAM_PLAYLISTS: '@stream-playlists'
 };

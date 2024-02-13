@@ -155,7 +155,7 @@ export default function HomeHeader() {
 
           <Button
             onPress={onOpen}
-            className="bg-transparent border-1 border-foreground dark:border-foreground-200"
+            className="bg-transparent border-1 border-foreground dark:border-foreground-300"
             size={width > 1280 ? 'md' : 'sm'}
             radius="full"
             startContent={<Icons.ClapperboardTextSolid size={18} />}
@@ -175,7 +175,7 @@ export default function HomeHeader() {
           >
             <Button
               isIconOnly
-              className="bg-transparent border-1 border-foreground dark:border-foreground-200"
+              className="bg-transparent border-1 border-foreground dark:border-foreground-300"
               size={width > 1280 ? 'md' : 'sm'}
               radius="full"
               startContent={<Icons.ClockSolid size={18} />}
