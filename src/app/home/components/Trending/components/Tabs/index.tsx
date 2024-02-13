@@ -79,19 +79,17 @@ export default function TrendingTabs({ tab, setTab, ...props }: TypeTabsProps) {
             className={`absolute right-0 top-0 ${isMobile() ? 'max-w-[calc(100%-32px)]' : 'max-w-xs'}`}
             classNames={{ trigger: 'invisible' }}
           >
-            {PIPED_VALUES.REGIONS.reverse()
-              .map((country) => (
-                <SelectItem
-                  isDisabled={country === region}
-                  key={country}
-                  variant="light"
-                  className="font-bold rounded-full hover:bg-foreground-100"
-                  startContent={<ReactCountryFlag countryCode={country} style={{ fontSize: 20 }} />}
-                >
-                  {CommonUtils.getCountryName(country)}
-                </SelectItem>
-              ))
-              .sort((a) => (a.props.startContent.props.countryCode === region ? -1 : 1))}
+            {PIPED_VALUES.REGIONS.map((country) => (
+              <SelectItem
+                isDisabled={country === region}
+                key={country}
+                variant="light"
+                className={`font-bold rounded-full hover:bg-foreground-100 ${country === region && 'hidden'}`}
+                startContent={<ReactCountryFlag countryCode={country} style={{ fontSize: 20 }} />}
+              >
+                {CommonUtils.getCountryName(country)}
+              </SelectItem>
+            ))}
           </Select>
           <Button
             isDisabled={isSelectOpen}
