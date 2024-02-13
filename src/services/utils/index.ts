@@ -10,6 +10,6 @@ export async function getCacheControl(): Promise<RequestCache> {
     await setServerFileData({ file: ServerFile.TRENDING, newData });
     return 'no-store';
   } else if (isSameDay(new Date(lastUpdate), new Date())) {
-    return 'no-store';
-  } else return 'default';
+    return 'default';
+  } else return 'no-store';
 }
