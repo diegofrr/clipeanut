@@ -1,19 +1,8 @@
 import type { ITrendingVideo } from '@/types';
-import { type ITrendingFileOutput, type ITrendingVideosFileOutput, ServerFile } from '@/api/types';
+import { type ITrendingVideosFileOutput, ServerFile } from '@/api/types';
 
+import { isSameDay } from '.';
 import { getServerFileData, setServerFileData } from '@/api';
-
-export async function getCacheControl(): Promise<RequestCache> {
-  const { lastUpdate } = await getServerFileData<ITrendingFileOutput>({ file: ServerFile.TRENDING });
-
-  if (!lastUpdate) {
-    const newData = { lastUpdate: new Date().toISOString() };
-    await setServerFileData({ file: ServerFile.TRENDING, newData });
-    return 'no-store';
-  } else if (isSameDay(new Date(lastUpdate), new Date())) {
-    return 'default';
-  } else return 'no-store';
-}
 
 export async function getCachedTrendingVideos(region: string): Promise<ITrendingVideo[]> {
   try {
@@ -50,12 +39,4 @@ export async function saveTrendingVideosInCache(region: string, data: ITrendingV
 export async function resetTrendingVideosInCache() {
   const newData = { lastUpdate: new Date().toISOString(), regionList: [] };
   await setServerFileData({ file: ServerFile.TRENDING_VIDEOS, newData });
-}
-
-export function isSameDay(date1: Date, date2 = new Date()) {
-  return (
-    date1.getDate() === date2.getDate() &&
-    date1.getMonth() === date2.getMonth() &&
-    date1.getFullYear() === date2.getFullYear()
-  );
 }
