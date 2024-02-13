@@ -9,18 +9,15 @@ import Trending from './components/Trending';
 
 import HighlighStreamProvider from './contexts/highlightStream';
 
-import { HOME_PAGE_VALUES } from '@/constants';
-const { INITIAL_STATE } = HOME_PAGE_VALUES.TRENDING_VIDEO;
-
 export default function Home() {
-  const [tab, setTab] = useState<string | number>(INITIAL_STATE.TAB);
+  const [tab, setTab] = useState<string | number>('videos');
 
   return (
     <Main>
       <HighlighStreamProvider>
         <Content className="flex flex-col gap-6 justify-center pr-0 sm:pr-6 lg:pr-12">
-          <HomeHeader />
           <Trending.Tabs className="mr-6 sm:mr-0" tab={tab} setTab={setTab} />
+          <HomeHeader />
 
           <div className="flex flex-col-reverse w-full md:flex-row gap-6">
             <Trending.Videos isHidden={tab !== 'videos'} />

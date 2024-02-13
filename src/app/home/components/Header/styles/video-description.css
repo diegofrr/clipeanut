@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.video-description-container {
+  a {
+    @apply text-blue-400;
+
+    &:hover {
+      @apply text-blue-500 underline;
+    }
+  }
+}

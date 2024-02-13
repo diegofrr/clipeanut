@@ -60,6 +60,7 @@ export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
 
     try {
       const data = await fetchTrendingVideos({ options });
+      if (!data.length) return retryLoadTrendingVideo();
       setTrendingVideos(data);
     } catch {
       retryLoadTrendingVideo();

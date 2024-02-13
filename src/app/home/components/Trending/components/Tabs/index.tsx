@@ -3,12 +3,12 @@ import { useContext, useState } from 'react';
 import Icons from '@/icons';
 import ReactCountryFlag from 'react-country-flag';
 
-import { CommonUtils } from '@/utils';
 import { useWindowSize, useIsClient } from 'usehooks-ts';
-import { Tabs, Tab, Button, Select, SelectItem } from '@nextui-org/react';
 import { PipedInstanceContext } from '@/contexts/pipedInstance';
+import { Tabs, Tab, Button, Select, SelectItem } from '@nextui-org/react';
+import { CommonUtils } from '@/utils';
 
-import { PIPED_VALUES } from '@/constants';
+import { COUNTRIES } from '@/constants';
 
 type TypeTabsProps = React.HTMLAttributes<HTMLElement> & {
   tab: string | number;
@@ -47,11 +47,11 @@ export default function TrendingTabs({ tab, setTab, ...props }: TypeTabsProps) {
       <Tabs
         {...props}
         isDisabled={isSelectOpen}
-        size="sm"
+        size={isMobile() ? 'sm' : 'md'}
         selectedKey={tab}
         onSelectionChange={setTab}
         aria-label="Options"
-        variant="bordered"
+        variant="light"
         radius="full"
         color="warning"
         className={`z-10 ${props.className || ''}`}
@@ -76,20 +76,20 @@ export default function TrendingTabs({ tab, setTab, ...props }: TypeTabsProps) {
             onChange={(e) => setRegion(e.target.value)}
             isOpen={isSelectOpen}
             aria-label="Selecionar região"
-            className={`absolute right-16 top-0 ${isMobile() ? 'max-w-[calc(100%-32px)]' : 'max-w-xs'}`}
+            className={`absolute right-0 top-0 ${isMobile() ? 'max-w-[calc(100%-32px)]' : 'max-w-xs'}`}
             classNames={{ trigger: 'invisible' }}
           >
-            {PIPED_VALUES.REGIONS.map((country) => (
+            {COUNTRIES.sort((a, b) => a.name.localeCompare(b.name)).map((country) => (
               <SelectItem
-                isDisabled={country === region}
-                key={country}
+                isDisabled={country.flag === region}
+                key={country.flag}
                 variant="light"
-                className="font-bold rounded-full hover:bg-foreground-100"
-                startContent={<ReactCountryFlag countryCode={country} style={{ fontSize: 20 }} />}
+                className={`font-bold rounded-full hover:bg-foreground-100 ${country.flag === region && 'hidden'}`}
+                startContent={<ReactCountryFlag countryCode={country.flag} style={{ fontSize: 20 }} />}
               >
-                {CommonUtils.getCountryName(country)}
+                {country.name}
               </SelectItem>
-            )).sort((a) => (a.props.startContent.props.countryCode === region ? -1 : 1))}
+            ))}
           </Select>
           <Button
             isDisabled={isSelectOpen}
