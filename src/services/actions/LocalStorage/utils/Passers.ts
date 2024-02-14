@@ -1,34 +1,38 @@
 import type { IFavoriteStream, IStream, ITrendingVideo } from '@/types';
 
-function streamDataToFavoriteStream(data: IStream): IFavoriteStream {
-  return {
-    id: '',
-    type: 'video',
-    isShort: false,
-    duration: data.duration,
-    thumbnail: data.thumbnailUrl,
-    title: data.title,
-    uploaderAvatar: data.uploaderAvatar,
-    uploaderName: data.uploader,
-    uploaderUrl: data.uploaderUrl
-  } as IFavoriteStream;
+type DataToFavoriteStreamProps = {
+  stream?: IStream;
+  trending?: ITrendingVideo;
+};
+
+function dataToFavoriteStream({ stream, trending }: DataToFavoriteStreamProps): IFavoriteStream {
+  try {
+    const data = stream ?? trending!;
+
+    const thumbnail = stream?.thumbnailUrl ?? trending?.thumbnail;
+    const uploaderName = stream?.uploader ?? trending?.uploaderName;
+    const id = extractId(new URL(String(thumbnail)));
+
+    return {
+      id,
+      type: 'video',
+      isShort: false,
+      duration: data.duration,
+      thumbnail: thumbnail,
+      title: data.title,
+      uploaderName: uploaderName,
+      uploaderAvatar: data.uploaderAvatar,
+      uploaderUrl: data.uploaderUrl
+    } as IFavoriteStream;
+  } catch {
+    return {} as IFavoriteStream;
+  }
 }
 
-function trendingVideoToFavoriteStream(data: ITrendingVideo): IFavoriteStream {
-  return {
-    id: '',
-    type: 'video',
-    isShort: false,
-    duration: data.duration,
-    thumbnail: data.thumbnail,
-    title: data.title,
-    uploaderAvatar: data.uploaderAvatar,
-    uploaderName: data.uploaderName,
-    uploaderUrl: data.uploaderUrl
-  } as IFavoriteStream;
+function extractId(url: URL): string {
+  return url.pathname.split('/').reverse()[1];
 }
 
 export const localStoragePassers = {
-  streamDataToFavoriteStream,
-  trendingVideoToFavoriteStream
+  dataToFavoriteStream
 };

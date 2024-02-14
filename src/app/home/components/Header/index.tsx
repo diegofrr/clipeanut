@@ -16,9 +16,13 @@ import { useWindowSize } from 'usehooks-ts';
 import { HighlighStreamContext } from '../../contexts/highlightStream';
 
 import { isFakeDataFetch } from '@/environments';
-import { StreamUtils } from '@/utils';
 import { useLocalStorageWithExpiration } from '@/hooks';
 import { highlightStreamData } from '@/mocks/highlightStreamData';
+import { useTheme } from 'next-themes';
+import { StreamUtils } from '@/utils';
+
+import { isFavoriteStream, toggleFavoriteStream } from '@/services/actions/LocalStorage/favoriteStreams';
+import { myToast } from '@/components/Toaster';
 
 import { PIPED_VALUES, LOCALSTORAGE_KEYS } from '@/constants';
 const { DEFAULT_INSTANCE_LIST } = PIPED_VALUES;
@@ -27,18 +31,43 @@ export default function HomeHeader() {
   let oldInstanceList = DEFAULT_INSTANCE_LIST;
   const descriptionRef = createRef<HTMLDivElement>();
 
+  const { resolvedTheme } = useTheme();
   const { width } = useWindowSize();
+
   const { isExistsItem, getStoragedItem, setStoragedItem } = useLocalStorageWithExpiration();
   const { highlightStreamId, highlightStream } = useContext(HighlighStreamContext);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const [stream, setStream] = useState<IStream>();
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (descriptionRef.current && stream) {
-      descriptionRef.current.innerHTML = stream.description;
-    }
-  }, [stream, descriptionRef]);
+  function handleToggleFavorite() {
+    const isSaved = toggleFavoriteStream({ stream });
+    setIsFavorite(!isFavorite);
+
+    const message = isSaved ? 'Vídeo salvo nos favoritos.' : 'Vídeo removido dos favoritos.';
+    const icon = isSaved ? (
+      <Icons.HeartSolid color="#e70e0e" size={20} />
+    ) : (
+      <Icons.HeartBrokenSolid color="#e70e0e" size={20} />
+    );
+
+    myToast(message, {
+      icon,
+      isDarkMode: resolvedTheme === 'dark',
+      radius: 'full'
+    });
+  }
+
+  function handleClickWatchLater() {
+    if (!stream) return;
+
+    myToast('Salvo para assistir depois', {
+      icon: <Icons.ClockSolid size={18} />,
+      isDarkMode: resolvedTheme === 'dark',
+      radius: 'full'
+    });
+  }
 
   function retryGetStreamData() {
     if (!oldInstanceList?.length) oldInstanceList = DEFAULT_INSTANCE_LIST;
@@ -90,6 +119,13 @@ export default function HomeHeader() {
     if (window?.document && highlightStreamId) getStreamData();
   }, [highlightStreamId, getStreamData]);
 
+  useEffect(() => {
+    if (descriptionRef.current && stream) {
+      descriptionRef.current.innerHTML = stream.description;
+    }
+    if (stream) setIsFavorite(isFavoriteStream({ stream }));
+  }, [stream, descriptionRef]);
+
   return (
     <header className="hidden sm:flex flex-row w-full bg-neutral-200 dark:bg-neutral-950 p-6 gap-6 rounded-xl relative">
       <div className="rounded-lg relative overflow-hidden w-full max-h-[400px] max-w-[720px]">
@@ -102,10 +138,19 @@ export default function HomeHeader() {
           alt="Thumbnail"
         />
 
-        <>
-          <div className="absolute flex gap-4 items-center justify-end left-0 right-0 bottom-0 p-4 z-20"></div>
-          <span className="absolute left-0 bottom-0 right-0 shadow-[0px_0px_6em_8em_#000000] z-[10]" />
-        </>
+        <Button
+          title={isFavorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+          onClick={handleToggleFavorite}
+          isIconOnly
+          className="absolute left-2 bottom-2 z-50"
+          variant="light"
+          size={width > 1280 ? 'md' : 'sm'}
+          radius="full"
+          startContent={isFavorite ? <Icons.HeartSolid color="#e70e0e" /> : <Icons.Heart />}
+        ></Button>
+
+        <div className="absolute flex gap-4 items-center justify-end left-0 right-0 bottom-0 p-4 z-20"></div>
+        <span className="absolute left-0 bottom-0 right-0 shadow-[0px_0px_6em_8em_#000000] z-[10]" />
       </div>
       <div className="bg-netral-850 flex flex-col gap-4 w-full z-10 mb-auto">
         <div className="flex flex-row gap-4 items-center">
@@ -176,6 +221,7 @@ export default function HomeHeader() {
             showArrow
           >
             <Button
+              onClick={handleClickWatchLater}
               isIconOnly
               className="bg-transparent border-1 border-foreground dark:border-foreground-300"
               size={width > 1280 ? 'md' : 'sm'}

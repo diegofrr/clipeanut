@@ -1,29 +1,44 @@
-import { localStoragePassers } from './utils/Passers';
-
 import type { IFavoriteStream, IStream, ITrendingVideo } from '@/types';
+
+import { localStoragePassers } from './utils/Passers';
 import { LOCALSTORAGE_KEYS } from '@/constants';
+
+type SaveFavoriteStreamProps = {
+  stream?: IStream;
+  trending?: ITrendingVideo;
+};
 
 export function getFavoriteStreams(): IFavoriteStream[] {
   const value = localStorage.getItem(LOCALSTORAGE_KEYS.FAVORITE_STREAMS) || '[]';
   return JSON.parse(value) as IFavoriteStream[];
 }
 
-export function setFavoriteStreamsWithStreamInput(newData: IStream) {
-  const passedData = localStoragePassers.streamDataToFavoriteStream(newData);
+export function saveFavoriteStream({ stream, trending }: SaveFavoriteStreamProps): boolean {
+  const passedData = localStoragePassers.dataToFavoriteStream({ stream, trending });
   const favoriteStreams = getFavoriteStreams();
 
-  passedData.id = String(favoriteStreams.length + 1);
-
-  localStorage.setItem(LOCALSTORAGE_KEYS.FAVORITE_STREAMS, JSON.stringify([...favoriteStreams, newData]));
+  if (favoriteStreams.some((favorite) => favorite.thumbnail === passedData.thumbnail)) return false;
+  localStorage.setItem(LOCALSTORAGE_KEYS.FAVORITE_STREAMS, JSON.stringify([...favoriteStreams, passedData]));
+  return true;
 }
 
-export function setFavoriteStreamsWithTrendingInput(newData: ITrendingVideo) {
-  const passedData = localStoragePassers.trendingVideoToFavoriteStream(newData);
+export function toggleFavoriteStream({ stream, trending }: SaveFavoriteStreamProps): boolean {
+  const passedData = localStoragePassers.dataToFavoriteStream({ stream, trending });
+
+  if (isFavoriteStream({ stream, trending })) {
+    removeFavoriteStream(passedData.id);
+    return false;
+  } else {
+    saveFavoriteStream({ stream, trending });
+    return true;
+  }
+}
+
+export function isFavoriteStream({ stream, trending }: SaveFavoriteStreamProps): boolean {
+  const passedData = localStoragePassers.dataToFavoriteStream({ stream, trending });
   const favoriteStreams = getFavoriteStreams();
 
-  passedData.id = String(favoriteStreams.length + 1);
-
-  localStorage.setItem(LOCALSTORAGE_KEYS.FAVORITE_STREAMS, JSON.stringify([...favoriteStreams, newData]));
+  return favoriteStreams.some((favorite) => favorite.id === passedData.id);
 }
 
 export function removeFavoriteStream(id: string) {

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { createRef } from 'react';
+import { createRef, useState } from 'react';
 
 import Icons from '@/icons';
 
@@ -8,6 +8,9 @@ import type { ITrendingVideo } from '@/types';
 import { StreamUtils } from '@/utils';
 import { isFakeDataFetch } from '@/environments';
 import { Avatar, Button, Chip, Image } from '@nextui-org/react';
+import { isFavoriteStream, toggleFavoriteStream } from '@/services/actions/LocalStorage/favoriteStreams';
+import { myToast } from '@/components/Toaster';
+import { useTheme } from 'next-themes';
 
 type TrendingVideoProps = React.HTMLAttributes<HTMLElement> & {
   data: ITrendingVideo;
@@ -15,6 +18,27 @@ type TrendingVideoProps = React.HTMLAttributes<HTMLElement> & {
 
 export function TrendingVideo({ data, ...props }: TrendingVideoProps) {
   const thumbnailRef = createRef<HTMLImageElement>();
+  const { resolvedTheme } = useTheme();
+
+  const [isFavorite, setIsFavorite] = useState<boolean>(isFavoriteStream({ trending: data }));
+
+  function handleToggleFavorite() {
+    const isSaved = toggleFavoriteStream({ trending: data });
+    setIsFavorite(!isFavorite);
+
+    const message = isSaved ? 'Vídeo salvo nos favoritos.' : 'Vídeo removido dos favoritos.';
+    const icon = isSaved ? (
+      <Icons.HeartSolid color="#e70e0e" size={20} />
+    ) : (
+      <Icons.HeartBrokenSolid color="#e70e0e" size={20} />
+    );
+
+    myToast(message, {
+      icon,
+      isDarkMode: resolvedTheme === 'dark',
+      radius: 'full'
+    });
+  }
 
   function onLoadThumbnailError() {
     const img = thumbnailRef.current as HTMLImageElement;
@@ -92,8 +116,15 @@ export function TrendingVideo({ data, ...props }: TrendingVideoProps) {
             </Link>
           </div>
 
-          <Button isIconOnly variant="light" radius="full" size="sm">
-            <Icons.Heart opacity={0.7} size={18} />
+          <Button
+            title={isFavorite ? 'Desfavoritar' : 'Favoritar'}
+            onClick={handleToggleFavorite}
+            isIconOnly
+            variant="light"
+            radius="full"
+            size="sm"
+          >
+            {isFavorite ? <Icons.HeartSolid color="#e70e0e" size={20} /> : <Icons.Heart size={20} />}
           </Button>
         </footer>
       </div>
