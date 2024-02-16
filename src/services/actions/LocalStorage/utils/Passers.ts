@@ -1,17 +1,20 @@
+import type { ICachedHighligthStream } from '../types';
 import type { IFavoriteStream, IStream, ITrendingVideo } from '@/types';
+
+import { extractId } from '.';
 
 type DataToFavoriteStreamProps = {
   stream?: IStream;
   trending?: ITrendingVideo;
 };
 
-function dataToFavoriteStream({ stream, trending }: DataToFavoriteStreamProps): IFavoriteStream {
+export function dataToFavoriteStream({ stream, trending }: DataToFavoriteStreamProps): IFavoriteStream {
   try {
     const data = stream ?? trending!;
 
     const thumbnail = stream?.thumbnailUrl ?? trending?.thumbnail;
     const uploaderName = stream?.uploader ?? trending?.uploaderName;
-    const id = extractId(new URL(String(thumbnail)));
+    const id = extractId(String(thumbnail));
 
     return {
       id,
@@ -29,10 +32,22 @@ function dataToFavoriteStream({ stream, trending }: DataToFavoriteStreamProps): 
   }
 }
 
-function extractId(url: URL): string {
-  return url.pathname.split('/').reverse()[1];
-}
+export function streamToCachedHighligthStream(stream: IStream) {
+  const id = extractId(String(stream.thumbnailUrl));
 
-export const localStoragePassers = {
-  dataToFavoriteStream
-};
+  try {
+    return {
+      id,
+      type: 'video',
+      isShort: false,
+      title: stream.title,
+      description: stream.description,
+      thumbnailUrl: stream.thumbnailUrl,
+      uploaderAvatar: stream.uploaderAvatar,
+      uploaderName: stream.uploader,
+      uploaderUrl: stream.uploaderUrl
+    } as ICachedHighligthStream;
+  } catch {
+    return {} as ICachedHighligthStream;
+  }
+}

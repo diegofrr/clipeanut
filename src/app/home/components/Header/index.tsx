@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import '@/styles/custom-oplayer-ui.css';
 
@@ -9,31 +9,23 @@ import Icons from '@/icons';
 import StreamDescriptionModal from '@/components/StreamDescriptionModal';
 
 import type { IStream } from '@/types';
-import { fetchStream, type FetchStreamOptionsType } from '@/services/actions/fetchStreamData';
 import { Button, Image, Tooltip, useDisclosure } from '@nextui-org/react';
 import { useWindowSize } from 'usehooks-ts';
 
 import { HighlighStreamContext } from '../../contexts/highlightStream';
 
 import { isFakeDataFetch } from '@/environments';
-import { useLocalStorageWithExpiration } from '@/hooks';
-import { highlightStreamData } from '@/mocks/highlightStreamData';
-import { useTheme } from 'next-themes';
 import { StreamUtils } from '@/utils';
+import { getHighlightStreamData } from '@/services/utils';
 
+import { useTheme } from 'next-themes';
 import { isFavoriteStream, toggleFavoriteStream } from '@/services/actions/LocalStorage/favoriteStreams';
 import { myToast } from '@/components/Toaster';
 
-import { PIPED_VALUES, LOCALSTORAGE_KEYS } from '@/constants';
-const { DEFAULT_INSTANCE_LIST } = PIPED_VALUES;
-
 export default function HomeHeader() {
-  let oldInstanceList = DEFAULT_INSTANCE_LIST;
-
   const { resolvedTheme } = useTheme();
   const { width } = useWindowSize();
 
-  const { isExistsItem, getStoragedItem, setStoragedItem } = useLocalStorageWithExpiration();
   const { highlightStreamId, highlightStream } = useContext(HighlighStreamContext);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -69,58 +61,13 @@ export default function HomeHeader() {
     });
   }
 
-  async function retryGetStreamData() {
-    if (!oldInstanceList?.length) oldInstanceList = DEFAULT_INSTANCE_LIST;
-    oldInstanceList = oldInstanceList.slice(1);
-
-    await getStreamData();
-  }
-
-  const getStreamData = useCallback(async () => {
-    setStream(null);
-    const instance = oldInstanceList[0];
-
-    const options = {
-      streamId: highlightStreamId,
-      instance,
-      isFake: isFakeDataFetch,
-      delay: 1
-    } as FetchStreamOptionsType;
-
-    const boundFetchStream = async () => {
-      try {
-        const data = await fetchStream({ options });
-        setStoragedItem(LOCALSTORAGE_KEYS.HIGHLIGTH_STREAM, { data, highlightStreamId }, { minutes: 15 });
-        setStream(data);
-      } catch {
-        retryGetStreamData();
-      }
-    };
-
-    try {
-      if (isExistsItem(LOCALSTORAGE_KEYS.HIGHLIGTH_STREAM)) {
-        const storagedHighlightStream = getStoragedItem<{ data: IStream; highlightStreamId: string }>(
-          LOCALSTORAGE_KEYS.HIGHLIGTH_STREAM
-        );
-        if (storagedHighlightStream?.value) {
-          if (storagedHighlightStream.value.highlightStreamId === highlightStreamId) {
-            setStream(storagedHighlightStream.value.data);
-          } else await boundFetchStream();
-        } else await boundFetchStream();
-      } else await boundFetchStream();
-
-      if (isFakeDataFetch) setStream(highlightStreamData as IStream);
-    } catch {
-      retryGetStreamData();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [oldInstanceList, highlightStreamId]);
-
   useEffect(() => {
-    if (window?.document && highlightStreamId) {
-      getStreamData();
-    }
-  }, [highlightStreamId, getStreamData]);
+    if (!window?.document || !highlightStreamId) return;
+    (async () => {
+      setStream(null);
+      setStream(await getHighlightStreamData(highlightStreamId));
+    })();
+  }, [highlightStreamId]);
 
   function getStreamImage(type: 'thumbnail' | 'avatar') {
     if (type === 'avatar') return highlightStream.uploaderAvatar;

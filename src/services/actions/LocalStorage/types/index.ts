@@ -5,6 +5,18 @@ export interface ICachedTrendingVideos {
   regionList: IRegion[];
 }
 
+export interface ICachedHighligthStream {
+  id: string;
+  thumbnailUrl: string;
+  description: string;
+  type: string;
+  isShort: boolean;
+  title: string;
+  uploaderName: string;
+  uploaderUrl: string;
+  uploaderAvatar: string;
+}
+
 interface IRegion {
   region: string;
   data: ITrendingVideo[];

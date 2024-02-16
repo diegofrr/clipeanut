@@ -26,6 +26,7 @@ export function saveCachedTrendingVideos(region: string, data: ITrendingVideo[])
   try {
     const storagedData = localStorage.getItem(LOCALSTORAGE_KEYS.CACHED_TRENDING_VIDEOS) || '[]';
     let { regionList } = JSON.parse(storagedData) as ICachedTrendingVideos;
+
     if (!regionList || !regionList.length) regionList = [{ region, data }];
     else regionList.push({ region, data });
 
