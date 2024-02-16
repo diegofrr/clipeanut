@@ -1,5 +1,7 @@
 import { createRef, useEffect } from 'react';
 
+import './stream-description.css';
+
 import Icons from '@/icons';
 import CustomSpinner from '../CustomSpinner';
 import DescriptionModalSkeleton from './Skeleton';
