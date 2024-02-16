@@ -8,5 +8,6 @@ export const LOCALSTORAGE_KEYS = {
   WATCHED_STREAMS: '@watched-streams',
   FAVORITE_STREAMS: '@favorite-streams',
   WATCH_LATER_STREAMS: '@watch-later-streams',
-  STREAM_PLAYLISTS: '@stream-playlists'
+  STREAM_PLAYLISTS: '@stream-playlists',
+  CACHED_TRENDING_VIDEOS: '@cached-trending-videos'
 };
