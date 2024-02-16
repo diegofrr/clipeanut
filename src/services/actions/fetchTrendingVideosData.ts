@@ -4,7 +4,7 @@ import type { IPipedInstance, ITrendingVideo } from '@/types';
 
 import { trendingVideosData } from '@/mocks';
 import { DEFAULT_VALUES, PIPED_VALUES } from '@/constants';
-import { getCachedTrendingVideos, saveTrendingVideosInCache } from '../utils';
+import { getCachedTrendingVideos, saveTrendingVideosInCache } from '@/api/utils/cacheControl';
 
 interface IFetchTrendingVideosProps {
   options: FetchTrendingVideosOptionsType;

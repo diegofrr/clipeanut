@@ -7,7 +7,8 @@ import type { ITrendingVideo } from '@/types';
 
 import { StreamUtils } from '@/utils';
 import { isFakeDataFetch } from '@/environments';
-import { Avatar, Button, Chip, Image } from '@nextui-org/react';
+import { Avatar, Chip, Image } from '@nextui-org/react';
+import { VideoMenuDropdown } from './VideoMenuDropdown';
 
 type TrendingVideoProps = React.HTMLAttributes<HTMLElement> & {
   data: ITrendingVideo;
@@ -92,9 +93,7 @@ export function TrendingVideo({ data, ...props }: TrendingVideoProps) {
             </Link>
           </div>
 
-          <Button isIconOnly variant="light" radius="full" size="sm">
-            <Icons.Heart opacity={0.7} size={18} />
-          </Button>
+          <VideoMenuDropdown video={data} />
         </footer>
       </div>
     </div>

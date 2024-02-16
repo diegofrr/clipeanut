@@ -16,9 +16,13 @@ import { useWindowSize } from 'usehooks-ts';
 import { HighlighStreamContext } from '../../contexts/highlightStream';
 
 import { isFakeDataFetch } from '@/environments';
-import { StreamUtils } from '@/utils';
 import { useLocalStorageWithExpiration } from '@/hooks';
 import { highlightStreamData } from '@/mocks/highlightStreamData';
+import { useTheme } from 'next-themes';
+import { StreamUtils } from '@/utils';
+
+import { isFavoriteStream, toggleFavoriteStream } from '@/services/actions/LocalStorage/favoriteStreams';
+import { myToast } from '@/components/Toaster';
 
 import { PIPED_VALUES, LOCALSTORAGE_KEYS } from '@/constants';
 const { DEFAULT_INSTANCE_LIST } = PIPED_VALUES;
@@ -27,27 +31,54 @@ export default function HomeHeader() {
   let oldInstanceList = DEFAULT_INSTANCE_LIST;
   const descriptionRef = createRef<HTMLDivElement>();
 
+  const { resolvedTheme } = useTheme();
   const { width } = useWindowSize();
+
   const { isExistsItem, getStoragedItem, setStoragedItem } = useLocalStorageWithExpiration();
   const { highlightStreamId, highlightStream } = useContext(HighlighStreamContext);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  const [stream, setStream] = useState<IStream>();
+  const [stream, setStream] = useState<IStream | null>();
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (descriptionRef.current && stream) {
-      descriptionRef.current.innerHTML = stream.description;
-    }
-  }, [stream, descriptionRef]);
+  function handleToggleFavorite() {
+    if (!stream) return;
+    const isSaved = toggleFavoriteStream({ stream });
+    setIsFavorite(!isFavorite);
 
-  function retryGetStreamData() {
+    const message = isSaved ? 'Vídeo salvo nos favoritos.' : 'Vídeo removido dos favoritos.';
+    const icon = isSaved ? (
+      <Icons.HeartSolid color="#e70e0e" size={20} />
+    ) : (
+      <Icons.HeartBrokenSolid color="#e70e0e" size={20} />
+    );
+
+    myToast(message, {
+      icon,
+      isDarkMode: resolvedTheme === 'dark',
+      radius: 'full'
+    });
+  }
+
+  function handleClickWatchLater() {
+    if (!stream) return;
+
+    myToast('Salvo para assistir depois', {
+      icon: <Icons.ClockSolid size={18} />,
+      isDarkMode: resolvedTheme === 'dark',
+      radius: 'full'
+    });
+  }
+
+  async function retryGetStreamData() {
     if (!oldInstanceList?.length) oldInstanceList = DEFAULT_INSTANCE_LIST;
     oldInstanceList = oldInstanceList.slice(1);
 
-    getStreamData();
+    await getStreamData();
   }
 
   const getStreamData = useCallback(async () => {
+    setStream(null);
     const instance = oldInstanceList[0];
 
     const options = {
@@ -87,8 +118,23 @@ export default function HomeHeader() {
   }, [oldInstanceList, highlightStreamId]);
 
   useEffect(() => {
-    if (window?.document && highlightStreamId) getStreamData();
+    if (window?.document && highlightStreamId) {
+      getStreamData();
+    }
   }, [highlightStreamId, getStreamData]);
+
+  function getStreamImage(type: 'thumbnail' | 'avatar') {
+    if (type === 'avatar') return highlightStream.uploaderAvatar;
+    else if (isFakeDataFetch) return highlightStream.thumbnail;
+    else return `https://i.ytimg.com/vi/${highlightStream.url.split('v=')[1]}/mqdefault.jpg`;
+  }
+
+  useEffect(() => {
+    if (descriptionRef.current && stream) {
+      descriptionRef.current.innerHTML = stream.description;
+    }
+    if (stream) setIsFavorite(isFavoriteStream({ stream }));
+  }, [stream, descriptionRef]);
 
   return (
     <header className="hidden sm:flex flex-row w-full bg-neutral-200 dark:bg-neutral-950 p-6 gap-6 rounded-xl relative">
@@ -98,28 +144,41 @@ export default function HomeHeader() {
           width={720}
           height={400}
           loading="lazy"
-          src={stream?.thumbnailUrl}
+          src={stream ? stream.thumbnailUrl : highlightStream.thumbnail}
           alt="Thumbnail"
         />
 
-        <>
-          <div className="absolute flex gap-4 items-center justify-end left-0 right-0 bottom-0 p-4 z-20"></div>
-          <span className="absolute left-0 bottom-0 right-0 shadow-[0px_0px_6em_8em_#000000] z-[10]" />
-        </>
+        {stream && (
+          <>
+            <Button
+              title={isFavorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+              onClick={handleToggleFavorite}
+              isIconOnly
+              className="absolute left-2 bottom-2 z-50"
+              variant="light"
+              size={width > 1280 ? 'md' : 'sm'}
+              radius="full"
+              startContent={isFavorite ? <Icons.HeartSolid color="#e70e0e" /> : <Icons.Heart />}
+            ></Button>
+
+            <div className="absolute flex gap-4 items-center justify-end left-0 right-0 bottom-0 p-4 z-20"></div>
+            <span className="absolute left-0 bottom-0 right-0 shadow-[0px_0px_6em_8em_#000000] z-[10]" />
+          </>
+        )}
       </div>
       <div className="bg-netral-850 flex flex-col gap-4 w-full z-10 mb-auto">
         <div className="flex flex-row gap-4 items-center">
           <div className="bg-default-200 relative min-w-[40px] min-h-[40px] w-10 h-10 rounded-full">
             <Image
               isLoading={!highlightStream}
-              alt={stream?.uploader + ' avatar'}
-              src={stream?.uploaderAvatar}
+              alt={highlightStream.uploaderName + ' avatar'}
+              src={getStreamImage('avatar')}
               height={40}
               width={40}
               radius="full"
               className="z-[1] overflow-hidden"
             />
-            {stream?.uploaderVerified && (
+            {highlightStream.uploaderVerified && (
               <Icons.VerifiedSolid
                 size={18}
                 className="absolute rounded-full p-[1px] bottom-[-2px] right-[-2px] bg-neutral-200 dark:bg-neutral-950 text-app_orange-600 z-[2]"
@@ -128,7 +187,7 @@ export default function HomeHeader() {
           </div>
 
           <div>
-            <p className="sm:text-sm md:text-base text-lg font-bold">{stream?.uploader}</p>
+            <p className="sm:text-sm md:text-base text-lg font-bold">{highlightStream.uploaderName}</p>
 
             {stream && (
               <p className="break-all text-xs text-gray-800 dark:text-gray-300  inline-flexowrap">
@@ -139,7 +198,7 @@ export default function HomeHeader() {
         </div>
 
         <p className="md:text-lg lg:text-3xl xl:text-5xl font-bold line-clamp-3 overflow-hidden leading-1">
-          {stream?.title}
+          {highlightStream.title}
         </p>
 
         <div className="flex flex-row gap-4">
@@ -155,15 +214,17 @@ export default function HomeHeader() {
             Assistir
           </Button>
 
-          <Button
-            onPress={onOpen}
-            className="bg-transparent border-1 border-foreground dark:border-foreground-300"
-            size={width > 1280 ? 'md' : 'sm'}
-            radius="full"
-            startContent={<Icons.ClapperboardTextSolid size={18} />}
-          >
-            Ver descrição
-          </Button>
+          {stream && (
+            <Button
+              onPress={onOpen}
+              className="bg-transparent border-1 border-foreground dark:border-foreground-300"
+              size={width > 1280 ? 'md' : 'sm'}
+              radius="full"
+              startContent={<Icons.ClapperboardTextSolid size={18} />}
+            >
+              Ver descrição
+            </Button>
+          )}
 
           <Tooltip
             className="bg-foreground text-background"
@@ -176,6 +237,7 @@ export default function HomeHeader() {
             showArrow
           >
             <Button
+              onClick={handleClickWatchLater}
               isIconOnly
               className="bg-transparent border-1 border-foreground dark:border-foreground-300"
               size={width > 1280 ? 'md' : 'sm'}

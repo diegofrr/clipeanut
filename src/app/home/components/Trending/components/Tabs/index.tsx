@@ -1,14 +1,13 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 
 import Icons from '@/icons';
 import ReactCountryFlag from 'react-country-flag';
 
-import { useWindowSize, useIsClient } from 'usehooks-ts';
-import { PipedInstanceContext } from '@/contexts/pipedInstance';
+import { useWindowSize, useIsClient, useLocalStorage } from 'usehooks-ts';
 import { Tabs, Tab, Button, Select, SelectItem } from '@nextui-org/react';
 import { CommonUtils } from '@/utils';
 
-import { COUNTRIES } from '@/constants';
+import { COUNTRIES, LOCALSTORAGE_KEYS } from '@/constants';
 
 type TypeTabsProps = React.HTMLAttributes<HTMLElement> & {
   tab: string | number;
@@ -17,9 +16,9 @@ type TypeTabsProps = React.HTMLAttributes<HTMLElement> & {
 
 export default function TrendingTabs({ tab, setTab, ...props }: TypeTabsProps) {
   const { width } = useWindowSize();
-  const { region, setRegion } = useContext(PipedInstanceContext);
   const isClient = useIsClient();
 
+  const [region, setRegion] = useLocalStorage(LOCALSTORAGE_KEYS.CURRENT_REGION, 'BR');
   const [isSelectOpen, setIsSelectOpen] = useState<boolean>(false);
 
   const isMobile = () => width <= 640;

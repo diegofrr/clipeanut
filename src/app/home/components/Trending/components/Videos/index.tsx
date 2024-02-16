@@ -4,18 +4,19 @@ import { Reducer, useCallback, useContext, useEffect, useReducer } from 'react';
 
 import { TrendingVideo } from './components/Video';
 
+import TrendingVideosSkeleton from '../Skeletons/TrendingVideosSkeleton';
+
 import type { ITrendingVideo } from '@/types';
 import { ActionTypes, type TrendingVideosAction, type TrendingVideosState } from './reducer/types';
-import { PipedInstanceContext } from '@/contexts/pipedInstance';
 import { HighlighStreamContext } from '@/app/home/contexts/highlightStream';
 import { initialTrendingVideosState, trendingVideoReducer } from './reducer';
-import { useWindowSize } from 'usehooks-ts';
+import { useLocalStorage, useWindowSize } from 'usehooks-ts';
 
 import { FetchTrendingVideosOptionsType, fetchTrendingVideos } from '@/services/actions/fetchTrendingVideosData';
+import { getCurrentRegion } from '@/services/utils';
 import { isFakeDataFetch } from '@/environments';
 
-import { PIPED_VALUES } from '@/constants';
-import TrendingVideosSkeleton from '../Skeletons/TrendingVideosSkeleton';
+import { LOCALSTORAGE_KEYS, PIPED_VALUES } from '@/constants';
 const { DEFAULT_INSTANCE_LIST } = PIPED_VALUES;
 
 type TrendingVideosProps = {
@@ -23,10 +24,10 @@ type TrendingVideosProps = {
 };
 
 export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
-  const { region } = useContext(PipedInstanceContext);
   const { setHighlightStream } = useContext(HighlighStreamContext);
   const { width } = useWindowSize();
 
+  const [region] = useLocalStorage(LOCALSTORAGE_KEYS.CURRENT_REGION, 'BR');
   const [state, dispatch] = useReducer<Reducer<TrendingVideosState, TrendingVideosAction>>(
     trendingVideoReducer,
     initialTrendingVideosState
@@ -54,6 +55,9 @@ export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
   const loadTrendingVideos = useCallback(async () => {
     setIsLoading(true);
 
+    const region = getCurrentRegion();
+    if (!region) return;
+
     const instance = oldInstanceList[0];
 
     const options = { instance, region, delay: 1, isFake: isFakeDataFetch } as FetchTrendingVideosOptionsType;
@@ -67,7 +71,7 @@ export default function TrendingVideos({ isHidden }: TrendingVideosProps) {
     } finally {
       setIsLoading(false);
     }
-  }, [oldInstanceList, setTrendingVideos, region, retryLoadTrendingVideo]);
+  }, [oldInstanceList, setTrendingVideos, retryLoadTrendingVideo]);
 
   useEffect(() => {
     if (window?.document) loadTrendingVideos();

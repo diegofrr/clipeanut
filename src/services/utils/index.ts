@@ -1,61 +1,34 @@
-import type { ITrendingVideo } from '@/types';
-import { type ITrendingFileOutput, type ITrendingVideosFileOutput, ServerFile } from '@/api/types';
+import type { IStream } from '@/types';
 
-import { getServerFileData, setServerFileData } from '@/api';
+import { isFakeDataFetch } from '@/environments';
+import { FetchStreamOptionsType, fetchStream } from '../actions/fetchStreamData';
 
-export async function getCacheControl(): Promise<RequestCache> {
-  const { lastUpdate } = await getServerFileData<ITrendingFileOutput>({ file: ServerFile.TRENDING });
+import { PIPED_VALUES } from '@/constants';
+const { DEFAULT_INSTANCE_LIST } = PIPED_VALUES;
 
-  if (!lastUpdate) {
-    const newData = { lastUpdate: new Date().toISOString() };
-    await setServerFileData({ file: ServerFile.TRENDING, newData });
-    return 'no-store';
-  } else if (isSameDay(new Date(lastUpdate), new Date())) {
-    return 'default';
-  } else return 'no-store';
-}
+let oldInstanceList = DEFAULT_INSTANCE_LIST;
+export async function getStreamData(streamId: string): Promise<IStream> {
+  const instance = oldInstanceList[0];
 
-export async function getCachedTrendingVideos(region: string): Promise<ITrendingVideo[]> {
+  const options = {
+    streamId,
+    instance,
+    isFake: isFakeDataFetch,
+    delay: 1
+  } as FetchStreamOptionsType;
+
   try {
-    const { regionList, lastUpdate } = await getServerFileData<ITrendingVideosFileOutput>({
-      file: ServerFile.TRENDING_VIDEOS
-    });
-    const cachedRegion = regionList.find((item) => item.region === region);
-
-    if (isSameDay(new Date(lastUpdate))) return cachedRegion?.data ? cachedRegion.data : [];
-    else {
-      resetTrendingVideosInCache();
-      return [];
-    }
+    const data = await fetchStream({ options });
+    return data;
   } catch {
-    return [];
+    if (!oldInstanceList?.length) oldInstanceList = DEFAULT_INSTANCE_LIST;
+    oldInstanceList = oldInstanceList.slice(1);
+
+    return getStreamData(streamId);
   }
 }
 
-export async function saveTrendingVideosInCache(region: string, data: ITrendingVideo[]) {
-  try {
-    let { regionList } = await getServerFileData<ITrendingVideosFileOutput>({
-      file: ServerFile.TRENDING_VIDEOS
-    });
-    if (!regionList || !regionList.length) regionList = [{ region, data }];
-    else regionList.push({ region, data });
-
-    const newData = { lastUpdate: new Date().toISOString(), regionList };
-    await setServerFileData({ file: ServerFile.TRENDING_VIDEOS, newData });
-  } catch {
-    /*empty*/
-  }
-}
-
-export async function resetTrendingVideosInCache() {
-  const newData = { lastUpdate: new Date().toISOString(), regionList: [] };
-  await setServerFileData({ file: ServerFile.TRENDING_VIDEOS, newData });
-}
-
-export function isSameDay(date1: Date, date2 = new Date()) {
-  return (
-    date1.getDate() === date2.getDate() &&
-    date1.getMonth() === date2.getMonth() &&
-    date1.getFullYear() === date2.getFullYear()
-  );
+export function getCurrentRegion() {
+  const region = JSON.parse(localStorage.getItem('@piped-current-region') || '"BR"');
+  return region;
 }
