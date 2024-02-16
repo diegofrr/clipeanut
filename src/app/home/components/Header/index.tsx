@@ -6,6 +6,7 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import '@/styles/custom-oplayer-ui.css';
 
 import Icons from '@/icons';
+import StreamDescriptionModal from '@/components/StreamDescriptionModal';
 
 import type { IStream } from '@/types';
 import { fetchStream, type FetchStreamOptionsType } from '@/services/actions/fetchStreamData';
@@ -24,7 +25,6 @@ import { isFavoriteStream, toggleFavoriteStream } from '@/services/actions/Local
 import { myToast } from '@/components/Toaster';
 
 import { PIPED_VALUES, LOCALSTORAGE_KEYS } from '@/constants';
-import StreamDescriptionModal from '@/components/StreamDescriptionModal';
 const { DEFAULT_INSTANCE_LIST } = PIPED_VALUES;
 
 export default function HomeHeader() {
@@ -242,7 +242,7 @@ export default function HomeHeader() {
             ></Button>
           </Tooltip>
 
-          <StreamDescriptionModal.Video data={stream} isOpen={isOpen} onOpenChange={onOpenChange} />
+          <StreamDescriptionModal data={stream} isOpen={isOpen} onOpenChange={onOpenChange} />
         </div>
       </div>
 

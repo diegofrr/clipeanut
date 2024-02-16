@@ -56,7 +56,7 @@ export function VideoMenuDropdown({ video }: VideoMenuDropdownProps) {
         </DropdownMenu>
       </Dropdown>
 
-      <StreamDescriptionModal.Video data={stream} isOpen={isOpen} onOpenChange={onOpenChange} />
+      <StreamDescriptionModal data={stream} isOpen={isOpen} onOpenChange={onOpenChange} />
     </>
   );
 }

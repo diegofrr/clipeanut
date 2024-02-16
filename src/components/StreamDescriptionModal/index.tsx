@@ -14,7 +14,7 @@ type VideoDescriptionModalProps = {
   onOpenChange: () => void;
 };
 
-export function VideoDescriptionModal({ data, isOpen, onOpenChange }: VideoDescriptionModalProps) {
+export default function StreamDescriptionModal({ data, isOpen, onOpenChange }: VideoDescriptionModalProps) {
   const descriptionRef = createRef<HTMLDivElement>();
   const { width } = useWindowSize();
 
