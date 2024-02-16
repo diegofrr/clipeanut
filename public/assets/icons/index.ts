@@ -21,6 +21,9 @@ import { ArrowLeftUpIcon } from './outline/arrow-left-up';
 import { ClapperboardIcon } from './outline/clapperboard';
 import { ClapperboardTextIcon } from './outline/clapperboard-text';
 import { HeartBrokenIcon } from './outline/heart-broken';
+import { MenuDotsIcon } from './outline/menu-dots';
+import { MenuDotsVerticalIcon } from './outline/menu-dots-vertical';
+import { PlaylistIcon } from './outline/playlist';
 
 import { TagIconSolid } from './solid/tag-solid';
 import { PlayIconSolid } from './solid/play-solid';
@@ -31,6 +34,7 @@ import { ClockIconSolid } from './solid/clock-solid';
 import { SettingsIconSolid } from './solid/settings-solid';
 import { SettingsIconSolid2 } from './solid/settings2-solid';
 import { VerifiedIconSolid } from './solid/verified-solid';
+import { PlaylistIconSolid } from './solid/playlist-solid';
 import { ClapperboardIconSolid } from './solid/clapperboard-text-solid';
 import { ClapperboardTextIconSolid } from './solid/clapperboard-solid';
 import { HeartBrokenIconSolid } from './solid/heart-broken-solid';
@@ -59,7 +63,11 @@ const Icons = {
   Play: PlayIcon,
   ClapperboardText: ClapperboardTextIcon,
   HeartBroken: HeartBrokenIcon,
+  MenuDots: MenuDotsIcon,
+  MenuDotsVertical: MenuDotsVerticalIcon,
+  Playlist: PlaylistIcon,
 
+  PlaylistSolid: PlaylistIconSolid,
   ClockSolid: ClockIconSolid,
   TagSolid: TagIconSolid,
   HomeSolid: HomeIconSolid,
