@@ -1,16 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import { createRef, useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 import '@/styles/custom-oplayer-ui.css';
-import './styles/video-description.css';
 
 import Icons from '@/icons';
 
 import type { IStream } from '@/types';
 import { fetchStream, type FetchStreamOptionsType } from '@/services/actions/fetchStreamData';
-import { Button, Image, Modal, ModalBody, ModalContent, ModalHeader, Tooltip, useDisclosure } from '@nextui-org/react';
+import { Button, Image, Tooltip, useDisclosure } from '@nextui-org/react';
 import { useWindowSize } from 'usehooks-ts';
 
 import { HighlighStreamContext } from '../../contexts/highlightStream';
@@ -25,11 +24,11 @@ import { isFavoriteStream, toggleFavoriteStream } from '@/services/actions/Local
 import { myToast } from '@/components/Toaster';
 
 import { PIPED_VALUES, LOCALSTORAGE_KEYS } from '@/constants';
+import StreamDescriptionModal from '@/components/StreamDescriptionModal';
 const { DEFAULT_INSTANCE_LIST } = PIPED_VALUES;
 
 export default function HomeHeader() {
   let oldInstanceList = DEFAULT_INSTANCE_LIST;
-  const descriptionRef = createRef<HTMLDivElement>();
 
   const { resolvedTheme } = useTheme();
   const { width } = useWindowSize();
@@ -130,11 +129,8 @@ export default function HomeHeader() {
   }
 
   useEffect(() => {
-    if (descriptionRef.current && stream) {
-      descriptionRef.current.innerHTML = stream.description;
-    }
     if (stream) setIsFavorite(isFavoriteStream({ stream }));
-  }, [stream, descriptionRef]);
+  }, [stream]);
 
   return (
     <header className="hidden sm:flex flex-row w-full bg-neutral-200 dark:bg-neutral-950 p-6 gap-6 rounded-xl relative">
@@ -246,25 +242,7 @@ export default function HomeHeader() {
             ></Button>
           </Tooltip>
 
-          <Modal
-            className="overflow-hidden"
-            scrollBehavior="inside"
-            size={width < 768 ? 'lg' : '4xl'}
-            isOpen={isOpen}
-            onOpenChange={onOpenChange}
-          >
-            <ModalContent>
-              <ModalHeader>Descrição</ModalHeader>
-              <ModalBody>
-                <div
-                  className={`dark:bg-neutral-900 bg-white bg-opacity-10 rounded-md p-2 video-description-container ${
-                    width < 768 ? 'text-xs' : 'text-base'
-                  }`}
-                  ref={descriptionRef}
-                />
-              </ModalBody>
-            </ModalContent>
-          </Modal>
+          <StreamDescriptionModal.Video data={stream} isOpen={isOpen} onOpenChange={onOpenChange} />
         </div>
       </div>
 
