@@ -28,7 +28,7 @@ async function fetchData(options: FetchTrendingVideosOptionsType): Promise<ITren
   if (controller) controller.abort();
   controller = new AbortController();
 
-  const timeout = setTimeout(() => controller.abort(), 5000);
+  const timeout = setTimeout(() => controller.abort(), 2000);
   const cachedData = getCachedTrendingVideos(options.region);
   if (cachedData.length > 0) return cachedData;
 
