@@ -21,10 +21,15 @@ export async function fetchSuggestions({ options }: IFetchSuggestionsProps): Pro
 }
 
 async function fetchData(options: FetchSuggestionsOptionsType): Promise<ISuggestions> {
-  return fetch(`${options.instance.api_url}/opensearch/suggestions?query=${options.query}`)
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000);
+
+  return fetch(`${options.instance.api_url}/opensearch/suggestions?query=${options.query}`, {
+    signal: controller.signal
+  })
     .then((res) => res.json())
     .then((data) => data as ISuggestions)
-    .catch(() => ({}) as ISuggestions);
+    .finally(() => clearTimeout(timeout));
 }
 
 async function fetchFakeData(delay?: number): Promise<ISuggestions> {

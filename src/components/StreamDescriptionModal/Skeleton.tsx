@@ -1,6 +1,6 @@
 import { useWindowSize } from 'usehooks-ts';
 
-export function DescriptionModalSkeleton() {
+export default function DescriptionModalSkeleton() {
   const { width } = useWindowSize();
 
   return (

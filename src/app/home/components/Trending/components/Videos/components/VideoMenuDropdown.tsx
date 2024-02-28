@@ -1,36 +1,19 @@
+import { useState } from 'react';
+
 import Icons from '@/icons';
+import StreamDescriptionModal from '@/components/StreamDescriptionModal';
 
-import { IStream, ITrendingVideo } from '@/types';
+import type { IStream, ITrendingVideo } from '@/types';
 
-import {
-  Button,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-  useDisclosure
-} from '@nextui-org/react';
-import { createRef, useEffect, useState } from 'react';
-import { DescriptionModalSkeleton } from './DescriptionModalSkeleton';
-
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, useDisclosure } from '@nextui-org/react';
 import { getStreamData } from '@/services/utils';
-import { useWindowSize } from 'usehooks-ts';
-import CustomSpinner from '@/components/CustomSpinner';
 
 type VideoMenuDropdownProps = {
   video: ITrendingVideo;
 };
 
 export function VideoMenuDropdown({ video }: VideoMenuDropdownProps) {
-  const descriptionRef = createRef<HTMLDivElement>();
-
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { width } = useWindowSize();
-
   const [stream, setStream] = useState<IStream>();
 
   async function handleViewDescription() {
@@ -41,19 +24,6 @@ export function VideoMenuDropdown({ video }: VideoMenuDropdownProps) {
 
     setStream(stream);
   }
-
-  function addTargetBlankForDescriptionLinks(container: HTMLElement) {
-    container.querySelectorAll('a').forEach((link) => {
-      link.setAttribute('target', '_blank');
-    });
-  }
-
-  useEffect(() => {
-    if (descriptionRef.current && stream) {
-      descriptionRef.current.innerHTML = stream.description || 'Este vídeo não tem descrição...';
-      stream.description && addTargetBlankForDescriptionLinks(descriptionRef.current);
-    }
-  }, [stream, descriptionRef]);
 
   return (
     <>
@@ -86,48 +56,7 @@ export function VideoMenuDropdown({ video }: VideoMenuDropdownProps) {
         </DropdownMenu>
       </Dropdown>
 
-      <Modal
-        className="overflow-hidden h-auto max-h-[70vh]"
-        placement="bottom-center"
-        classNames={{
-          base: 'w-screen',
-          wrapper: 'w-screen'
-        }}
-        scrollBehavior="inside"
-        size={width < 640 ? 'full' : '4xl'}
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-      >
-        <ModalContent>
-          <ModalHeader className="flex items-center">
-            {!stream ? (
-              <>
-                <CustomSpinner size="sm" />
-                <span className="ml-4">Um momento...</span>
-              </>
-            ) : stream && stream.description ? (
-              <>
-                <Icons.ClapperboardTextSolid />
-                <span className="ml-4">Descrição</span>
-              </>
-            ) : (
-              <>
-                <Icons.HeartBrokenSolid />
-                <span className="ml-4">Sorry :(</span>
-              </>
-            )}
-          </ModalHeader>
-          <ModalBody className="pb-6">
-            {!stream && <DescriptionModalSkeleton />}
-            <div
-              className={`dark:bg-neutral-900 bg-white bg-opacity-10 rounded-md p-2 video-description-container
-              ${width < 768 ? 'text-xs' : 'text-base'}
-              ${!stream ? 'hidden' : ''}`}
-              ref={descriptionRef}
-            />
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+      <StreamDescriptionModal data={stream} isOpen={isOpen} onOpenChange={onOpenChange} />
     </>
   );
 }

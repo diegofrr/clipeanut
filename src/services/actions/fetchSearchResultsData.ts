@@ -27,7 +27,6 @@ async function fetchData(options: FetchSearchResultsOptionsType): Promise<ISearc
   const filter = options.filter || 'all';
 
   return fetch(`${options.instance.api_url}/search?q=${options.query}&filter=${filter}`, {
-    cache: 'no-cache',
     signal: controller.signal
   })
     .then((res) => res.json())

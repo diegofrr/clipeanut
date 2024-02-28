@@ -1,6 +1,6 @@
 import type { IFavoriteStream, IStream, ITrendingVideo } from '@/types';
 
-import { localStoragePassers } from './utils/Passers';
+import { localStoragePassers } from './utils';
 import { LOCALSTORAGE_KEYS } from '@/constants';
 
 type SaveFavoriteStreamProps = {

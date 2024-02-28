@@ -116,8 +116,7 @@ export default function Search() {
               ${!state.isValidSuggestion ? 'hidden' : ''}`}
               isIconOnly
               onClick={() => handleFetchSuggestion(state.searchValue)}
-              isLoading={state.fetchingSuggestions}
-              startContent={!state.fetchingSuggestions && <Icons.Search strokeWidth={2} size={16} />}
+              startContent={!state.isHistory && <Icons.Search strokeWidth={2} size={16} />}
             />
           }
           classNames={{
