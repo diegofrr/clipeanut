@@ -10,6 +10,10 @@ export const PIPED_VALUES = {
 
   DEFAULT_INSTANCE_LIST: [
     {
+      name: 'leptons.xyz',
+      api_url: 'https://pipedapi.leptons.xyz'
+    },
+    {
       name: 'lunar.icu',
       api_url: 'https://piped-api.lunar.icus'
     },
@@ -20,10 +24,6 @@ export const PIPED_VALUES = {
     {
       name: 'kavin.rocks libre (Official)',
       api_url: 'https://pipedapi-libre.kavin.rocks'
-    },
-    {
-      name: 'leptons.xyz',
-      api_url: 'https://pipedapi.leptons.xyz'
     },
     {
       name: 'r4fo.com',
