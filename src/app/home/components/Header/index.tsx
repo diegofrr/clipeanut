@@ -5,22 +5,21 @@ import { useContext, useEffect, useState } from 'react';
 
 import '@/styles/custom-oplayer-ui.css';
 
+import type { IStream } from '@/types';
+
 import Icons from '@/icons';
 import StreamDescriptionModal from '@/components/StreamDescriptionModal';
 
-import type { IStream } from '@/types';
-import { Button, Image, Tooltip, useDisclosure } from '@nextui-org/react';
-import { useWindowSize } from 'usehooks-ts';
-
 import { HighlighStreamContext } from '../../contexts/highlightStream';
-
 import { isFakeDataFetch } from '@/environments';
-import { StreamUtils } from '@/utils';
-import { getHighlightStreamData } from '@/services/utils';
-
 import { useTheme } from 'next-themes';
+
 import { isFavoriteStream, toggleFavoriteStream } from '@/services/actions/LocalStorage/favoriteStreams';
+import { Button, Image, Tooltip, useDisclosure } from '@nextui-org/react';
+import { getHighlightStreamData } from '@/services/utils';
 import { myToast } from '@/components/Toaster';
+import { useWindowSize } from 'usehooks-ts';
+import { StreamUtils } from '@/utils';
 
 export default function HomeHeader() {
   const { resolvedTheme } = useTheme();
