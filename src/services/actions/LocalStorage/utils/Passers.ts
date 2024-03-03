@@ -1,5 +1,5 @@
-import type { ICachedHighligthStream } from '../types';
-import type { IFavoriteStream, IStream, ITrendingVideo } from '@/types';
+import type { ICachedHighligthStream, ICachedPipedInstance } from '../types';
+import type { IFavoriteStream, IPipedInstance, IStream, ITrendingVideo } from '@/types';
 
 import { extractId } from '.';
 
@@ -29,6 +29,17 @@ export function dataToFavoriteStream({ stream, trending }: DataToFavoriteStreamP
     } as IFavoriteStream;
   } catch {
     return {} as IFavoriteStream;
+  }
+}
+
+export function instancesToCachedPipedInstances(data: IPipedInstance[]): ICachedPipedInstance[] {
+  try {
+    return data.map((item) => ({
+      name: item.name,
+      api_url: item.api_url
+    })) as ICachedPipedInstance[];
+  } catch {
+    return [] as ICachedPipedInstance[];
   }
 }
 

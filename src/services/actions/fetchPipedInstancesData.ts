@@ -3,6 +3,7 @@
 import type { IPipedInstance } from '@/types';
 import { DEFAULT_VALUES, PIPED_VALUES } from '@/constants';
 import { pipedInstancesData } from '@/mocks';
+import { saveCachedPipedInstances } from './LocalStorage/cachedPipedInstances';
 
 interface IFetchPipedInstancesData {
   options: FetchPipedInstancesOptionsType;
@@ -23,7 +24,7 @@ async function fetchData(): Promise<IPipedInstance[]> {
     .then((data) => {
       if (data.error) return Promise.reject(data.error);
 
-      // @task: add cache logic
+      saveCachedPipedInstances(data);
       return data as IPipedInstance[];
     });
 }

@@ -1,5 +1,4 @@
 export const LOCALSTORAGE_KEYS = {
-  STORAGED_INSTANCES: '@piped-saved-instances',
   CURRENT_INSTANCE: '@piped-current-instance',
   HIGHLIGTH_STREAM: '@piped-hightlight-stream',
   CURRENT_REGION: '@piped-current-region',
@@ -10,5 +9,6 @@ export const LOCALSTORAGE_KEYS = {
   WATCH_LATER_STREAMS: '@watch-later-streams',
   STREAM_PLAYLISTS: '@stream-playlists',
   CACHED_TRENDING_VIDEOS: '@cached-trending-videos',
-  CACHED_HIGHLIGHT_VIDEOS: '@cached-highlight-videos'
+  CACHED_HIGHLIGHT_VIDEOS: '@cached-highlight-videos',
+  CACHED_PIPED_INSTANCES: '@cached-piped-instances'
 };
