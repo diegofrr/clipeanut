@@ -10,6 +10,10 @@ export const PIPED_VALUES = {
 
   DEFAULT_INSTANCE_LIST: [
     {
+      name: 'smnz.de',
+      api_url: 'https://pipedapi.smnz.de'
+    },
+    {
       name: 'leptons.xyz',
       api_url: 'https://pipedapi.leptons.xyz'
     },
@@ -45,10 +49,7 @@ export const PIPED_VALUES = {
       name: 'privacydev.net',
       api_url: 'https://api.piped.privacydev.net'
     },
-    {
-      name: 'smnz.de',
-      api_url: 'https://pipedapi.smnz.de'
-    },
+
     {
       name: 'adminforge.de',
       api_url: 'https://pipedapi.adminforge.de'

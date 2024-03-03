@@ -4,7 +4,7 @@ import type { IStream } from '@/types';
 
 import { LOCALSTORAGE_KEYS } from '@/constants';
 import { ICachedHighligthStream } from './types';
-import { localStoragePassers } from './utils';
+import { LocalStoragePassers } from './utils';
 
 export function getCachedHighligthtStream(id: string): ICachedHighligthStream {
   try {
@@ -20,7 +20,7 @@ export function getCachedHighligthtStream(id: string): ICachedHighligthStream {
 
 export function saveCachedHighlightStream(data: IStream) {
   try {
-    const passedData = localStoragePassers.streamToCachedHighligthStream(data);
+    const passedData = LocalStoragePassers.streamToCachedHighligthStream(data);
     const storagedData = localStorage.getItem(LOCALSTORAGE_KEYS.CACHED_HIGHLIGHT_VIDEOS) || '[]';
     let cachedStreamList = JSON.parse(storagedData) as ICachedHighligthStream[];
 

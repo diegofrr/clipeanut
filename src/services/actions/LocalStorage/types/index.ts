@@ -5,6 +5,11 @@ export interface ICachedTrendingVideos {
   regionList: IRegion[];
 }
 
+export interface ICachedPipedInstance {
+  name: string;
+  api_url: string;
+}
+
 export interface ICachedHighligthStream {
   id: string;
   thumbnailUrl: string;

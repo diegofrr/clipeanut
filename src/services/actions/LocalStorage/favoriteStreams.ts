@@ -1,6 +1,6 @@
 import type { IFavoriteStream, IStream, ITrendingVideo } from '@/types';
 
-import { localStoragePassers } from './utils';
+import { LocalStoragePassers } from './utils';
 import { LOCALSTORAGE_KEYS } from '@/constants';
 
 type SaveFavoriteStreamProps = {
@@ -14,7 +14,7 @@ export function getFavoriteStreams(): IFavoriteStream[] {
 }
 
 export function saveFavoriteStream({ stream, trending }: SaveFavoriteStreamProps): boolean {
-  const passedData = localStoragePassers.dataToFavoriteStream({ stream, trending });
+  const passedData = LocalStoragePassers.dataToFavoriteStream({ stream, trending });
   const favoriteStreams = getFavoriteStreams();
 
   if (favoriteStreams.some((favorite) => favorite.thumbnail === passedData.thumbnail)) return false;
@@ -23,7 +23,7 @@ export function saveFavoriteStream({ stream, trending }: SaveFavoriteStreamProps
 }
 
 export function toggleFavoriteStream({ stream, trending }: SaveFavoriteStreamProps): boolean {
-  const passedData = localStoragePassers.dataToFavoriteStream({ stream, trending });
+  const passedData = LocalStoragePassers.dataToFavoriteStream({ stream, trending });
 
   if (isFavoriteStream({ stream, trending })) {
     removeFavoriteStream(passedData.id);
@@ -35,7 +35,7 @@ export function toggleFavoriteStream({ stream, trending }: SaveFavoriteStreamPro
 }
 
 export function isFavoriteStream({ stream, trending }: SaveFavoriteStreamProps): boolean {
-  const passedData = localStoragePassers.dataToFavoriteStream({ stream, trending });
+  const passedData = LocalStoragePassers.dataToFavoriteStream({ stream, trending });
   const favoriteStreams = getFavoriteStreams();
 
   return favoriteStreams.some((favorite) => favorite.id === passedData.id);

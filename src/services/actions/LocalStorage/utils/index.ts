@@ -1,4 +1,4 @@
-import { dataToFavoriteStream, streamToCachedHighligthStream } from './Passers';
+import * as LocalStoragePassers from './Passers';
 
 export function isSameDay(date1: Date, date2 = new Date()) {
   return (
@@ -13,7 +13,4 @@ export function extractId(link: string): string {
   return url.pathname.split('/').reverse()[1];
 }
 
-export const localStoragePassers = {
-  dataToFavoriteStream,
-  streamToCachedHighligthStream
-};
+export { LocalStoragePassers };
