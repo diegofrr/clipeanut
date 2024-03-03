@@ -38,7 +38,9 @@ async function fetchData(options: FetchTrendingVideosOptionsType): Promise<ITren
   })
     .then((res) => res.json())
     .then((data) => {
-      if (data.length) saveCachedTrendingVideos(options.region, data);
+      if (data.error) return Promise.reject(data.error);
+
+      saveCachedTrendingVideos(options.region, data);
       return data as ITrendingVideo[];
     })
     .catch(() => [])

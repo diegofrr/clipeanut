@@ -20,7 +20,12 @@ export async function fetchPipedInstancesData({ options }: IFetchPipedInstancesD
 async function fetchData(): Promise<IPipedInstance[]> {
   return await fetch(PIPED_VALUES.ENDPOINTS.INSTANCES)
     .then((res) => res.json())
-    .then((data) => data as IPipedInstance[]);
+    .then((data) => {
+      if (data.error) return Promise.reject(data.error);
+
+      // @task: add cache logic
+      return data as IPipedInstance[];
+    });
 }
 
 async function fetchFakeData(delay?: number): Promise<IPipedInstance[]> {
